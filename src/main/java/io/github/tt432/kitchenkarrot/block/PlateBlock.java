@@ -84,7 +84,7 @@ public class PlateBlock extends FacingEntityBlock<PlateBlockEntity> {
             blockEntity.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).ifPresent(handler -> {
                 ItemStack heldItem = player.getItemInHand(hand);
                 ItemStack input = handler.getStackInSlot(0);
-                if (player.isCrouching()) {
+                if (player.isShiftKeyDown()) {
                     if (heldItem.isEmpty()) {
                         ItemStack stack = new ItemStack(this);
                         blockEntity.saveToItem(stack);
