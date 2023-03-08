@@ -78,6 +78,6 @@ public class CoasterBlock extends FacingEntityBlock<CoasterBlockEntity> {
             return InteractionResult.SUCCESS;
         }
 
-        return super.use(pState, pLevel, pPos, pPlayer, pHand, pHit);
+        return InteractionResult.PASS;
     }
 }

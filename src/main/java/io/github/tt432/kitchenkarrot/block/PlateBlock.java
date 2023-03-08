@@ -5,12 +5,12 @@ import io.github.tt432.kitchenkarrot.blockentity.PlateBlockEntity;
 import io.github.tt432.kitchenkarrot.recipes.recipe.PlateRecipe;
 import io.github.tt432.kitchenkarrot.recipes.register.RecipeTypes;
 import io.github.tt432.kitchenkarrot.sound.ModSoundEvents;
+import io.github.tt432.kitchenkarrot.tag.ModItemTags;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Style;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
-import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
@@ -60,7 +60,7 @@ public class PlateBlock extends FacingEntityBlock<PlateBlockEntity> {
     }
 
     @Override
-    public VoxelShape getShape(BlockState pState, BlockGetter pLevel, BlockPos pPos, CollisionContext pContext) {
+    public @NotNull VoxelShape getShape(BlockState pState, BlockGetter pLevel, BlockPos pPos, CollisionContext pContext) {
         return SHAPE;
     }
 
@@ -83,28 +83,27 @@ public class PlateBlock extends FacingEntityBlock<PlateBlockEntity> {
         if (blockEntity != null) {
             blockEntity.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).ifPresent(handler -> {
                 ItemStack heldItem = player.getItemInHand(hand);
-                ItemStack input = handler.getStackInSlot(0);
+                ItemStack dishItem = handler.getStackInSlot(0);
                 if (player.isShiftKeyDown()) {
                     if (heldItem.isEmpty()) {
                         ItemStack stack = new ItemStack(this);
                         blockEntity.saveToItem(stack);
-                        setPlate(stack, input);
+                        setPlate(stack, dishItem);
                         //如果盘子中装有食物，则端起来时会显示"盘装的XXX"
-                        if (stack.getOrCreateTag().contains("plate_type") && !input.is(Items.AIR)) {
-                            String inputName = input.getDisplayName().getString().replace("[", "").replace("]", "");
+                        if (stack.getOrCreateTag().contains("plate_type") && !dishItem.is(Items.AIR)) {
+                            String inputName = dishItem.getDisplayName().getString().replace("[", "").replace("]", "");
                             stack.setHoverName((new TranslatableComponent("info.kitchenkarrot.dished", inputName)).setStyle(Style.EMPTY.withItalic(false)));
                         }
                         player.setItemInHand(hand, stack);
                         level.setBlock(pos, Blocks.AIR.defaultBlockState(), Block.UPDATE_ALL_IMMEDIATE);
                     }
                 } else {
-                    boolean isEmpty = input.isEmpty();
-                    if (isEmpty && !heldItem.isEmpty()) {
-                        if (intoPlate(level, heldItem, handler)) {
-                            success.set(true);
-                        }
-                    } else if (!isEmpty) {
-                        if (outPlate(level, player, handler, input, heldItem)) {
+                    if (dishItem.isEmpty() && !heldItem.isEmpty()) {
+                            if (addToPlate(level, heldItem, handler)) {
+                                success.set(true);
+                            }
+                    } else if (!dishItem.isEmpty()) {
+                        if(interactWithDish(dishItem, heldItem, level, player, handler)){
                             success.set(true);
                         }
                     }
@@ -115,11 +114,32 @@ public class PlateBlock extends FacingEntityBlock<PlateBlockEntity> {
         if (success.get()) {
             return InteractionResult.SUCCESS;
         }
-
-        return super.use(state, level, pos, player, hand, hit);
+        return InteractionResult.PASS;
     }
 
-    boolean outPlate(Level level, Player player, IItemHandler handler, ItemStack input, ItemStack heldItem) {
+    boolean canHoldItem(Level level, IItemHandler handler, ItemStack dishItem){
+        Optional<PlateRecipe> recipe = level.getRecipeManager().getAllRecipesFor(RecipeTypes.PLATE.get()).stream()
+                        .filter(r ->
+                                r.matches(Collections.singletonList(dishItem))
+                        ).findFirst();
+        return recipe.filter(plateRecipe -> handler.getStackInSlot(0).getCount() < plateRecipe.getMax()).isPresent();
+    }
+
+    boolean interactWithDish(ItemStack dishItem, ItemStack heldItem,Level level, Player player, IItemHandler handler){
+        AtomicBoolean result = new AtomicBoolean(false);
+        if (heldItem.isEmpty() || heldItem.is(ModItemTags.KNIFE_ITEM)){
+            if (removeFromPlate(level, player, handler, dishItem, heldItem)) {
+                result.set(true);
+            }
+        } else if (heldItem.sameItem(dishItem) && canHoldItem(level, handler, dishItem)) {
+            if (addToPlate(level,heldItem,handler)){
+                result.set(true);
+            }
+        }
+        return result.get();
+    }
+
+    boolean removeFromPlate(Level level, Player player, IItemHandler handler, ItemStack input, ItemStack heldItem) {
         Optional<PlateRecipe> recipe = level.getRecipeManager()
                 .getAllRecipesFor(RecipeTypes.PLATE.get())
                 .stream()
@@ -131,17 +151,15 @@ public class PlateBlock extends FacingEntityBlock<PlateBlockEntity> {
 
         recipe.ifPresent(r -> {
             if (giveRecipeResult(level, r, handler)) {
-                level.playSound(player, player.getOnPos(), ModSoundEvents.CHOP.get(), player.getSoundSource(), 0.5F, 0.5F);
+                level.playSound(player, player.getOnPos(), ModSoundEvents.CHOP.get(), player.getSoundSource(), 0.5F, 1F);
                 result.set(true);
             }
         });
 
         if (recipe.isEmpty()) {
-            ItemStack item = handler.extractItem(0, 64, false);
+            ItemStack item = handler.extractItem(0, 1, false);
+            player.getInventory().add(item);
 
-            //捡物品时优先堆叠，满了以后掉落至玩家坐标附近
-            ItemEntity itemEntity = new ItemEntity(level, player.getX(), player.getY(), player.getZ(), item);
-            level.addFreshEntity(itemEntity);
 
             result.set(true);
         }
@@ -149,15 +167,15 @@ public class PlateBlock extends FacingEntityBlock<PlateBlockEntity> {
         return result.get();
     }
 
-    boolean intoPlate(Level level, ItemStack heldItem, IItemHandler handler) {
+    boolean addToPlate(Level level, ItemStack heldItem, IItemHandler handler) {
         Optional<PlateRecipe> recipe = level.getRecipeManager().getAllRecipesFor(RecipeTypes.PLATE.get())
                 .stream().filter(r -> r.matches(Collections.singletonList(heldItem))).findFirst();
 
         AtomicBoolean result = new AtomicBoolean(false);
 
         recipe.ifPresent(r -> {
-            ItemStack maxStack = heldItem.split(r.getMax());
-            handler.insertItem(0, maxStack, false);
+            ItemStack Stack = heldItem.split(1);
+            handler.insertItem(0, Stack, false);
             result.set(true);
         });
 
@@ -186,4 +204,8 @@ public class PlateBlock extends FacingEntityBlock<PlateBlockEntity> {
         }
     }
 
+    @Override
+    protected void spawnDestroyParticles(Level pLevel, Player pPlayer, BlockPos pPos, BlockState pState) {
+        pLevel.levelEvent(pPlayer, 2001, pPos, getId(pState));
+    }
 }

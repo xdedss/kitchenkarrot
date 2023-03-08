@@ -241,5 +241,4 @@ public class EmptyPlateItem extends Item {
     public static CompoundTag getBlockEntityData(ItemStack itemStack) {
         return itemStack.getTagElement("BlockEntityTag");
     }
-
 }
