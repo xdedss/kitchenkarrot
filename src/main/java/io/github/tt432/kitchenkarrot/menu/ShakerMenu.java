@@ -143,15 +143,6 @@ public class ShakerMenu extends KKMenu {
     protected Slot addResultSlot(IItemHandler handler, int index, int x, int y) {
         return addSlot(new KKResultSlot(handler, index, x, y) {
             @Override
-            public void set(@NotNull ItemStack stack) {
-                if (stack.isEmpty()) {
-                    sound();
-                }
-
-                super.set(stack);
-            }
-
-            @Override
             public void setChanged() {
                 super.setChanged();
                 slotChanged(handler);
