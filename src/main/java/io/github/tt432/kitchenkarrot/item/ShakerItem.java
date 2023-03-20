@@ -53,7 +53,6 @@ public class ShakerItem extends Item {
             } else if (!getFinish(stack)) {
                 if (!pLevel.isClientSide) {
                     pPlayer.startUsingItem(pUsedHand);
-                } else {
                     SoundUtil.shakerSound(pPlayer, pLevel);
                 }
 
