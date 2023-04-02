@@ -2,6 +2,7 @@ package io.github.tt432.kitchenkarrot;
 
 import io.github.tt432.kitchenkarrot.block.ModBlocks;
 import io.github.tt432.kitchenkarrot.blockentity.ModBlockEntities;
+import io.github.tt432.kitchenkarrot.config.ModCommonConfigs;
 import io.github.tt432.kitchenkarrot.entity.ModEntitys;
 import io.github.tt432.kitchenkarrot.glm.ModGlobalLootModifiers;
 import io.github.tt432.kitchenkarrot.item.ModBlockItems;
@@ -12,7 +13,9 @@ import io.github.tt432.kitchenkarrot.recipes.register.RecipeManager;
 import io.github.tt432.kitchenkarrot.sound.ModSoundEvents;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.ModList;
+import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.config.ModConfig;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 
 /**
@@ -25,6 +28,7 @@ public class Kitchenkarrot {
     public Kitchenkarrot() {
 
         IEventBus bus = FMLJavaModLoadingContext.get().getModEventBus();
+        ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON,ModCommonConfigs.COMMON,"kitchenkarrot-common.toml");
         ModBlocks.BLOCKS.register(bus);
         ModItems.ITEMS.register(bus);
         ModBlockItems.BLOCK_ITEMS.register(bus);

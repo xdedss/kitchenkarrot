@@ -26,3 +26,4 @@ public class ModBlockItems {
     public static final RegistryObject<BlockItem> SEA_SALT = BLOCK_ITEMS.register("sea_salt", () -> new BlockItem(ModBlocks.SEA_SALT.get(), defaultProperties()));
     public static final RegistryObject<BlockItem> GEM_CARROT = BLOCK_ITEMS.register("gem_carrot", () -> new BlockItem(ModBlocks.GEM_CARROT.get(),FoodUtil.food(defaultProperties(), 6, 8)));
 }
+

@@ -44,7 +44,7 @@ public class ModBlocks {
     public static final RegistryObject<Block> COASTER = BLOCKS.register("coaster", () -> new CoasterBlock(BlockBehaviour.Properties.of(Material.WOOD, MaterialColor.WOOD).strength(0.5F, 0.5F).sound(SoundType.WOOD)));
 
     public static final RegistryObject<Block> PLATE = BLOCKS.register("plate", () -> new PlateBlock(BlockBehaviour.Properties.of(Material.GLASS).strength(1F, 1F).sound(SoundType.GLASS)));
-    public static final RegistryObject<Block> GEM_CARROT = BLOCKS.register("gem_carrot", GemCarrotCrop::new);
+    public static final RegistryObject<Block> GEM_CARROT = BLOCKS.register("gem_carrot", ()->new GemCarrotCrop(BlockBehaviour.Properties.of(Material.PLANT).sound(SoundType.CROP).randomTicks().noCollission().instabreak()));
 
     private static RegistryObject<Block> oil(String name) {
         return BLOCKS.register(name, () -> new Block(BlockBehaviour.Properties.of(Material.STONE)

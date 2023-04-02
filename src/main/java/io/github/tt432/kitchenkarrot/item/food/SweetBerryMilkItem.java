@@ -1,18 +1,18 @@
 package io.github.tt432.kitchenkarrot.item.food;
 
 import io.github.tt432.kitchenkarrot.item.EffectEntry;
+import io.github.tt432.kitchenkarrot.item.IndexItem;
 import io.github.tt432.kitchenkarrot.item.ModItems;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.NotNull;
 
-public class SweetBerryMilkItem extends Item {
+public class SweetBerryMilkItem extends IndexItem {
     public SweetBerryMilkItem(int nutrition, float saturation, EffectEntry... effectEntries) {
-        super(FoodUtil.effectFood(ModItems.defaultProperties(), nutrition, saturation, effectEntries).stacksTo(16));
+        super(FoodUtil.effectFood(ModItems.defaultProperties(), nutrition, saturation,true, effectEntries).stacksTo(16));
     }
 
     @Override
@@ -25,5 +25,11 @@ public class SweetBerryMilkItem extends Item {
         }
 
         return itemStack;
+    }
+
+    @Override
+    public SweetBerryMilkItem setIndex(int index) {
+        super.setIndex(index);
+        return this;
     }
 }

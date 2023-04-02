@@ -48,7 +48,7 @@ import java.util.List;
 import java.util.Objects;
 
 @ParametersAreNonnullByDefault
-public class EmptyPlateItem extends Item {
+public class EmptyPlateItem extends IndexItem {
 
     public EmptyPlateItem(Properties properties) {
         super(properties);

@@ -1,8 +1,6 @@
 package io.github.tt432.kitchenkarrot.item;
 
-import net.minecraft.world.item.Item;
-
-public class KnifeItem extends Item {
+public class KnifeItem extends IndexItem {
     public KnifeItem() {
         super(ModItems.defaultProperties());
     }

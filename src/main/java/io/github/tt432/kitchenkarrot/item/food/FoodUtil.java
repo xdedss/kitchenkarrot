@@ -13,8 +13,13 @@ public class FoodUtil {
         return properties.food(builder.build());
     }
 
-    public static Item.Properties effectFood(Item.Properties properties, int nutrition, float saturation, EffectEntry... effectEntries) {
-        return properties.food(effect(defaultFood(nutrition, saturation), effectEntries).build());
+    public static Item.Properties effectFood(Item.Properties properties, int nutrition, float saturation,boolean alwaysEat, EffectEntry... effectEntries) {
+        if (alwaysEat){
+            return properties.food(effect(defaultFood(nutrition, saturation), effectEntries).alwaysEat().build());
+        } else {
+            return properties.food(effect(defaultFood(nutrition, saturation), effectEntries).build());
+        }
+
     }
 
     public static FoodProperties.Builder effect(FoodProperties.Builder builder, EffectEntry... effectEntries) {
