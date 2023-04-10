@@ -1,5 +1,6 @@
 package io.github.tt432.kitchenkarrot.entity;
 
+import io.github.tt432.kitchenkarrot.config.ModCommonConfigs;
 import io.github.tt432.kitchenkarrot.item.ModItems;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
@@ -25,8 +26,8 @@ import org.jetbrains.annotations.NotNull;
 
 public class CanEntity extends Mob {
     //    private final Logger logger = LogManager.getLogger();
-    //TODO 将最长存活时间改成从配置文件读取 by：skyinr
-    private static int MaxAge = 10 * 20;
+    private int MaxAge = ModCommonConfigs.CAN_ENTITY_LIFETIME.get() * 20;
+    private int getMaxAge() {return MaxAge;}
     private static final EntityDataAccessor<Integer> AGE = SynchedEntityData.defineId(CanEntity.class, EntityDataSerializers.INT);
 
     public CanEntity(EntityType<? extends Mob> p_21368_, Level p_21369_) {
@@ -59,7 +60,7 @@ public class CanEntity extends Mob {
     public InteractionResult mobInteract(Player pPlayer, InteractionHand pHand) {
         if (pPlayer.getItemInHand(pHand) == ItemStack.EMPTY) {
             returnItem(level, pPlayer);
-            return InteractionResult.FAIL;
+            return InteractionResult.SUCCESS;
         }
         return InteractionResult.PASS;
     }
@@ -85,12 +86,14 @@ public class CanEntity extends Mob {
     @Override
     public void tick() {
         this.setDeltaMovement(this.getDeltaMovement().add(0.0D, -0.04D, 0.0D));
-        this.entityData.set(AGE, this.entityData.get(AGE) + 1);
-        if (entityData.get(AGE) >= MaxAge) {
-            if (level instanceof ServerLevel serverLevel) {
-                serverLevel.sendParticles(ParticleTypes.CLOUD, getX(), getY(), getZ(), 30, 0, 0, 0, 0.1);
+        if (MaxAge >= 0){
+            this.entityData.set(AGE, this.entityData.get(AGE) + 1);
+            if (entityData.get(AGE) >= getMaxAge()) {
+                if (level instanceof ServerLevel serverLevel) {
+                    serverLevel.sendParticles(ParticleTypes.CLOUD, getX(), getY(), getZ(), 30, 0, 0, 0, 0.1);
+                }
+                this.remove(RemovalReason.DISCARDED);
             }
-            this.remove(RemovalReason.DISCARDED);
         }
         super.tick();
     }

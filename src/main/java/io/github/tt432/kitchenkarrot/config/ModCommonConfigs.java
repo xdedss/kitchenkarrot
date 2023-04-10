@@ -6,15 +6,18 @@ public class ModCommonConfigs {
     public static final ForgeConfigSpec.Builder BUILDER = new ForgeConfigSpec.Builder();
     public static ForgeConfigSpec COMMON;
 
-    public static ForgeConfigSpec.DoubleValue GEM_CARROT_DROP_CHANCE;
+    public static ForgeConfigSpec.ConfigValue<Boolean> CAN_ENTITY_SPAWN;
+    public static ForgeConfigSpec.ConfigValue<Integer> CAN_ENTITY_LIFETIME;
 
 
     static {
         BUILDER.comment("Common Configs for KitchenKarrot");
 
-        BUILDER.comment("Item Drop Settings").push("Loot Modifier");
-        GEM_CARROT_DROP_CHANCE = BUILDER.comment("Chance of getting a gem carrot when harvest carrot.","0.02 by default.")
-                .defineInRange("Gem Carrot Drop Chance",0.02,0,1);
+        BUILDER.push("Canned Food Settings");
+        CAN_ENTITY_SPAWN = BUILDER.comment("Whether or not an empty can entity spawns everytime player finished eating a canned food.")
+                .define("Spawn Empty Can Entity",Boolean.TRUE);
+        CAN_ENTITY_LIFETIME = BUILDER.comment("The maximum time in seconds an empty can entity can live.","10 by default, -1 to prevent disappearing.")
+                .define("Can Entity Lifetime",10);
         BUILDER.pop();
         COMMON = BUILDER.build();
     }

@@ -53,7 +53,7 @@
     "item.kitchenkarrot.seed_pie":"Seed Pie",
     "item.kitchenkarrot.kelp_with_sunflower_seed":"Kelp With Sunflower Seed",
     "item.kitchenkarrot.rice_cake":"Rice Cake",
-    "item.kitchenkarrot.leafy_fresh_chocolate":"Leafy Fresh Chocolate",
+    "item.kitchenkarrot.leafy_fresh_chocolate":"Verdant Nama Chocolate",
     "item.kitchenkarrot.cupcake":"Cupcake",
     "item.kitchenkarrot.canned_beef_potato":"Canned Beef Potato",
     "item.kitchenkarrot.canned_pork_beetroot":"Canned Pork Beetroot",
@@ -101,7 +101,12 @@
     "item.kitchenkarrot.lava_brulee":"Lava Brulee",
     "item.kitchenkarrot.hi_nrg_brulee":"High Energy Brulee",
     "item.kitchenkarrot.gem_carrot":"Gem Carrot",
-    
+    "item.kitchenkarrot.crispy_potato_with_kelp":"Crispy Potato With Kelp",
+    "item.kitchenkarrot.beetroot_salad":"Beetroot Salad",
+    "item.kitchenkarrot.woodland_tater_puree":"Woodland Tater Puree",
+    "item.kitchenkarrot.bacon_wrapped_potato":"Bacon Wrapped Potato",
+
+
     "block.kitchenkarrot.sunflower_oil":"Sunflower Oil",
     "block.kitchenkarrot.chorus_oil":"Chorus Oil",
     "block.kitchenkarrot.acorn_oil":"Acorn Oil",
@@ -128,6 +133,7 @@
     "info.kitchenkarrot.text3":"§7Right click and press shift to porting the dished food",
     "info.kitchenkarrot.text4":"§dPress §r§e[SHIFT] §r§dto view all foods which can put on the plate.",
     "info.kitchenkarrot.text5":"§eThe food of the following can put on the plate: ",
+    "info.kitchenkarrot.can_be_dished":"§7Can be put on the plate",
 
     "kitchenkarrot.unknown":"Unknown Cocktail",
     "kitchenkarrot.unknown.tooltip":"Creative work.Uncertain effect.",

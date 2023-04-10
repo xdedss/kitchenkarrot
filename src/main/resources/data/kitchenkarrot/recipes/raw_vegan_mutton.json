@@ -2,16 +2,16 @@
   "type": "minecraft:crafting_shapeless",
   "ingredients": [
     {
-      "item": "minecraft:pumpkin"
+      "item": "kitchenkarrot:gem_carrot"
     },
     {
-      "item": "minecraft:pumpkin"
+      "item": "kitchenkarrot:gem_carrot"
     },
     {
-      "tag": "forge:crops/wheat"
+      "item": "kitchenkarrot:birch_sap"
     },
     {
-      "tag": "forge:crops/wheat"
+      "item": "kitchenkarrot:birch_sap"
     }
   ],
   "result": {

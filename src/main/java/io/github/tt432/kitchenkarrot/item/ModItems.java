@@ -69,6 +69,7 @@ public class ModItems {
     public static final RegistryObject<Item> RAW_VEGAN_MUTTON = ITEMS.register("raw_vegan_mutton", () -> new FoodItem(2, 1.2F).setIndex(133));
     public static final RegistryObject<Item> COOKED_VEGAN_MUTTON = ITEMS.register("cooked_vegan_mutton", () -> new FoodItem(6, 7.2F).setIndex(134));
     public static final RegistryObject<Item> GEM_CARROT = ITEMS.register("gem_carrot", () -> new FoodItem(6, 8F).setIndex(12));
+    public static final RegistryObject<Item> CRISPY_BREAD_WITH_KELP = ITEMS.register("crispy_bread_with_kelp", () -> new FoodItem(6, 8F).setIndex(45));
 
 
     public static final RegistryObject<Item> SOOTHING_TEA = ITEMS.register("soothing_tea", () -> new DrinkItem(3.6F) {
@@ -78,7 +79,7 @@ public class ModItems {
         }
         {setIndex(62);}
     });
-    public static final RegistryObject<Item> BIRCH_SAP = ITEMS.register("birch_sap", () -> new DrinkItem(3, 2).setIndex(20));
+    public static final RegistryObject<Item> BIRCH_SAP = ITEMS.register("birch_sap", () -> new DrinkItem(1, 2).setIndex(20));
     public static final RegistryObject<Item> ICED_MELON_LAGER = ITEMS.register("iced_melon_lager", () -> new DrinkItem(3, 2.4F, EffectEntry.of(MobEffects.FIRE_RESISTANCE, 300, 2, 1)).setIndex(109));
     public static final RegistryObject<Item> GLOW_BERRY_LAGER = ITEMS.register("glow_berry_lager", () -> new DrinkItem(2, 2.4F, EffectEntry.of(MobEffects.GLOWING, 300, 2, 1)).setIndex(110));
     public static final RegistryObject<Item> ACORN_WINE = ITEMS.register("acorn_wine", () -> new DrinkItem(2, 5.2F).setIndex(115));
@@ -91,6 +92,7 @@ public class ModItems {
     public static final RegistryObject<Item> SEED_PIE = ITEMS.register("seed_pie", () -> new SnackItem(4, 2.4F, 24).setIndex(23));
     public static final RegistryObject<Item> RICE_CAKE = ITEMS.register("rice_cake", () -> new SnackItem(4, 4, 18).setIndex(85));
     public static final RegistryObject<Item> LEAFY_FRESH_CHOCOLATE = ITEMS.register("leafy_fresh_chocolate", () -> new SnackItem(2, 4.8F, 18).setIndex(86));
+    public static final RegistryObject<Item> BACON_WRAPPED_POTATO = ITEMS.register("bacon_wrapped_potato", () -> new SnackItem(5, 3.6F, 24).setIndex(43));
 
     public static final RegistryObject<Item> LIGHT_SODA = ITEMS.register("light_soda", () -> new SnackDrinkItem(0, 0, 72000).setIndex(119));
     public static final RegistryObject<Item> KELP_SODA = ITEMS.register("kelp_soda", () -> new SnackDrinkItem(0, 0F, 24, EffectEntry.of(MobEffects.WATER_BREATHING, 180, 1)).setIndex(120));
@@ -105,13 +107,16 @@ public class ModItems {
     public static final RegistryObject<Item> TRAVELERS_SALAD = ITEMS.register("travelers_salad", () -> new BowlFoodItem(5, 3.2F).setIndex(52));
     public static final RegistryObject<Item> FRUIT_CEREAL_PORRIDGE = ITEMS.register("fruit_cereal_porridge", () -> new BowlFoodItem(7, 9.6F).setIndex(55));
     public static final RegistryObject<Item> CREEPER_CEREAL_PORRIDGE = ITEMS.register("creeper_cereal_porridge", () -> new BowlFoodItem(7, 9.6F).setIndex(56));
+    public static final RegistryObject<Item> BEETROOT_SALAD = ITEMS.register("beetroot_salad", () -> new BowlFoodItem(6, 3.6F).setIndex(53));
+    public static final RegistryObject<Item> WOODLAND_TATER_PUREE = ITEMS.register("woodland_tater_puree", () -> new BowlFoodItem(7, 4.8F).setIndex(44));
 
-    public static final RegistryObject<Item> CANNED_MUTTON_PUMPKIN = ITEMS.register("canned_mutton_pumpkin", () -> new InstantFoodItem(8, 12.8F).setIndex(99));
-    public static final RegistryObject<Item> CANNED_PORK_BEETROOT = ITEMS.register("canned_pork_beetroot", () -> new InstantFoodItem(8, 12.8F).setIndex(100));
-    public static final RegistryObject<Item> CANNED_CANDIED_APPLE = ITEMS.register("canned_candied_apple", () -> new InstantFoodItem(6, 14.4F).setIndex(101));
-    public static final RegistryObject<Item> CANNED_BEEF_POTATO = ITEMS.register("canned_beef_potato", () -> new InstantFoodItem(8, 12.8F).setIndex(102));
-    public static final RegistryObject<Item> CANNED_SWEET_BERRY_MILK = ITEMS.register("canned_sweet_berry_milk", () -> new InstantFoodItem(4, 4.8F, EffectEntry.of(MobEffects.INVISIBILITY, 90, 1)).setIndex(103));
-    public static final RegistryObject<Item> CANNED_HOGLIN_CONFIT = ITEMS.register("canned_hoglin_confit", () -> new InstantFoodItem(8, 12.8F).setIndex(104));
+
+    public static final RegistryObject<Item> CANNED_MUTTON_PUMPKIN = ITEMS.register("canned_mutton_pumpkin", () -> new InstantFoodItem(5, 9.6F).setIndex(99));
+    public static final RegistryObject<Item> CANNED_PORK_BEETROOT = ITEMS.register("canned_pork_beetroot", () -> new InstantFoodItem(5, 9.6F).setIndex(100));
+    public static final RegistryObject<Item> CANNED_CANDIED_APPLE = ITEMS.register("canned_candied_apple", () -> new InstantFoodItem(4, 10.8F).setIndex(101));
+    public static final RegistryObject<Item> CANNED_BEEF_POTATO = ITEMS.register("canned_beef_potato", () -> new InstantFoodItem(5, 9.6F).setIndex(102));
+    public static final RegistryObject<Item> CANNED_SWEET_BERRY_MILK = ITEMS.register("canned_sweet_berry_milk", () -> new InstantFoodItem(2, 3.6F, EffectEntry.of(MobEffects.INVISIBILITY, 90, 1)).setIndex(103));
+    public static final RegistryObject<Item> CANNED_HOGLIN_CONFIT = ITEMS.register("canned_hoglin_confit", () -> new InstantFoodItem(6, 10.8F).setIndex(104));
 
     public static final RegistryObject<Item> CREAM_OF_MUSHROOM_SOUP = ITEMS.register("cream_of_mushroom_soup", () -> new CreamSoupItem(8, 9.2F).setIndex(39));
 

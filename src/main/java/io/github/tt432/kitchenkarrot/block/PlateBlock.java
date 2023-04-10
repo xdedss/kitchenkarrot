@@ -75,10 +75,6 @@ public class PlateBlock extends FacingEntityBlock<PlateBlockEntity> {
     @NotNull
     @Override
     public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
-        //为了所有人都可以听到声音，所以把这里注释掉了
-//        if (level.isClientSide) {
-//            return InteractionResult.SUCCESS;
-//        }
 
         AtomicBoolean success = new AtomicBoolean(false);
         BlockEntity blockEntity = level.getBlockEntity(pos);

@@ -183,7 +183,7 @@ public class EmptyPlateItem extends IndexItem {
     }
 
     //获取所有可以装在盘子中的食物
-    public static void showPlateRecipeList(List<Component> tooltip) {
+    public static void  showPlateRecipeList(List<Component> tooltip) {
         ResourceManager manager = Minecraft.getInstance().getResourceManager();
         tooltip.add(new TranslatableComponent("info.kitchenkarrot.text5"));
         for (String namespace : manager.getNamespaces()) {

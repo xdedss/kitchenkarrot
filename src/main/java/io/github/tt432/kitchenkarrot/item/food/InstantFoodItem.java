@@ -1,5 +1,6 @@
 package io.github.tt432.kitchenkarrot.item.food;
 
+import io.github.tt432.kitchenkarrot.config.ModCommonConfigs;
 import io.github.tt432.kitchenkarrot.entity.CanEntity;
 import io.github.tt432.kitchenkarrot.entity.ModEntitys;
 import io.github.tt432.kitchenkarrot.item.EffectEntry;
@@ -23,10 +24,12 @@ public class InstantFoodItem extends IndexItem {
     @Override
     @NotNull
     public ItemStack finishUsingItem(@NotNull ItemStack itemStack, @NotNull Level level, LivingEntity livingEntity) {
-        CanEntity canEntity = new CanEntity(ModEntitys.CAN.get(), level);
-        canEntity.setPos(livingEntity.position());
-        canEntity.moveRelative(1, livingEntity.getLookAngle());
-        level.addFreshEntity(canEntity);
+        if (ModCommonConfigs.CAN_ENTITY_SPAWN.get()){
+            CanEntity canEntity = new CanEntity(ModEntitys.CAN.get(), level);
+            canEntity.setPos(livingEntity.position());
+            canEntity.moveRelative(1, livingEntity.getLookAngle());
+            level.addFreshEntity(canEntity);
+        }
         return super.finishUsingItem(itemStack, level, livingEntity);
     }
 

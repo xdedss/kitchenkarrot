@@ -100,8 +100,6 @@
     "item.kitchenkarrot.honey_brulee":"蜂蜜布蕾",
     "item.kitchenkarrot.lava_brulee":"熔岩布蕾",
     "item.kitchenkarrot.hi_nrg_brulee":"高能布蕾",
-
-    "block.kitchenkarrot.gem_carrot":"宝石胡萝卜",
     "block.kitchenkarrot.sunflower_oil":"瓜子油",
     "block.kitchenkarrot.chorus_oil":"紫颂油",
     "block.kitchenkarrot.acorn_oil":"橡子油",
@@ -215,5 +213,11 @@
     "advancement.kitchenkarrot.place_plate.title":"早餐上桌咯！",
     "advancement.kitchenkarrot.place_plate.desc":"用盘子切菜或者装饰餐厅",
     "advancement.kitchenkarrot.use_knife.title":"我切！",
-    "advancement.kitchenkarrot.use_knife.desc":"把大份食物切成小份方便分享，也有助于消化"
+    "advancement.kitchenkarrot.use_knife.desc":"把大份食物切成小份方便分享，也有助于消化",
+    "item.kitchenkarrot.gem_carrot": "宝石胡萝卜",
+    "info.kitchenkarrot.can_be_dished": "§7可以装在盘子上",
+    "item.kitchenkarrot.crispy_potato_with_kelp": "酥脆海苔面包",
+    "item.kitchenkarrot.beetroot_salad": "甜菜沙拉",
+    "item.kitchenkarrot.woodland_tater_puree": "林木土豆泥",
+    "item.kitchenkarrot.bacon_wrapped_potato": "煎培根土豆卷"
 }

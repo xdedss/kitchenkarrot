@@ -102,7 +102,6 @@ public class AirCompressorBlockEntity extends MenuBlockEntity {
         }
 
         if (progress.get() == 0) {
-            // 尚未开始
             if (!recipeValid(items)) {
                 if (burnTime.get() > 0 || !input2.getStackInSlot(0).isEmpty()) {
                     var recipeList = RecipeManager.getAirCompressorRecipe(level)
@@ -127,7 +126,6 @@ public class AirCompressorBlockEntity extends MenuBlockEntity {
                 }
             }
             else {
-                // 结束
                 for (int i = 0; i < 4; i++) {
                     input1.extractItem(i, 1, false);
                 }
@@ -142,16 +140,13 @@ public class AirCompressorBlockEntity extends MenuBlockEntity {
             }
         }
         else if (burnTime.get() != 0 && recipeValid(items)) {
-            // 还在工作
             progress.reduce(1, 0);
         }
         else {
-            // 中止
             stop();
         }
 
         if (burnTime.reduce(1, 0) == 0 && recipeValid(items)) {
-            // 燃料耗尽
             addFuel();
         }
     }
