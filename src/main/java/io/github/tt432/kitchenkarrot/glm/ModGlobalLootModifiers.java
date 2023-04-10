@@ -10,5 +10,5 @@ import net.minecraftforge.registries.RegistryObject;
 public class ModGlobalLootModifiers {
     public static final DeferredRegister<GlobalLootModifierSerializer<?>> GLM = DeferredRegister.create(ForgeRegistries.Keys.LOOT_MODIFIER_SERIALIZERS, Kitchenkarrot.MOD_ID);
 
-    public static final RegistryObject<ModGlobalLootModifierSerializer> GLOBAL_LOOT_MODIFIER_SERIALIZER= GLM.register("piglin_barter_loot_modifier",ModGlobalLootModifierSerializer::new);
+    public static final RegistryObject<ModGlobalLootModifierSerializer> MOD_GLOBAL_LOOT_MODIFIER = GLM.register("kitchenkarrot_loot_modifier",ModGlobalLootModifierSerializer::new);
 }

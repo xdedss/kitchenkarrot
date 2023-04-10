@@ -7,5 +7,5 @@
   ],
   "item": "kitchenkarrot:canned_hoglin_confit",
   "weight": 40,
-  "type": "kitchenkarrot:piglin_barter_loot_modifier"
+  "type": "kitchenkarrot:kitchenkarrot_loot_modifier"
 }

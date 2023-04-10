@@ -3,6 +3,7 @@ package io.github.tt432.kitchenkarrot.item;
 import net.minecraft.world.item.Item;
 
 public class IndexItem extends Item {
+    private int index;
     public int getIndex() {
         return index;
     }
@@ -11,7 +12,6 @@ public class IndexItem extends Item {
         this.index = index;
         return this;
     }
-    public int index;
     public IndexItem(Properties pProperties) {
         super(pProperties);
     }

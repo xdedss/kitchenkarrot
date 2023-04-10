@@ -27,18 +27,6 @@ public class ModBlockLootProvider extends BlockLoot {
     }
 
     @Override
-    protected void addTables() {
-        add(ModBlocks.GEM_CARROT.get(),
-                createCropDrops(ModBlocks.GEM_CARROT.get(),
-                        ModBlockItems.GEM_CARROT.get(),
-                        ModBlockItems.GEM_CARROT.get(),
-                        LootItemBlockStatePropertyCondition
-                                .hasBlockStateProperties(ModBlocks.GEM_CARROT.get())
-                                .setProperties(StatePropertiesPredicate.Builder.properties()
-                                        .hasProperty(CropBlock.AGE, 7))));
-    }
-
-    @Override
     @NotNull
     protected Iterable<Block> getKnownBlocks() {
         return skipBlocks;

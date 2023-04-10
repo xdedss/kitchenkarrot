@@ -1,6 +1,7 @@
 {
   "replace": false,
   "entries": [
-    "kitchenkarrot:piglin_barter_loot_modifier"
+    "kitchenkarrot:piglin_barter_loot_modifier",
+    "kitchenkarrot:gem_carrot_loot_modifier"
   ]
 }

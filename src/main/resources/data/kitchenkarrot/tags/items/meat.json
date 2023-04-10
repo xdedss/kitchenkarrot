@@ -12,6 +12,8 @@
     "#forge:raw_rabbit",
     "#forge:raw_mutton",
     "#forge:raw_pork",
-    "#forge:raw_fishes"
+    "#forge:raw_fishes",
+    "#forge:raw_meat",
+    "#forge:cooked_meat"
   ]
 }

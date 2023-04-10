@@ -28,7 +28,7 @@ public class TutItemModels extends ItemModelProvider {
         ForgeRegistries.ITEMS.forEach(item -> {
             if (item.getRegistryName().getNamespace().equals(DataGenerators.MOD_ID)) {
                 if (item instanceof BlockItem) {
-                    if (item == ModItems.FOOD_FILLED_PLATE.get() || item == ModBlockItems.GEM_CARROT.get())
+                    if (item == ModItems.FOOD_FILLED_PLATE.get())
                         return;
                     withExistingParent(item.getRegistryName().getPath(), modLoc("block/" + item.getRegistryName().getPath()));
                 } else {

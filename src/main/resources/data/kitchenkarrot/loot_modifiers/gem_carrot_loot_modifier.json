@@ -1,0 +1,14 @@
+{
+  "conditions": [
+    {
+      "block": "minecraft:carrots",
+      "condition": "minecraft:block_state_property",
+      "properties": {
+        "age": "7"
+      }
+    }
+  ],
+  "item": "kitchenkarrot:gem_carrot",
+  "weight": 75,
+  "type": "kitchenkarrot:kitchenkarrot_loot_modifier"
+}

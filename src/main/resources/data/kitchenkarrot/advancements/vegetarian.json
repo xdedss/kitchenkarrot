@@ -2,7 +2,7 @@
   "parent": "kitchenkarrot:get_gem_carrot",
   "display": {
     "icon": {
-      "item": "kitchenkarrot:raw_veggie_beef"
+      "item": "kitchenkarrot:raw_vegan_beef"
     },
     "title": {
       "translate": "advancement.kitchenkarrot.vegetarian.title"
@@ -24,7 +24,7 @@
       "conditions": {
         "item": {
           "items": [
-            "kitchenkarrot:raw_veggie_beef"
+            "kitchenkarrot:raw_vegan_beef"
           ]
         }
       }
@@ -34,7 +34,7 @@
       "conditions": {
         "item": {
           "items": [
-            "kitchenkarrot:raw_veggie_pork"
+            "kitchenkarrot:raw_vegan_pork"
           ]
         }
       }
@@ -44,7 +44,7 @@
       "conditions": {
         "item": {
           "items": [
-            "kitchenkarrot:cooked_veggie_beef"
+            "kitchenkarrot:cooked_vegan_beef"
           ]
         }
       }
@@ -54,7 +54,27 @@
       "conditions": {
         "item": {
           "items": [
-            "kitchenkarrot:cooked_veggie_pork"
+            "kitchenkarrot:cooked_vegan_pork"
+          ]
+        }
+      }
+    },
+    "raw_mutton": {
+      "trigger": "minecraft:consume_item",
+      "conditions": {
+        "item": {
+          "items": [
+            "kitchenkarrot:raw_vegan_mutton"
+          ]
+        }
+      }
+    },
+    "cooked_mutton": {
+      "trigger": "minecraft:consume_item",
+      "conditions": {
+        "item": {
+          "items": [
+            "kitchenkarrot:cooked_vegan_mutton"
           ]
         }
       }
@@ -66,6 +86,9 @@
     ],
     [
       "raw_pork","cooked_pork"
+    ],
+    [
+      "raw_mutton","cooked_mutton"
     ]
   ]
 }

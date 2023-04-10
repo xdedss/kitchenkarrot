@@ -15,7 +15,7 @@ public class ModGlobalLootModifierProvider extends GlobalLootModifierProvider {
 
     @Override
     protected void start() {
-        add("piglin_barter_loot_modifier", ModGlobalLootModifiers.GLOBAL_LOOT_MODIFIER_SERIALIZER.get(),
+        add("kitchenkarrot_loot_modifier", ModGlobalLootModifiers.MOD_GLOBAL_LOOT_MODIFIER.get(),
                 new AddLootTableModifier(
                         new LootItemCondition[]{
                                 LootTableIdCondition.builder(BuiltInLootTables.PIGLIN_BARTERING).build()
