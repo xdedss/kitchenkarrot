@@ -1,6 +1,5 @@
 package io.github.tt432.kitchenkarrot.item;
 
-import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.item.BlockItem;
@@ -26,12 +25,5 @@ public class FilledPlateItem extends BlockItem {
         tooltip.add(new TranslatableComponent("info.kitchenkarrot.text1"));
         tooltip.add(new TranslatableComponent("info.kitchenkarrot.text2"));
         tooltip.add(new TranslatableComponent("info.kitchenkarrot.text3"));
-        if (level != null) {
-            if (Screen.hasShiftDown()) {
-                EmptyPlateItem.showPlateRecipeList(tooltip);
-            } else {
-                tooltip.add(new TranslatableComponent("info.kitchenkarrot.text4"));
-            }
-        }
     }
 }

@@ -1,29 +1,18 @@
 package io.github.tt432.kitchenkarrot.item;
 
 import io.github.tt432.kitchenkarrot.block.ModBlocks;
-import io.github.tt432.kitchenkarrot.client.plate.PlateList;
-import io.github.tt432.kitchenkarrot.util.json.JsonUtils;
-import net.minecraft.ChatFormatting;
 import net.minecraft.advancements.CriteriaTriggers;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TextComponent;
 import net.minecraft.network.chat.TranslatableComponent;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.server.packs.resources.Resource;
-import net.minecraft.server.packs.resources.ResourceManager;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.item.context.UseOnContext;
@@ -36,14 +25,10 @@ import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.Property;
 import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.phys.shapes.CollisionContext;
-import net.minecraftforge.registries.ForgeRegistries;
 import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
-import java.io.InputStreamReader;
-import java.util.ArrayList;
-import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Objects;
 
@@ -182,55 +167,11 @@ public class EmptyPlateItem extends IndexItem {
         }
     }
 
-    //获取所有可以装在盘子中的食物
-    public static void  showPlateRecipeList(List<Component> tooltip) {
-        ResourceManager manager = Minecraft.getInstance().getResourceManager();
-        tooltip.add(new TranslatableComponent("info.kitchenkarrot.text5"));
-        for (String namespace : manager.getNamespaces()) {
-            try {
-                ResourceLocation resourceName = new ResourceLocation(namespace, "plate/list.json");
-                if (manager.hasResource(resourceName)) {
-                    List<Resource> resources = manager.getResources(resourceName);
-                    for (Resource resource : resources) {
-                        InputStreamReader reader = new InputStreamReader(resource.getInputStream());
-                        PlateList list = JsonUtils.INSTANCE.noExpose.fromJson(reader, PlateList.class);
-                        List<String> stringList = new ArrayList<>();
-                        for (String string : list.plates) {
-                            int last = string.lastIndexOf("_");
-                            stringList.add(string.replaceAll("\\d+","").substring(0, last));
-                        }
-                        if (stringList.size() > 0) {
-                            LinkedHashSet<String> hashSet = new LinkedHashSet<>(stringList);
-                            ArrayList<String> listWithoutDuplicates = new ArrayList<>(hashSet);
-                            for (String string : listWithoutDuplicates) {
-                                Item canPutOnPlate = ForgeRegistries.ITEMS.getValue(new ResourceLocation(string));
-                                if (canPutOnPlate != null && canPutOnPlate.getRegistryName() != null && !canPutOnPlate.getDefaultInstance().is(Items.AIR)) {
-                                    String defaultItemName = canPutOnPlate.getDefaultInstance().getDisplayName().getString();
-                                    String correctItemName = defaultItemName.replace("[", "").replace("]", "");
-                                    tooltip.add(new TextComponent(correctItemName).withStyle(ChatFormatting.GRAY));
-                                }
-                            }
-                        }
-                    }
-                }
-            } catch (Exception exception) {
-                exception.printStackTrace();
-            }
-        }
-    }
-
     public void appendHoverText(ItemStack stack, @Nullable Level level, List<Component> tooltip, TooltipFlag flag) {
         this.getBlock().appendHoverText(stack, level, tooltip, flag);
         tooltip.add(new TranslatableComponent("info.kitchenkarrot.text1"));
         tooltip.add(new TranslatableComponent("info.kitchenkarrot.text2"));
         tooltip.add(new TranslatableComponent("info.kitchenkarrot.text3"));
-        if (level != null) {
-            if (Screen.hasShiftDown()) {
-                showPlateRecipeList(tooltip);
-            } else {
-                tooltip.add(new TranslatableComponent("info.kitchenkarrot.text4"));
-            }
-        }
     }
 
     public Block getBlock() {

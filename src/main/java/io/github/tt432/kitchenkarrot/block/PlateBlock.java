@@ -16,7 +16,6 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.RenderShape;
@@ -35,6 +34,8 @@ import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.Collections;
 import java.util.Optional;
 import java.util.concurrent.atomic.AtomicBoolean;
+
+import static io.github.tt432.kitchenkarrot.block.PlateHolderMap.plateHolder;
 
 /**
  * @author DustW
@@ -97,14 +98,10 @@ public class PlateBlock extends FacingEntityBlock<PlateBlockEntity> {
                         level.setBlock(pos, Blocks.AIR.defaultBlockState(), Block.UPDATE_ALL_IMMEDIATE);
                     }
                 } else {
-                    if (dishItem.isEmpty() && !heldItem.isEmpty()) {
-                            if (addToPlate(level, heldItem, handler)) {
-                                success.set(true);
-                            }
-                    } else if (!dishItem.isEmpty()) {
-                        if(interactWithDish(dishItem, heldItem, level, player, handler)){
-                            success.set(true);
-                        }
+                    if (hand == InteractionHand.MAIN_HAND){
+                        success.set(interactWithDish(dishItem, heldItem, level, player, handler));
+                    } else if (!heldItem.isEmpty() && !success.get()){
+                        success.set(interactWithDish(dishItem, heldItem, level, player, handler));
                     }
                 }
             });
@@ -116,25 +113,19 @@ public class PlateBlock extends FacingEntityBlock<PlateBlockEntity> {
         return InteractionResult.PASS;
     }
 
-    boolean canHoldItem(Level level, IItemHandler handler, ItemStack dishItem){
-        Optional<PlateRecipe> recipe = level.getRecipeManager().getAllRecipesFor(RecipeTypes.PLATE.get()).stream()
-                        .filter(r ->
-                                r.matches(Collections.singletonList(dishItem))
-                        ).findFirst();
-        return recipe.filter(plateRecipe -> handler.getStackInSlot(0).getCount() < plateRecipe.getMax()).isPresent();
+    boolean canHoldItem(IItemHandler handler, ItemStack heldItem){
+        ItemStack dishItem = handler.getStackInSlot(0);
+        return plateHolder.containsKey(heldItem.getItem()) &&
+                (dishItem.isEmpty() || (dishItem.sameItem(heldItem) && dishItem.getCount() < plateHolder.get(dishItem.getItem())));
     }
 
     boolean interactWithDish(ItemStack dishItem, ItemStack heldItem,Level level, Player player, IItemHandler handler){
         AtomicBoolean result = new AtomicBoolean(false);
-        if (heldItem.isEmpty() || heldItem.is(ModItemTags.KNIFE_ITEM)){
-            if (removeFromPlate(level, player, handler, dishItem, heldItem)) {
-                result.set(true);
+            if (canHoldItem(handler, heldItem)) {
+                result.set(addToPlate(handler, heldItem));
+            } else if (heldItem.isEmpty() || heldItem.is(ModItemTags.KNIFE_ITEM)) {
+                result.set(removeFromPlate(level, player, handler, dishItem, heldItem));
             }
-        } else if (heldItem.sameItem(dishItem) && canHoldItem(level, handler, dishItem)) {
-            if (addToPlate(level,heldItem,handler)){
-                result.set(true);
-            }
-        }
         return result.get();
     }
 
@@ -166,18 +157,11 @@ public class PlateBlock extends FacingEntityBlock<PlateBlockEntity> {
         return result.get();
     }
 
-    boolean addToPlate(Level level, ItemStack heldItem, IItemHandler handler) {
-        Optional<PlateRecipe> recipe = level.getRecipeManager().getAllRecipesFor(RecipeTypes.PLATE.get())
-                .stream().filter(r -> r.matches(Collections.singletonList(heldItem))).findFirst();
-
+    boolean addToPlate( IItemHandler handler, ItemStack heldItem) {
         AtomicBoolean result = new AtomicBoolean(false);
-
-        recipe.ifPresent(r -> {
-            ItemStack Stack = heldItem.split(1);
-            handler.insertItem(0, Stack, false);
-            result.set(true);
-        });
-
+        ItemStack Stack = heldItem.split(1);
+        handler.insertItem(0, Stack, false);
+        result.set(true);
         return result.get();
     }
 
@@ -203,8 +187,4 @@ public class PlateBlock extends FacingEntityBlock<PlateBlockEntity> {
         }
     }
 
-    @Override
-    protected void spawnDestroyParticles(Level pLevel, Player pPlayer, BlockPos pPos, BlockState pState) {
-        pLevel.levelEvent(pPlayer, 2001, pPos, getId(pState));
-    }
 }
