@@ -15,10 +15,12 @@ public class PopacornItem extends IndexItem {
 
     @Override
     public ItemStack finishUsingItem(@NotNull ItemStack itemStack, @NotNull Level level, @NotNull LivingEntity livingEntity) {
-        if (livingEntity instanceof Player) {
+        if (livingEntity instanceof Player pl) {
             itemStack.hurtAndBreak(1,livingEntity,(player) -> player.broadcastBreakEvent(player.getUsedItemHand()));
+            if (!pl.isCreative()) {
+                itemStack.grow(1);
+            }
         }
-        itemStack.grow(1);
         super.finishUsingItem(itemStack,level,livingEntity);
         return itemStack;
     }
