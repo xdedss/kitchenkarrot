@@ -15,6 +15,7 @@
     }
   ],
   "result": {
-    "item": "kitchenkarrot:carrot_spices"
+    "item": "kitchenkarrot:carrot_spices",
+    "count": 2
   }
 }

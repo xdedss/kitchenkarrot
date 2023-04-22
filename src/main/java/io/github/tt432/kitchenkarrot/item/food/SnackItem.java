@@ -12,7 +12,10 @@ public class SnackItem extends IndexItem {
         super(FoodUtil.food(ModItems.defaultProperties(), nutrition, saturation).stacksTo(16));
         this.tick = tick;
     }
-
+    public SnackItem(int nutrition, float saturation, int tick, int stackSize) {
+        super(FoodUtil.food(ModItems.defaultProperties(), nutrition, saturation).stacksTo(stackSize));
+        this.tick = tick;
+    }
     @Override
     public SnackItem setIndex(int index) {
         super.setIndex(index);

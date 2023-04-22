@@ -18,6 +18,6 @@ public class CurryUdonItem extends IndexItem {
 
     @Override
     public int getUseDuration(ItemStack itemStack) {
-        return 480;
+        return 240;
     }
 }
