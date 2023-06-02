@@ -64,7 +64,7 @@ public class BrewingBarrelBlockEntity extends MenuBlockEntity {
         if (!level.isClientSide) {
             var inputList = ItemHandlerUtils.toList(input2);
 
-            if (fluidEnough() && !canUseRecipe()) {
+            if (isWaterEnough() && !canUseRecipe()) {
                 level.getRecipeManager().getAllRecipesFor(RecipeTypes.BREWING_BARREL.get())
                         .stream().filter(r -> r.matches(inputList)).forEach(r -> {
                             if (result.extractItem(0, 1, true).isEmpty()) {
@@ -72,18 +72,19 @@ public class BrewingBarrelBlockEntity extends MenuBlockEntity {
                             }
                         });
             }
-            else if (this.started.get() && progress.get() != 0) {
-                if (progress.reduce(1, 0) == 0) {
-                    result.insertItem(0, currentRecipe.getResultItem(), false);
+            else if (!progress.get().equals(maxProgress.get())) {
+                if (this.isStarted()){
+                    if (progress.plus(1, maxProgress.get()) == maxProgress.get()) {
+                        result.insertItem(0, currentRecipe.getResultItem(), false);
+                        for (int i = 0; i < input2.getSlots(); i++) {
+                            input2.extractItem(i, 1, false);
+                        }
 
-                    for (int i = 0; i < input2.getSlots(); i++) {
-                        input2.extractItem(i, 1, false);
+                        input1.get().drain(500, IFluidHandler.FluidAction.EXECUTE);
+
+                        finishBrewing();
                     }
-
-                    input1.get().drain(2000, IFluidHandler.FluidAction.EXECUTE);
-
-                    finishBrewing();
-                }
+                }else {setProgress();}
             }
             else if (getRecipe() != null) {
                 finishBrewing();
@@ -95,8 +96,8 @@ public class BrewingBarrelBlockEntity extends MenuBlockEntity {
         return result.getStackInSlot(0).isEmpty();
     }
 
-    public boolean fluidEnough() {
-        return input1.get().getFluidAmount() >= 2000;
+    public boolean isWaterEnough() {
+        return input1.get().getFluidAmount() >= 500;
     }
 
     public boolean canUseRecipe() {
@@ -126,7 +127,7 @@ public class BrewingBarrelBlockEntity extends MenuBlockEntity {
 
     void setProgress() {
         if (canUseRecipe()) {
-            this.progress.set(currentRecipe.getCraftingTime());
+            this.progress.set(0);
             this.maxProgress.set(currentRecipe.getCraftingTime());
         }
         else {

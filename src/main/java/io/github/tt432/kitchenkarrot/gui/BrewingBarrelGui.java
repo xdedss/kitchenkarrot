@@ -51,7 +51,7 @@ public class BrewingBarrelGui extends KKGui<BrewingBarrelMenu> {
                             if (be.isStarted()) {
                                 return new TextComponent(be.getProgress() + " / " + be.getMaxProgress());
                             } else {
-                                if (tank.getFluidAmount() < 2000) {
+                                if (tank.getFluidAmount() < 500) {
                                     return new TranslatableComponent("brewing_barrel.error.not_enough_liquid");
                                 }
                                 else if (!be.canUseRecipe()) {
@@ -65,7 +65,7 @@ public class BrewingBarrelGui extends KKGui<BrewingBarrelMenu> {
                                 }
                             }
                         },
-                        true, be::getMaxProgress, progress));
+                        true, be::getMaxProgress, be::getProgress));
             }
         });
 
@@ -80,7 +80,7 @@ public class BrewingBarrelGui extends KKGui<BrewingBarrelMenu> {
     public void render(PoseStack pPoseStack, int pMouseX, int pMouseY, float pPartialTick) {
         var be = menu.blockEntity;
 
-        if (be.resultEmpty() && be.fluidEnough() && be.canUseRecipe() && !be.isStarted()) {
+        if (be.resultEmpty() && be.isWaterEnough() && be.canUseRecipe() && !be.isStarted()) {
             open(button);
         }
         else {
