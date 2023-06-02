@@ -62,33 +62,33 @@ public class BrewingBarrelBlockEntity extends MenuBlockEntity {
         super.tick();
 
         if (!level.isClientSide) {
-            var inputList = ItemHandlerUtils.toList(input2);
-
-            if (isWaterEnough() && !canUseRecipe()) {
-                level.getRecipeManager().getAllRecipesFor(RecipeTypes.BREWING_BARREL.get())
-                        .stream().filter(r -> r.matches(inputList)).forEach(r -> {
-                            if (result.extractItem(0, 1, true).isEmpty()) {
-                                setRecipe(r);
-                            }
-                        });
-            }
-            else if (!progress.get().equals(maxProgress.get())) {
-                if (this.isStarted()){
-                    if (progress.plus(1, maxProgress.get()) == maxProgress.get()) {
-                        result.insertItem(0, currentRecipe.getResultItem(), false);
-                        for (int i = 0; i < input2.getSlots(); i++) {
-                            input2.extractItem(i, 1, false);
-                        }
-
-                        input1.get().drain(500, IFluidHandler.FluidAction.EXECUTE);
-
+            if (hasRecipe() && hasEnoughWater()){
+                if (isStarted()) {
+                    if (isRecipeSame() && progress.plus(1,getMaxProgress()) == getMaxProgress()){
                         finishBrewing();
                     }
-                }else {setProgress();}
+                } else {start();}
+            }else if(isStarted()) {
+                endProgress();
             }
-            else if (getRecipe() != null) {
-                finishBrewing();
+        }
+    }
+
+    private boolean hasRecipe(){
+        var inputList = ItemHandlerUtils.toList(input2);
+        return level.getRecipeManager().getAllRecipesFor(RecipeTypes.BREWING_BARREL.get())
+                .stream().anyMatch(r -> r.matches(inputList));
+    }
+
+    private void finishBrewing(){
+        ItemStack resultStack = result.extractItem(0, 1, true);
+        if (resultStack.isEmpty() || resultStack.sameItem(getRecipe().getResultItem())) {
+            result.insertItem(0, getRecipe().getResultItem(), false);
+            for (int i = 0; i < input2.getSlots(); i++) {
+                input2.extractItem(i, 1, false);
             }
+            input1.get().drain(500, IFluidHandler.FluidAction.EXECUTE);
+            endProgress();
         }
     }
 
@@ -96,11 +96,11 @@ public class BrewingBarrelBlockEntity extends MenuBlockEntity {
         return result.getStackInSlot(0).isEmpty();
     }
 
-    public boolean isWaterEnough() {
+    public boolean hasEnoughWater() {
         return input1.get().getFluidAmount() >= 500;
     }
 
-    public boolean canUseRecipe() {
+    public boolean isRecipeSame() {
         return this.getRecipe() != null && this.getRecipe().matches(ItemHandlerUtils.toList(input2));
     }
 
@@ -108,10 +108,10 @@ public class BrewingBarrelBlockEntity extends MenuBlockEntity {
         return started.get();
     }
 
-    void finishBrewing() {
+    void endProgress() {
         started.set(false);
         setRecipe(null);
-        setProgress();
+        resetProgress();
     }
 
     void setRecipe(BrewingBarrelRecipe recipe) {
@@ -125,8 +125,8 @@ public class BrewingBarrelBlockEntity extends MenuBlockEntity {
         }
     }
 
-    void setProgress() {
-        if (canUseRecipe()) {
+    void resetProgress() {
+        if (isStarted()) {
             this.progress.set(0);
             this.maxProgress.set(currentRecipe.getCraftingTime());
         }
@@ -137,10 +137,11 @@ public class BrewingBarrelBlockEntity extends MenuBlockEntity {
     }
 
     public void start() {
-        if (canUseRecipe()) {
-            started.set(true);
-            setProgress();
-        }
+        var inputList = ItemHandlerUtils.toList(input2);
+        level.getRecipeManager().getAllRecipesFor(RecipeTypes.BREWING_BARREL.get())
+                .stream().filter(r -> r.matches(inputList)).forEach(r -> {setRecipe(r);});
+        started.set(true);
+        resetProgress();
     }
 
     @Override

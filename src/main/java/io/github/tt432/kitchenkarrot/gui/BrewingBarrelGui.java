@@ -54,7 +54,7 @@ public class BrewingBarrelGui extends KKGui<BrewingBarrelMenu> {
                                 if (tank.getFluidAmount() < 500) {
                                     return new TranslatableComponent("brewing_barrel.error.not_enough_liquid");
                                 }
-                                else if (!be.canUseRecipe()) {
+                                else if (!be.isRecipeSame()) {
                                     return new TranslatableComponent("brewing_barrel.error.error_recipe");
                                 }
                                 else if (!be.resultEmpty()) {
@@ -80,7 +80,7 @@ public class BrewingBarrelGui extends KKGui<BrewingBarrelMenu> {
     public void render(PoseStack pPoseStack, int pMouseX, int pMouseY, float pPartialTick) {
         var be = menu.blockEntity;
 
-        if (be.resultEmpty() && be.isWaterEnough() && be.canUseRecipe() && !be.isStarted()) {
+        if (be.resultEmpty() && be.hasEnoughWater() && be.isRecipeSame() && !be.isStarted()) {
             open(button);
         }
         else {
