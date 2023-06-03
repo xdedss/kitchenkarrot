@@ -87,8 +87,7 @@ public class BrewingBarrelBlock extends FacingGuiEntityBlock<BrewingBarrelBlockE
                     }
                     pPlayer.playSound(SoundEvents.BOTTLE_EMPTY, 0.5F,
                             pLevel.random.nextFloat() * 0.1F + 0.9F);
-                }
-                else if (item.getItem() == ModItems.WATER.get()) {
+                } else if (item.getItem() == ModItems.WATER.get()) {
                     FluidStack water = new FluidStack(Fluids.WATER, 125);
 
                     if (tank.fill(water, IFluidHandler.FluidAction.SIMULATE) == 125) {
@@ -100,6 +99,10 @@ public class BrewingBarrelBlock extends FacingGuiEntityBlock<BrewingBarrelBlockE
                     }
                     pPlayer.playSound(SoundEvents.BUCKET_EMPTY, 0.5F,
                             pLevel.random.nextFloat() * 0.1F + 0.9F);
+                } else {
+                    if (!pLevel.isClientSide()) {
+                        pLevel.setBlock(pPos, pState.setValue(OPEN, !pState.getValue(OPEN)), Block.UPDATE_ALL);
+                    }
                 }
 
                 if (changed.get()) {
