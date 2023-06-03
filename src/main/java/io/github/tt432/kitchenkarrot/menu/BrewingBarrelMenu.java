@@ -16,14 +16,14 @@ public class BrewingBarrelMenu extends KKBeMenu<BrewingBarrelBlockEntity> {
     }
 
     void addSlots() {
-        var handler = blockEntity.input2;
-        addSlot(handler, 0, 36 + 1, 20 + 1);
-        addSlot(handler, 1, 54 + 1, 20 + 1);
-        addSlot(handler, 2, 72 + 1, 20 + 1);
-        addSlot(handler, 3, 36 + 1, 38 + 1);
-        addSlot(handler, 4, 54 + 1, 38 + 1);
-        addSlot(handler, 5, 72 + 1, 38 + 1);
+        var handler = blockEntity.input;
+        addSlot(handler, 0, 48, 25);
+        addSlot(handler, 1, 68, 25);
+        addSlot(handler, 2, 88, 25);
+        addSlot(handler, 3, 48, 45);
+        addSlot(handler, 4, 68, 45);
+        addSlot(handler, 5, 88, 45);
 
-        addResultSlot(blockEntity.result(), 0, 124 + 1, 20 + 1);
+        addResultSlot(blockEntity.result(), 0, 115, 35);
     }
 }

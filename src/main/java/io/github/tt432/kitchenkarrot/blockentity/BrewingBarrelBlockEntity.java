@@ -8,11 +8,22 @@ import io.github.tt432.kitchenkarrot.recipes.register.RecipeTypes;
 import io.github.tt432.kitchenkarrot.util.ItemHandlerUtils;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.Vec3i;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.sounds.SoundEvent;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.world.Container;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.inventory.ChestMenu;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.BarrelBlock;
+import net.minecraft.world.level.block.entity.BarrelBlockEntity;
+import net.minecraft.world.level.block.entity.ContainerOpenersCounter;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.Fluids;
 import net.minecraftforge.common.capabilities.Capability;
@@ -29,8 +40,10 @@ import java.util.List;
  * @author DustW
  **/
 public class BrewingBarrelBlockEntity extends MenuBlockEntity {
-    FluidTankSyncData input1;
-    public KKItemStackHandler input2 = new KKItemStackHandler(this, 6);
+    public static final int FLUID_CONSUMPTION = 500;
+    public static final int FLUID_CAPACITY = 4000;
+    FluidTankSyncData tank;
+    public KKItemStackHandler input = new KKItemStackHandler(this, 6);
     private KKItemStackHandler result = new KKItemStackHandler(this, 1);
     private IntSyncData progress;
     private IntSyncData maxProgress;
@@ -44,7 +57,7 @@ public class BrewingBarrelBlockEntity extends MenuBlockEntity {
 
     @Override
     protected void syncDataInit(SyncDataManager manager) {
-        manager.add(input1 = new FluidTankSyncData("fluid",4000, (f) -> f.getFluid() == Fluids.WATER, true));
+        manager.add(tank = new FluidTankSyncData("fluid",FLUID_CAPACITY, (f) -> f.getFluid() == Fluids.WATER, true));
         manager.add(progress = new IntSyncData("progress", 0, true));
         manager.add(maxProgress = new IntSyncData("maxProgress", 0, true));
         manager.add(recipe = new StringSyncData("recipe", "", true));
@@ -75,19 +88,20 @@ public class BrewingBarrelBlockEntity extends MenuBlockEntity {
     }
 
     private boolean hasRecipe(){
-        var inputList = ItemHandlerUtils.toList(input2);
+        var inputList = ItemHandlerUtils.toList(input);
         return level.getRecipeManager().getAllRecipesFor(RecipeTypes.BREWING_BARREL.get())
                 .stream().anyMatch(r -> r.matches(inputList));
     }
 
     private void finishBrewing(){
-        ItemStack resultStack = result.extractItem(0, 1, true);
-        if (resultStack.isEmpty() || resultStack.sameItem(getRecipe().getResultItem())) {
+        ItemStack resultStack = result.getStackInSlot(0);
+        if (resultStack.isEmpty() ||
+                (resultStack.sameItem(getRecipe().getResultItem()) && resultStack.getCount() < resultStack.getMaxStackSize())) {
             result.insertItem(0, getRecipe().getResultItem(), false);
-            for (int i = 0; i < input2.getSlots(); i++) {
-                input2.extractItem(i, 1, false);
+            for (int i = 0; i < input.getSlots(); i++) {
+                input.extractItem(i, 1, false);
             }
-            input1.get().drain(500, IFluidHandler.FluidAction.EXECUTE);
+            tank.get().drain(500, IFluidHandler.FluidAction.EXECUTE);
             endProgress();
         }
     }
@@ -97,11 +111,11 @@ public class BrewingBarrelBlockEntity extends MenuBlockEntity {
     }
 
     public boolean hasEnoughWater() {
-        return input1.get().getFluidAmount() >= 500;
+        return tank.get().getFluidAmount() >= FLUID_CONSUMPTION;
     }
 
     public boolean isRecipeSame() {
-        return this.getRecipe() != null && this.getRecipe().matches(ItemHandlerUtils.toList(input2));
+        return this.getRecipe() != null && this.getRecipe().matches(ItemHandlerUtils.toList(input));
     }
 
     public boolean isStarted() {
@@ -137,7 +151,7 @@ public class BrewingBarrelBlockEntity extends MenuBlockEntity {
     }
 
     public void start() {
-        var inputList = ItemHandlerUtils.toList(input2);
+        var inputList = ItemHandlerUtils.toList(input);
         level.getRecipeManager().getAllRecipesFor(RecipeTypes.BREWING_BARREL.get())
                 .stream().filter(r -> r.matches(inputList)).forEach(r -> {setRecipe(r);});
         started.set(true);
@@ -146,7 +160,7 @@ public class BrewingBarrelBlockEntity extends MenuBlockEntity {
 
     @Override
     public List<ItemStack> drops() {
-        return ItemHandlerUtils.toList(input2, result);
+        return ItemHandlerUtils.toList(input, result);
     }
 
     @Nullable
@@ -158,7 +172,7 @@ public class BrewingBarrelBlockEntity extends MenuBlockEntity {
     @NotNull
     @Override
     public <T> LazyOptional<T> getCapability(@NotNull Capability<T> cap, @Nullable Direction side) {
-        return CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY.orEmpty(cap, LazyOptional.of(() -> input1.get()));
+        return CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY.orEmpty(cap, LazyOptional.of(() -> tank.get()));
     }
 
     public Integer getMaxProgress() {
@@ -172,4 +186,22 @@ public class BrewingBarrelBlockEntity extends MenuBlockEntity {
     public IItemHandler result() {
         return result;
     }
+
+    @Override
+    protected void saveAdditional(CompoundTag pTag) {
+        super.saveAdditional(pTag);
+        pTag.put("input", input.serializeNBT());
+        pTag.put("result", result.serializeNBT());
+    }
+
+    @Override
+    public void load(CompoundTag pTag) {
+        super.load(pTag);
+
+        if (!isSyncTag(pTag)) {
+            input.deserializeNBT(pTag.getCompound("input"));
+            result.deserializeNBT(pTag.getCompound("result"));
+        }
+    }
+
 }

@@ -11,21 +11,45 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.alchemy.PotionUtils;
+import net.minecraft.world.item.context.BlockPlaceContext;
+import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.StateDefinition;
+import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.VoxelShape;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.IFluidTank;
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandler;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.concurrent.atomic.AtomicBoolean;
 
 public class BrewingBarrelBlock extends FacingGuiEntityBlock<BrewingBarrelBlockEntity> {
+    public static final BooleanProperty OPEN = BooleanProperty.create("open");
+
+    public static final VoxelShape SHAPE_Z = Block.box(1, 1, 0, 15, 15, 16);
+    public static final VoxelShape SHAPE_X = Block.box(0, 1, 1, 16, 15, 15);
     protected BrewingBarrelBlock(Properties p_49224_) {
         super(p_49224_);
+        this.registerDefaultState(this.stateDefinition.any().setValue(OPEN, false));
+    }
+
+    @Override
+    public @Nullable BlockState getStateForPlacement(BlockPlaceContext pContext) {
+        this.defaultBlockState().setValue(OPEN,false);
+        return super.getStateForPlacement(pContext);
+    }
+    @Override
+    protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> pBuilder) {
+        super.createBlockStateDefinition(pBuilder);
+        pBuilder.add(OPEN);
     }
 
     @Override
@@ -87,11 +111,19 @@ public class BrewingBarrelBlock extends FacingGuiEntityBlock<BrewingBarrelBlockE
         if (changed.get()) {
             return InteractionResult.SUCCESS;
         }
-
         return super.use(pState, pLevel, pPos, pPlayer, pHand, pHit);
     }
     @Override
     public BlockEntityType<BrewingBarrelBlockEntity> getBlockEntity() {
         return ModBlockEntities.BREWING_BARREL.get();
+    }
+    @Override
+    public VoxelShape getShape(BlockState pState, BlockGetter pLevel, BlockPos pPos, CollisionContext pContext) {
+
+        return switch (pState.getValue(FACING)) {
+            case NORTH,SOUTH -> SHAPE_Z;
+            case EAST,WEST -> SHAPE_X;
+            default -> SHAPE_Z;
+        };
     }
 }

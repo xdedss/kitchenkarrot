@@ -2,6 +2,7 @@ package io.github.tt432.kitchenkarrot.gui;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import io.github.tt432.kitchenkarrot.Kitchenkarrot;
+import io.github.tt432.kitchenkarrot.blockentity.BrewingBarrelBlockEntity;
 import io.github.tt432.kitchenkarrot.gui.base.KKGui;
 import io.github.tt432.kitchenkarrot.gui.widget.ImageButtonWidget;
 import io.github.tt432.kitchenkarrot.gui.widget.ProgressWidget;
@@ -13,6 +14,7 @@ import net.minecraft.network.chat.TextComponent;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.level.block.BarrelBlock;
 import net.minecraftforge.fluids.IFluidTank;
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 
@@ -33,25 +35,23 @@ public class BrewingBarrelGui extends KKGui<BrewingBarrelMenu> {
     @Override
     protected void init() {
         super.init();
-
         var be = this.menu.blockEntity;
-
         be.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY).ifPresent(handler -> {
             if (handler instanceof IFluidTank tank) {
                 Supplier<Integer> progress = () -> be.getMaxProgress() - be.getProgress();
 
-                addRenderableWidget(new ProgressWidget(this, TEXTURE, leftPos + 22, topPos + 21,
-                        176, 44, 8, 33, true,
-                        () -> new TextComponent(tank.getFluidAmount() + " / " + tank.getCapacity()),
+                addRenderableWidget(new ProgressWidget(this, TEXTURE, leftPos + 21, topPos + 23,
+                        182, 0, 9, 42, true,
+                        () -> new TextComponent(tank.getFluidAmount() + "mB / " + tank.getCapacity() + "mB"),
                         true, tank::getCapacity, tank::getFluidAmount));
 
-                addRenderableWidget(new ProgressWidget(this, TEXTURE, leftPos + 101, topPos + 17,
-                        176, 0, 8, 44, true,
+                addRenderableWidget(new ProgressWidget(this, TEXTURE, leftPos + 152, topPos + 23,
+                        178, 0, 4, 42, true,
                         () -> {
                             if (be.isStarted()) {
-                                return new TextComponent(be.getProgress() + " / " + be.getMaxProgress());
+                                return new TextComponent(be.getProgress() * 100 / be.getMaxProgress() + "%");
                             } else {
-                                if (tank.getFluidAmount() < 500) {
+                                if (tank.getFluidAmount() < be.FLUID_CONSUMPTION) {
                                     return new TranslatableComponent("brewing_barrel.error.not_enough_liquid");
                                 }
                                 else if (!be.isRecipeSame()) {
@@ -71,7 +71,13 @@ public class BrewingBarrelGui extends KKGui<BrewingBarrelMenu> {
 
         addRenderableWidget(close(button = new ImageButtonWidget(this, leftPos + 155, topPos + 50,
                 12, 12, (b) -> ModNetManager.sendToServer(new BrewingBarrelStartC2S(be.getBlockPos())),
-                TEXTURE, 184, 0)));
+                TEXTURE, 184, 0)));}
+
+    @Override
+    public void onClose() {
+        super.onClose();
+        BrewingBarrelBlockEntity blockEntity = this.getMenu().blockEntity;
+        blockEntity.getLevel().setBlock(blockEntity.getBlockPos(), blockEntity.getBlockState().setValue(BarrelBlock.OPEN, Boolean.FALSE), 3);
     }
 
     ImageButtonWidget button;
