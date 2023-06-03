@@ -7,8 +7,6 @@ import io.github.tt432.kitchenkarrot.gui.base.KKGui;
 import io.github.tt432.kitchenkarrot.gui.widget.ImageButtonWidget;
 import io.github.tt432.kitchenkarrot.gui.widget.ProgressWidget;
 import io.github.tt432.kitchenkarrot.menu.BrewingBarrelMenu;
-import io.github.tt432.kitchenkarrot.net.ModNetManager;
-import io.github.tt432.kitchenkarrot.net.client.BrewingBarrelStartC2S;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TextComponent;
 import net.minecraft.network.chat.TranslatableComponent;
@@ -68,31 +66,12 @@ public class BrewingBarrelGui extends KKGui<BrewingBarrelMenu> {
                         true, be::getMaxProgress, be::getProgress));
             }
         });
-
-        addRenderableWidget(close(button = new ImageButtonWidget(this, leftPos + 155, topPos + 50,
-                12, 12, (b) -> ModNetManager.sendToServer(new BrewingBarrelStartC2S(be.getBlockPos())),
-                TEXTURE, 184, 0)));}
+    }
 
     @Override
     public void onClose() {
         super.onClose();
         BrewingBarrelBlockEntity blockEntity = this.getMenu().blockEntity;
         blockEntity.getLevel().setBlock(blockEntity.getBlockPos(), blockEntity.getBlockState().setValue(BarrelBlock.OPEN, Boolean.FALSE), 3);
-    }
-
-    ImageButtonWidget button;
-
-    @Override
-    public void render(PoseStack pPoseStack, int pMouseX, int pMouseY, float pPartialTick) {
-        var be = menu.blockEntity;
-
-        if (be.resultEmpty() && be.hasEnoughWater() && be.isRecipeSame() && !be.isStarted()) {
-            open(button);
-        }
-        else {
-            close(button);
-        }
-
-        super.render(pPoseStack, pMouseX, pMouseY, pPartialTick);
     }
 }

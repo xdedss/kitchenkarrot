@@ -72,6 +72,8 @@ public class BrewingBarrelBlock extends FacingGuiEntityBlock<BrewingBarrelBlockE
                             tank.fill(water, IFluidHandler.FluidAction.EXECUTE);
                         }
                     }
+                    pPlayer.playSound(SoundEvents.BUCKET_EMPTY, 0.5F,
+                            pLevel.random.nextFloat() * 0.1F + 0.9F);
                 } else if (item.getItem() == Items.POTION && PotionUtils.getAllEffects(item.getTag()).isEmpty()) {
                     FluidStack water = new FluidStack(Fluids.WATER, 250);
 
@@ -83,6 +85,8 @@ public class BrewingBarrelBlock extends FacingGuiEntityBlock<BrewingBarrelBlockE
                             tank.fill(water, IFluidHandler.FluidAction.EXECUTE);
                         }
                     }
+                    pPlayer.playSound(SoundEvents.BOTTLE_EMPTY, 0.5F,
+                            pLevel.random.nextFloat() * 0.1F + 0.9F);
                 }
                 else if (item.getItem() == ModItems.WATER.get()) {
                     FluidStack water = new FluidStack(Fluids.WATER, 125);
@@ -94,6 +98,8 @@ public class BrewingBarrelBlock extends FacingGuiEntityBlock<BrewingBarrelBlockE
                             tank.fill(water, IFluidHandler.FluidAction.EXECUTE);
                         }
                     }
+                    pPlayer.playSound(SoundEvents.BUCKET_EMPTY, 0.5F,
+                            pLevel.random.nextFloat() * 0.1F + 0.9F);
                 }
 
                 if (changed.get()) {
@@ -101,9 +107,6 @@ public class BrewingBarrelBlock extends FacingGuiEntityBlock<BrewingBarrelBlockE
                         item.shrink(1);
                         pPlayer.getInventory().add(remain);
                     }
-
-                    pPlayer.playSound(SoundEvents.BUCKET_EMPTY, 0.5F,
-                            pLevel.random.nextFloat() * 0.1F + 0.9F);
                 }
             }
         });

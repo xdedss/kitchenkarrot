@@ -8,11 +8,9 @@ import io.github.tt432.kitchenkarrot.glm.ModGlobalLootModifiers;
 import io.github.tt432.kitchenkarrot.item.ModBlockItems;
 import io.github.tt432.kitchenkarrot.item.ModItems;
 import io.github.tt432.kitchenkarrot.menu.reg.ModMenuTypes;
-import io.github.tt432.kitchenkarrot.net.ModNetManager;
 import io.github.tt432.kitchenkarrot.recipes.register.RecipeManager;
 import io.github.tt432.kitchenkarrot.sound.ModSoundEvents;
 import net.minecraftforge.eventbus.api.IEventBus;
-import net.minecraftforge.fml.ModList;
 import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.config.ModConfig;
@@ -39,6 +37,5 @@ public class Kitchenkarrot {
         ModGlobalLootModifiers.GLM.register(bus);
 
         RecipeManager.register(bus);
-        ModNetManager.register();
     }
 }
