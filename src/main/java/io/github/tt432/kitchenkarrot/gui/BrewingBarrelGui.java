@@ -2,6 +2,7 @@ package io.github.tt432.kitchenkarrot.gui;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import io.github.tt432.kitchenkarrot.Kitchenkarrot;
+import io.github.tt432.kitchenkarrot.block.BrewingBarrelBlock;
 import io.github.tt432.kitchenkarrot.blockentity.BrewingBarrelBlockEntity;
 import io.github.tt432.kitchenkarrot.gui.base.KKGui;
 import io.github.tt432.kitchenkarrot.gui.widget.ImageButtonWidget;
@@ -72,6 +73,6 @@ public class BrewingBarrelGui extends KKGui<BrewingBarrelMenu> {
     public void onClose() {
         super.onClose();
         BrewingBarrelBlockEntity blockEntity = this.getMenu().blockEntity;
-        blockEntity.getLevel().setBlock(blockEntity.getBlockPos(), blockEntity.getBlockState().setValue(BarrelBlock.OPEN, Boolean.FALSE), 3);
+        Kitchenkarrot.getInstance().getNetworking().sendUpdateBarrel(blockEntity.getBlockPos(), false);
     }
 }

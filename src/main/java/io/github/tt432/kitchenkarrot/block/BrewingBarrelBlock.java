@@ -38,13 +38,12 @@ public class BrewingBarrelBlock extends FacingGuiEntityBlock<BrewingBarrelBlockE
     public static final VoxelShape SHAPE_X = Block.box(0, 1, 1, 16, 15, 15);
     protected BrewingBarrelBlock(Properties p_49224_) {
         super(p_49224_);
-        this.registerDefaultState(this.stateDefinition.any().setValue(OPEN, false));
+        this.registerDefaultState(defaultBlockState().setValue(OPEN, false));
     }
 
     @Override
     public @Nullable BlockState getStateForPlacement(BlockPlaceContext pContext) {
-        this.defaultBlockState().setValue(OPEN,false);
-        return super.getStateForPlacement(pContext);
+        return super.getStateForPlacement(pContext).setValue(OPEN,false);
     }
     @Override
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> pBuilder) {
@@ -87,8 +86,7 @@ public class BrewingBarrelBlock extends FacingGuiEntityBlock<BrewingBarrelBlockE
                     }
                     pPlayer.playSound(SoundEvents.BOTTLE_EMPTY, 0.5F,
                             pLevel.random.nextFloat() * 0.1F + 0.9F);
-                }
-                else if (item.getItem() == ModItems.WATER.get()) {
+                } else if (item.getItem() == ModItems.WATER.get()) {
                     FluidStack water = new FluidStack(Fluids.WATER, 125);
 
                     if (tank.fill(water, IFluidHandler.FluidAction.SIMULATE) == 125) {
@@ -100,6 +98,11 @@ public class BrewingBarrelBlock extends FacingGuiEntityBlock<BrewingBarrelBlockE
                     }
                     pPlayer.playSound(SoundEvents.BUCKET_EMPTY, 0.5F,
                             pLevel.random.nextFloat() * 0.1F + 0.9F);
+                } else {
+                    if (!pLevel.isClientSide()) {
+                        // Fixme: qyl27: work not correctly when more than one player open it.
+                        pLevel.setBlock(pPos, pState.setValue(OPEN, !pState.getValue(OPEN)), Block.UPDATE_ALL);
+                    }
                 }
 
                 if (changed.get()) {
@@ -116,6 +119,7 @@ public class BrewingBarrelBlock extends FacingGuiEntityBlock<BrewingBarrelBlockE
         }
         return super.use(pState, pLevel, pPos, pPlayer, pHand, pHit);
     }
+
     @Override
     public BlockEntityType<BrewingBarrelBlockEntity> getBlockEntity() {
         return ModBlockEntities.BREWING_BARREL.get();
