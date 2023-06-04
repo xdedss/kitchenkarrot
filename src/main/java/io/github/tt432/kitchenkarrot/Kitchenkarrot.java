@@ -8,6 +8,7 @@ import io.github.tt432.kitchenkarrot.glm.ModGlobalLootModifiers;
 import io.github.tt432.kitchenkarrot.item.ModBlockItems;
 import io.github.tt432.kitchenkarrot.item.ModItems;
 import io.github.tt432.kitchenkarrot.menu.reg.ModMenuTypes;
+import io.github.tt432.kitchenkarrot.networking.ModNetworking;
 import io.github.tt432.kitchenkarrot.recipes.register.RecipeManager;
 import io.github.tt432.kitchenkarrot.sound.ModSoundEvents;
 import net.minecraftforge.eventbus.api.IEventBus;
@@ -23,7 +24,15 @@ import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 public class Kitchenkarrot {
     public static final String MOD_ID = "kitchenkarrot";
 
+    // Mod version here.
+    public static final String VERSION = "1.18.2-0.3.3";
+
+    private static Kitchenkarrot INSTANCE;
+
+    private final ModNetworking networking;
+
     public Kitchenkarrot() {
+        INSTANCE = this;
 
         IEventBus bus = FMLJavaModLoadingContext.get().getModEventBus();
         ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON,ModCommonConfigs.COMMON,"kitchenkarrot-common.toml");
@@ -37,5 +46,15 @@ public class Kitchenkarrot {
         ModGlobalLootModifiers.GLM.register(bus);
 
         RecipeManager.register(bus);
+
+        networking = new ModNetworking();
+    }
+
+    public static Kitchenkarrot getInstance() {
+        return INSTANCE;
+    }
+
+    public ModNetworking getNetworking() {
+        return networking;
     }
 }

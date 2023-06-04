@@ -18,7 +18,7 @@ public abstract class FacingGuiEntityBlock<T extends BaseBlockEntity> extends Gu
 
     protected FacingGuiEntityBlock(Properties p_49224_) {
         super(p_49224_);
-        this.registerDefaultState(this.stateDefinition.any().setValue(FACING, Direction.NORTH));
+        this.registerDefaultState(defaultBlockState().setValue(FACING, Direction.NORTH));
     }
 
     @Override

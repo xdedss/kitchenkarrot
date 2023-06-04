@@ -73,7 +73,6 @@ public class BrewingBarrelGui extends KKGui<BrewingBarrelMenu> {
     public void onClose() {
         super.onClose();
         BrewingBarrelBlockEntity blockEntity = this.getMenu().blockEntity;
-        // Fixme: qyl27: It will only invoke in client side.
-        blockEntity.getLevel().setBlock(blockEntity.getBlockPos(), blockEntity.getBlockState().setValue(BrewingBarrelBlock.OPEN, Boolean.FALSE), 3);
+        Kitchenkarrot.getInstance().getNetworking().sendUpdateBarrel(blockEntity.getBlockPos(), false);
     }
 }
