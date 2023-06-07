@@ -4,7 +4,10 @@ import io.github.tt432.kitchenkarrot.blockentity.BrewingBarrelBlockEntity;
 import io.github.tt432.kitchenkarrot.blockentity.ModBlockEntities;
 import io.github.tt432.kitchenkarrot.item.ModItems;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Vec3i;
+import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
@@ -15,6 +18,8 @@ import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.entity.BarrelBlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
@@ -101,7 +106,8 @@ public class BrewingBarrelBlock extends FacingGuiEntityBlock<BrewingBarrelBlockE
                 } else {
                     if (!pLevel.isClientSide()) {
                         // Fixme: qyl27: work not correctly when more than one player open it.
-                        pLevel.setBlock(pPos, pState.setValue(OPEN, !pState.getValue(OPEN)), Block.UPDATE_ALL);
+                        pLevel.setBlock(pPos, pState.setValue(OPEN, true), Block.UPDATE_ALL);
+                        this.getBlockEntity().getBlockEntity(pLevel, pPos).playSound(SoundEvents.BARREL_OPEN);
                     }
                 }
 

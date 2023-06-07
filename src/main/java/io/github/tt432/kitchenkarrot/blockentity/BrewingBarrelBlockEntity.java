@@ -1,5 +1,6 @@
 package io.github.tt432.kitchenkarrot.blockentity;
 
+import io.github.tt432.kitchenkarrot.block.BrewingBarrelBlock;
 import io.github.tt432.kitchenkarrot.blockentity.sync.*;
 import io.github.tt432.kitchenkarrot.capability.KKItemStackHandler;
 import io.github.tt432.kitchenkarrot.menu.BrewingBarrelMenu;
@@ -12,18 +13,12 @@ import net.minecraft.core.Vec3i;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvent;
-import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
-import net.minecraft.world.Container;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
-import net.minecraft.world.inventory.ChestMenu;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.BarrelBlock;
-import net.minecraft.world.level.block.entity.BarrelBlockEntity;
-import net.minecraft.world.level.block.entity.ContainerOpenersCounter;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.Fluids;
 import net.minecraftforge.common.capabilities.Capability;
@@ -204,4 +199,11 @@ public class BrewingBarrelBlockEntity extends MenuBlockEntity {
         }
     }
 
+    public void playSound(SoundEvent soundEvent) {
+        Vec3i vec3i = this.getBlockState().getValue(BrewingBarrelBlock.FACING).getNormal();
+        double d0 = (double) this.getBlockPos().getX() + 0.5D + (double)vec3i.getX() / 2.0D;
+        double d1 = (double) this.getBlockPos().getY() + 0.5D + (double)vec3i.getY() / 2.0D;
+        double d2 = (double) this.getBlockPos().getZ() + 0.5D + (double)vec3i.getZ() / 2.0D;
+        level.playSound((Player)null, d0, d1, d2, soundEvent, SoundSource.BLOCKS, 0.5F, level.random.nextFloat() * 0.1F + 0.9F);
+    }
 }

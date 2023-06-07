@@ -1,18 +1,33 @@
 {
   "variants": {
-    "facing=east": {
+    "facing=east,open=false": {
       "model": "kitchenkarrot:block/brewing_barrel",
       "y": 270
     },
-    "facing=north": {
+    "facing=north,open=false": {
       "model": "kitchenkarrot:block/brewing_barrel",
       "y": 180
     },
-    "facing=south": {
+    "facing=south,open=false": {
       "model": "kitchenkarrot:block/brewing_barrel"
     },
-    "facing=west": {
+    "facing=west,open=false": {
       "model": "kitchenkarrot:block/brewing_barrel",
+      "y": 90
+    },
+    "facing=east,open=true": {
+      "model": "kitchenkarrot:block/brewing_barrel_open",
+      "y": 270
+    },
+    "facing=north,open=true": {
+      "model": "kitchenkarrot:block/brewing_barrel_open",
+      "y": 180
+    },
+    "facing=south,open=true": {
+      "model": "kitchenkarrot:block/brewing_barrel_open"
+    },
+    "facing=west,open=true": {
+      "model": "kitchenkarrot:block/brewing_barrel_open",
       "y": 90
     }
   }
