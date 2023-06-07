@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "minecraft:snowball"
+    },
+    {
+      "item": "kitchenkarrot:water"
+    }
+  ],
+  "result": {
+    "item": "kitchenkarrot:ice_cubes"
+  }
+}
