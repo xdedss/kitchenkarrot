@@ -71,6 +71,7 @@ public class ModItems {
     public static final RegistryObject<Item> GEM_CARROT = ITEMS.register("gem_carrot", () -> new FoodItem(6, 8F).setIndex(12));
     public static final RegistryObject<Item> CRISPY_BREAD_WITH_KELP = ITEMS.register("crispy_bread_with_kelp", () -> new FoodItem(6, 8F).setIndex(44));
     public static final RegistryObject<Item> RAW_BEEF_IN_DRIPLEAF = ITEMS.register("raw_beef_in_dripleaf", () -> new FoodItem(4,4).setIndex(24));
+    public static final RegistryObject<Item> SWEET_ROLL = ITEMS.register("sweet_roll", () -> new FoodItem(11,1.1F).setIndex(38));
 
 
     public static final RegistryObject<Item> SOOTHING_TEA = ITEMS.register("soothing_tea", () -> new DrinkItem(1,3.6F) {
@@ -110,6 +111,7 @@ public class ModItems {
     public static final RegistryObject<Item> CREEPER_CEREAL_PORRIDGE = ITEMS.register("creeper_cereal_porridge", () -> new BowlFoodItem(7, 9.6F).setIndex(56));
     public static final RegistryObject<Item> BEETROOT_SALAD = ITEMS.register("beetroot_salad", () -> new BowlFoodItem(6, 3.6F).setIndex(53));
     public static final RegistryObject<Item> WOODLAND_TATER_PUREE = ITEMS.register("woodland_tater_puree", () -> new BowlFoodItem(7, 6.4F).setIndex(45));
+    public static final RegistryObject<Item> CARROT_AND_CARROT = ITEMS.register("carrot_and_carrot", () -> new BowlFoodItem(10, 10F).setIndex(61));
 
 
     public static final RegistryObject<Item> CANNED_MUTTON_PUMPKIN = ITEMS.register("canned_mutton_pumpkin", () -> new InstantFoodItem(5, 9.6F).setIndex(99));
