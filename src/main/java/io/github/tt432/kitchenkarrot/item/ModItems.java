@@ -127,7 +127,7 @@ public class ModItems {
 
     public static final RegistryObject<Item> ULTRA_SUPER_DELICIOUS_CEREAL_PORRIDGE = ITEMS.register("ultra_super_delicious_cereal_porridge", () -> new UltraCerealItem(20, 100F).setIndex(57));
 
-    public static final RegistryObject<Item> CURRY_UDON = ITEMS.register("curry_udon", () -> new CurryUdonItem(18, 16F, EffectEntry.of(MobEffects.REGENERATION, 400, 0, 1)).setIndex(84));
+    public static final RegistryObject<Item> CURRY_UDON = ITEMS.register("curry_udon", () -> new CurryUdonItem(18, 16F, EffectEntry.of(MobEffects.REGENERATION, 60, 0, 1)).setIndex(84));
 
     public static final RegistryObject<Item> POPACORN = ITEMS.register("popacorn", () -> new PopacornItem(){{setIndex(83);}});
 

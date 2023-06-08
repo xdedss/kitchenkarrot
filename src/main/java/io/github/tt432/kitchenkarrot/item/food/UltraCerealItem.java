@@ -12,7 +12,7 @@ import org.jetbrains.annotations.NotNull;
 
 public class UltraCerealItem extends IndexItem {
     public UltraCerealItem(int nutrition, float saturation) {
-        super(FoodUtil.food(ModItems.defaultProperties(), nutrition, saturation).rarity(Rarity.EPIC).stacksTo(16));
+        super(FoodUtil.food(ModItems.defaultProperties(), nutrition, saturation).rarity(Rarity.UNCOMMON).stacksTo(16));
     }
 
     @Override

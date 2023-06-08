@@ -1,0 +1,17 @@
+{
+  "type": "create:filling",
+  "ingredients": [
+    {
+      "item": "minecraft:bowl"
+    },
+    {
+      "fluidTag": "forge:water",
+      "amount": 125
+    }
+  ],
+  "results": [
+    {
+      "item": "kitchenkarrot:water"
+    }
+  ]
+}
