@@ -29,5 +29,7 @@ public class PlateHolderMap {
             .put(ModItems.RICE_CAKE.get(), 10)
             .put(ModItems.LEAFY_FRESH_CHOCOLATE.get(), 10)
             .put(ModItems.FRIED_CHICKEN_COMBO.get(), 1)
+            .put(ModItems.BEEF_IN_DRIPLEAF.get(), 1)
+            .put(ModItems.SMALL_BEEF_IN_DRIPLEAF.get(), 4)
             .build();
 }
