@@ -1,14 +1,17 @@
 {
+  "type": "kitchenkarrot:add_item_modifier",
   "conditions": [
     {
-      "block": "minecraft:carrots",
       "condition": "minecraft:block_state_property",
+      "block": "minecraft:carrots",
       "properties": {
         "age": "7"
       }
+    },
+    {
+      "condition": "minecraft:random_chance",
+      "chance": 0.04
     }
   ],
-  "item": "kitchenkarrot:gem_carrot",
-  "weight": 75,
-  "type": "kitchenkarrot:kitchenkarrot_loot_modifier"
+  "item": "kitchenkarrot:gem_carrot"
 }

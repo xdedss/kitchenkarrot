@@ -1,4 +1,5 @@
 {
+  "type" : "kitchenkarrot:replace_loot_modifier",
   "conditions": [
     {
       "condition": "forge:loot_table_id",
@@ -6,6 +7,6 @@
     }
   ],
   "item": "kitchenkarrot:canned_hoglin_confit",
-  "weight": 40,
-  "type": "kitchenkarrot:kitchenkarrot_loot_modifier"
+  "max_count": 6,
+  "weight": 45
 }

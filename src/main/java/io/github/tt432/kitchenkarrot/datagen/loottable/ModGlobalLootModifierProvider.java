@@ -1,5 +1,6 @@
 package io.github.tt432.kitchenkarrot.datagen.loottable;
 
+import io.github.tt432.kitchenkarrot.glm.ReplaceLootModifier;
 import io.github.tt432.kitchenkarrot.glm.ModGlobalLootModifiers;
 import io.github.tt432.kitchenkarrot.item.ModItems;
 import net.minecraft.data.DataGenerator;
@@ -14,11 +15,5 @@ public class ModGlobalLootModifierProvider extends GlobalLootModifierProvider {
     }
 
     @Override
-    protected void start() {
-        add("kitchenkarrot_loot_modifier", ModGlobalLootModifiers.MOD_GLOBAL_LOOT_MODIFIER.get(),
-                new AddLootTableModifier(
-                        new LootItemCondition[]{
-                                LootTableIdCondition.builder(BuiltInLootTables.PIGLIN_BARTERING).build()
-                        }, ModItems.CANNED_HOGLIN_CONFIT.get(), 40));
-    }
+    protected void start() {}
 }
