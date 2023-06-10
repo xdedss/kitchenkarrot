@@ -1,17 +1,31 @@
 {
-  "type": "create:filling",
-  "ingredients": [
+  "type":"forge:conditional",
+  "recipes":[
     {
-      "item": "minecraft:bowl"
-    },
-    {
-      "fluidTag": "forge:milk",
-      "amount": 125
-    }
-  ],
-  "results": [
-    {
-      "item": "kitchenkarrot:milk"
+      "conditions": [
+        {
+          "type": "forge:mod_loaded",
+          "modid":"create"
+        }
+      ],
+
+      "recipe":{
+        "type": "create:filling",
+        "ingredients": [
+          {
+            "item": "minecraft:bowl"
+          },
+          {
+            "fluidTag": "forge:milk",
+            "amount": 125
+          }
+        ],
+        "results": [
+          {
+            "item": "kitchenkarrot:milk"
+          }
+        ]
+      }
     }
   ]
 }
