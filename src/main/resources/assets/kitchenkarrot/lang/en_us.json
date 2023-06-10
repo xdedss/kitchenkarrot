@@ -132,8 +132,6 @@
     "info.kitchenkarrot.text1":"§7Right click plate with food to put the food on plate.",
     "info.kitchenkarrot.text2":"§7Right click with empty hand to take out the food on plate.",
     "info.kitchenkarrot.text3":"§7Right click and press shift to porting the dished food",
-    "info.kitchenkarrot.text4":"§dPress §r§e[SHIFT] §r§dto view all foods which can put on the plate.",
-    "info.kitchenkarrot.text5":"§eThe food of the following can put on the plate: ",
     "info.kitchenkarrot.can_be_dished":"§7Can be put on the plate",
 
     "kitchenkarrot.unknown":"Unknown Cocktail",
@@ -216,12 +214,16 @@
     "advancement.kitchenkarrot.get_cocktail.desc":"Use your shaker to feel the collision of liquid,and pour out whatever you get",
     "advancement.kitchenkarrot.get_pillager_pie.title":"Vicious Delicious",
     "advancement.kitchenkarrot.get_pillager_pie.desc":"Loot a classic illager dish from the illagers",
-    "advancement.kitchenkarrot.place_air_compressor.title":"Is That A Water Cooler?",
+    "advancement.kitchenkarrot.place_air_compressor.title":"100% Reasonable",
     "advancement.kitchenkarrot.place_air_compressor.desc":"Place a modern machine for modern dishes",
     "advancement.kitchenkarrot.get_canned_food.title":"Molecular Gastronome",
     "advancement.kitchenkarrot.get_canned_food.desc":"Craft any canned food from the air compressor",
     "advancement.kitchenkarrot.place_plate.title":"Breakfast's Served!",
     "advancement.kitchenkarrot.place_plate.desc":"Place a plate as a cutting board or decoration",
     "advancement.kitchenkarrot.use_knife.title":"Chop Chop",
-    "advancement.kitchenkarrot.use_knife.desc":"Cutting a large meal into smaller ones to make it easy to share and digest"
+    "advancement.kitchenkarrot.use_knife.desc":"Cutting a large meal into smaller ones to make it easy to share and digest",
+    "advancement.kitchenkarrot.eat_ultra_cereal.title":"Made in Abyss",
+    "advancement.kitchenkarrot.eat_ultra_cereal.desc":"Enjoy your best breakfast ever with a nether star.",
+    "advancement.kitchenkarrot.get_canned_hoglin_confit.title":"Who Would Have Known!",
+    "advancement.kitchenkarrot.get_canned_hoglin_confit.desc":"Exchange some of your gold ingots for piglin treats."
 }

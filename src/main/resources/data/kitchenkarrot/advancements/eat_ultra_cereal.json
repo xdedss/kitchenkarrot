@@ -1,14 +1,14 @@
 {
-  "parent": "kitchenkarrot:place_air_compressor",
+  "parent": "kitchenkarrot:use_knife",
   "display": {
     "icon": {
-      "item": "kitchenkarrot:dragon_breath_coke"
+      "item": "kitchenkarrot:ultra_super_delicious_cereal_porridge"
     },
     "title": {
-      "translate": "advancement.kitchenkarrot.drink_dgcoke.title"
+      "translate": "advancement.kitchenkarrot.eat_ultra_cereal.title"
     },
     "description": {
-      "translate": "advancement.kitchenkarrot.drink_dgcoke.desc"
+      "translate": "advancement.kitchenkarrot.eat_ultra_cereal.desc"
     },
     "frame": "challenge",
     "show_toast": true,
@@ -16,12 +16,12 @@
     "hidden": false
   },
   "criteria": {
-    "coke": {
+    "ultra_cereal": {
       "trigger": "minecraft:consume_item",
       "conditions": {
         "item": {
           "items": [
-            "kitchenkarrot:dragon_breath_coke"
+            "kitchenkarrot:ultra_super_delicious_cereal_porridge"
           ]
         }
       }
@@ -29,7 +29,7 @@
   },
   "requirements": [
     [
-      "coke"
+      "ultra_cereal"
     ]
   ],
   "rewards": {

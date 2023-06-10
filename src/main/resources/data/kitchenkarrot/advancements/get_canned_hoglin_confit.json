@@ -1,0 +1,37 @@
+{
+  "parent": "kitchenkarrot:place_air_compressor",
+  "display": {
+    "icon": {
+      "item": "kitchenkarrot:canned_hoglin_confit"
+    },
+    "title": {
+      "translate": "advancement.kitchenkarrot.get_canned_hoglin_confit.title"
+    },
+    "description": {
+      "translate": "advancement.kitchenkarrot.get_canned_hoglin_confit.desc"
+    },
+    "frame": "goal",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "canned_hoglin_confit": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "kitchenkarrot:canned_hoglin_confit"
+            ]
+          }
+        ]
+      }
+    }
+  },
+  "requirements": [
+    [
+      "canned_hoglin_confit"
+    ]
+  ]
+}

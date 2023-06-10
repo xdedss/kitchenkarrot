@@ -13,17 +13,9 @@
     {
       "item": "kitchenkarrot:carrot_spices"
     },
-    [
-      {
-        "tag": "forge:cooked_beef"
-      },
-      {
-        "tag": "forge:cooked_chicken"
-      },
-      {
-        "tag": "forge:cooked_pork"
-      }
-    ]
+    {
+      "tag": "kitchenkarrot:cooked_meat"
+    }
   ],
   "result": {
     "item": "kitchenkarrot:chinese_crepe",
