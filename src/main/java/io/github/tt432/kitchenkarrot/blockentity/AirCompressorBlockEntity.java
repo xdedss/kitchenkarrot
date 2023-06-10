@@ -1,10 +1,11 @@
 package io.github.tt432.kitchenkarrot.blockentity;
 
+import io.github.tt432.kitchenkarrot.blockentity.sync.BoolSyncData;
+import io.github.tt432.kitchenkarrot.blockentity.sync.IntSyncData;
+import io.github.tt432.kitchenkarrot.blockentity.sync.StringSyncData;
 import io.github.tt432.kitchenkarrot.blockentity.sync.SyncDataManager;
 import io.github.tt432.kitchenkarrot.capability.KKItemStackHandler;
 import io.github.tt432.kitchenkarrot.menu.AirCompressorMenu;
-import io.github.tt432.kitchenkarrot.blockentity.sync.IntSyncData;
-import io.github.tt432.kitchenkarrot.blockentity.sync.StringSyncData;
 import io.github.tt432.kitchenkarrot.recipes.recipe.AirCompressorRecipe;
 import io.github.tt432.kitchenkarrot.recipes.register.RecipeManager;
 import io.github.tt432.kitchenkarrot.tag.ModItemTags;
@@ -17,8 +18,8 @@ import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraftforge.common.ForgeHooks;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.items.CapabilityItemHandler;
@@ -27,13 +28,13 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import javax.annotation.Nonnull;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
  * @author DustW
  **/
 public class AirCompressorBlockEntity extends MenuBlockEntity {
+    static final int MAX_ENERGY = 120;
     /** 原料 / 容器输入 */
     ItemStackHandler input1 = new KKItemStackHandler(this, 5) {
         @Override
@@ -57,7 +58,7 @@ public class AirCompressorBlockEntity extends MenuBlockEntity {
 
         @Override
         public boolean isItemValid(int slot, @NotNull ItemStack stack) {
-            return ForgeHooks.getBurnTime(stack, null) != 0;
+            return stack.is(Items.REDSTONE);
         }
     };
     /** 成品输出 */
@@ -67,18 +68,21 @@ public class AirCompressorBlockEntity extends MenuBlockEntity {
         super(ModBlockEntities.AIR_COMPRESSOR.get(), pWorldPosition, pBlockState);
     }
 
-    IntSyncData progress;
-    IntSyncData maxBurnTime;
-    IntSyncData burnTime;
-    StringSyncData recipeId;
-    AirCompressorRecipe recipe;
+    private IntSyncData progress;
+    private IntSyncData maxProgress;
+    private IntSyncData energy;
+    private StringSyncData recipeId;
+    private AirCompressorRecipe recipe;
+    private BoolSyncData started;
 
     @Override
     protected void syncDataInit(SyncDataManager manager) {
-        manager.add(burnTime = new IntSyncData("burn_time", 0, true));
         manager.add(recipeId = new StringSyncData("recipe", "", true));
         manager.add(progress = new IntSyncData("progress", 0, true));
-        manager.add(maxBurnTime = new IntSyncData("max_burn_time", 0, true));
+        manager.add(maxProgress = new IntSyncData("max_progress", 0, true));
+        manager.add(energy = new IntSyncData("energy", 0, true));
+        manager.add(started = new BoolSyncData("started", false, true));
+
     }
 
     public AirCompressorRecipe getRecipe() {
@@ -87,95 +91,177 @@ public class AirCompressorBlockEntity extends MenuBlockEntity {
                         .byKey(new ResourceLocation(recipeId.get())).get() : recipe;
     }
 
+//    @Override
+//    public void tick() {
+//        super.tick();
+//
+//        if (level.isClientSide) {
+//            return;
+//        }
+//
+//        List<ItemStack> items = new ArrayList<>();
+//
+//        for (int i = 0; i < 4; i++) {
+//            items.add(input1.getStackInSlot(i));
+//        }
+//
+//        if (progress.get() == 0) {
+//            if (!recipeValid(items)) {
+//                if (burnTime.get() > 0 || !input2.getStackInSlot(0).isEmpty()) {
+//                    var recipeList = RecipeManager.getAirCompressorRecipe(level)
+//                            .stream().filter(r -> r.matches(items) && r.testContainer(input1.getStackInSlot(4))).toArray();
+//
+//                    for (Object obj : recipeList) {
+//                        var r = (AirCompressorRecipe) obj;
+//
+//                        if (output.insertItem(0, r.getResultItem(), true).isEmpty()) {
+//                            setRecipe(r);
+//                            progress.set(recipe.getCraftingTime());
+//
+//                            if (burnTime.get() == 0) {
+//                                addFuel();
+//                            }
+//
+//                            setChanged();
+//
+//                            return;
+//                        }
+//                    }
+//                }
+//            }
+//            else {
+//                for (int i = 0; i < 4; i++) {
+//                    input1.extractItem(i, 1, false);
+//                }
+//
+//                if (getRecipe().getContainer() != null) {
+//                    input1.extractItem(4, 1, false);
+//                }
+//
+//                output.insertItem(0, recipe.getResultItem(), false);
+//
+//                stop();
+//            }
+//        }
+//        else if (burnTime.get() != 0 && recipeValid(items)) {
+//            progress.reduce(1, 0);
+//        }
+//        else {
+//            stop();
+//        }
+//
+//        if (burnTime.reduce(1, 0) == 0 && recipeValid(items)) {
+//            addFuel();
+//        }
+//    }
+
     @Override
     public void tick() {
-        super.tick();
-
-        if (level.isClientSide) {
-            return;
-        }
-
-        List<ItemStack> items = new ArrayList<>();
-
-        for (int i = 0; i < 4; i++) {
-            items.add(input1.getStackInSlot(i));
-        }
-
-        if (progress.get() == 0) {
-            if (!recipeValid(items)) {
-                if (burnTime.get() > 0 || !input2.getStackInSlot(0).isEmpty()) {
-                    var recipeList = RecipeManager.getAirCompressorRecipe(level)
-                            .stream().filter(r -> r.matches(items) && r.testContainer(input1.getStackInSlot(4))).toArray();
-
-                    for (Object obj : recipeList) {
-                        var r = (AirCompressorRecipe) obj;
-
-                        if (output.insertItem(0, r.getResultItem(), true).isEmpty()) {
-                            setRecipe(r);
-                            progress.set(recipe.getCraftingTime());
-
-                            if (burnTime.get() == 0) {
-                                addFuel();
-                            }
-
-                            setChanged();
-
-                            return;
-                        }
+        if (!level.isClientSide) {
+            // Part of adding energy
+            if (canCharge()) {
+                charge();
+            }
+            // Part of handling recipe
+            if (isStarted()) {
+                if (isRecipeSame()) {
+                    if (progress.plus(1, getMaxProgress()) == getMaxProgress()) {
+                        finish();
                     }
+                } else {
+                    stop();
                 }
+            } else if (hasEnergy() && hasRecipe() && isSlotAvailable()) {
+                start();
             }
-            else {
-                for (int i = 0; i < 4; i++) {
-                    input1.extractItem(i, 1, false);
-                }
-
-                if (getRecipe().getContainer() != null) {
-                    input1.extractItem(4, 1, false);
-                }
-
-                output.insertItem(0, recipe.getResultItem(), false);
-
-                stop();
-            }
-        }
-        else if (burnTime.get() != 0 && recipeValid(items)) {
-            progress.reduce(1, 0);
-        }
-        else {
-            stop();
-        }
-
-        if (burnTime.reduce(1, 0) == 0 && recipeValid(items)) {
-            addFuel();
         }
     }
 
-    protected boolean recipeValid(List<ItemStack> items) {
-        return getRecipe() != null && getRecipe().matches(items);
+    private boolean isSlotAvailable() {
+        ItemStack resultStack = output.getStackInSlot(0);
+        return resultStack.isEmpty() || (resultStack.sameItem(getRecipe().getResultItem())
+                && resultStack.getCount() < resultStack.getMaxStackSize());
+    }
+
+    private void finish() {
+        for (int i = 0; i < input1.getSlots(); i++) {
+            input1.extractItem(i, 1, false);
+        }
+        energy.reduce(10, 0);
+        output.insertItem(0, getRecipe().getResultItem(), false);
+        stop();
+    }
+
+    private boolean isRecipeSame() {
+        var recipe = getRecipe();
+        List<ItemStack> items = ItemHandlerUtils.toList(input1);
+        ItemStack container = items.remove(4);
+        return recipe != null && recipe.matches(items) && recipe.testContainer(container);
+    }
+
+    private boolean isStarted() {
+        return started.get();
+    }
+
+    protected boolean hasRecipe() {
+        List<ItemStack> items = ItemHandlerUtils.toList(input1);
+        ItemStack container = items.remove(4);
+        return RecipeManager.getAirCompressorRecipe(level)
+                .stream().anyMatch(r -> r.matches(items) && r.testContainer(container));
+    }
+
+    protected void start() {
+        List<ItemStack> items = ItemHandlerUtils.toList(input1);
+        ItemStack container = items.remove(4);
+        RecipeManager.getAirCompressorRecipe(level).stream()
+                .filter(r -> r.matches(items) && r.testContainer(container)).forEach(this::setRecipe);
+        maxProgress.set(recipe.getCraftingTime());
+        started.set(true);
     }
 
     protected void setRecipe(AirCompressorRecipe recipe) {
         this.recipe = recipe;
-        this.recipeId.set(recipe.getId().toString());
+        if (recipe != null) {
+            this.recipeId.set(recipe.getId().toString());
+        } else {
+            this.recipeId.set("");
+        }
     }
 
-    protected void addFuel() {
-        burnTime.set(ForgeHooks.getBurnTime(input2.getStackInSlot(0), null));
-        var fuel = input2.extractItem(0, 1, false);
-        if (!fuel.getContainerItem().isEmpty()) {
-            input2.insertItem(0, fuel.getContainerItem(), false);
-        }
-        maxBurnTime.set(burnTime.get());
+//    protected void addFuel() {
+//        burnTime.set(ForgeHooks.getBurnTime(input2.getStackInSlot(0), null));
+//        var fuel = input2.extractItem(0, 1, false);
+//        if (!fuel.getContainerItem().isEmpty()) {
+//            input2.insertItem(0, fuel.getContainerItem(), false);
+//        }
+//        maxBurnTime.set(burnTime.get());
+//
+//        setChanged();
+//    }
 
-        setChanged();
+    protected void charge() {
+        input2.getStackInSlot(0).shrink(1);
+        energy.set(120);
+    }
+
+    protected boolean hasEnergy() {
+        return energy.get() >= 10;
+    }
+
+    protected boolean canCharge() {
+        return input2.getStackInSlot(0).is(Items.REDSTONE) && getEnergy() < 10 ;
+    }
+    public int getEnergy() { return energy.get(); }
+    public int getAtomicEnergy() {
+        return getEnergy() / 10;
     }
 
     protected void stop() {
         recipe = null;
         recipeId.set("");
         progress.set(0);
-
+        maxProgress.set(0);
+        started.set(false);
         setChanged();
     }
 
@@ -202,19 +288,11 @@ public class AirCompressorBlockEntity extends MenuBlockEntity {
     }
 
     public int getProgress() {
-        return this.progress.get();
+        return progress.get();
     }
 
     public int getMaxProgress() {
-        return getRecipe() == null ? 0 : recipe.getCraftingTime();
-    }
-
-    public int getBurnTime() {
-        return burnTime.get();
-    }
-
-    public int getMaxBurnTime() {
-        return maxBurnTime.get();
+        return maxProgress.get();
     }
 
     public ItemStackHandler getInput1() {

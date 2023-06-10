@@ -30,11 +30,11 @@ public class AirCompressorGui extends KKGui<AirCompressorMenu> {
         super.init();
 
         addRenderableWidget(new ProgressWidget(this, GUI,
-                leftPos + 79, topPos + 34, 176, 14, 24, 17, false,
+                leftPos + 105, topPos + 51, 184, 0, 20, 19, false,
                 be::getMaxProgress, be::getProgress));
         addRenderableWidget(new ProgressWidget(this, GUI,
-                leftPos + 93, topPos + 60, 176, 0, 14, 14, true,
-                be::getMaxBurnTime, be::getBurnTime));
+                leftPos + 49, topPos + 8, 176, 0, 8, 60, true,
+                () -> 12, be::getAtomicEnergy));
     }
 
     @Override

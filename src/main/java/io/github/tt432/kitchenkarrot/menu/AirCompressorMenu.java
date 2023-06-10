@@ -16,14 +16,14 @@ public class AirCompressorMenu extends KKBeMenu<AirCompressorBlockEntity> {
 
     void addItemSlots() {
         var input1 = blockEntity.getInput1();
-        addSlot(input1, 0, 32 + 1, 25 + 1);
-        addSlot(input1, 1, 50 + 1, 25 + 1);
-        addSlot(input1, 2, 32 + 1, 43 + 1);
-        addSlot(input1, 3, 50 + 1, 43 + 1);
-        addSlot(input1, 4, 81 + 1, 14 + 1);
+        addSlot(input1, 0, 63, 31);
+        addSlot(input1, 1, 84, 31);
+        addSlot(input1, 2, 63, 52);
+        addSlot(input1, 3, 84, 52);
+        addSlot(input1, 4, 84, 8);
         var input2 = blockEntity.getInput2();
-        addSlot(input2, 0, 74 + 1, 58 + 1);
+        addSlot(input2, 0, 63, 8);
         var output = blockEntity.getOutput();
-        addResultSlot(output, 0, 120 + 1, 34 + 1);
+        addResultSlot(output, 0, 110, 31);
     }
 }

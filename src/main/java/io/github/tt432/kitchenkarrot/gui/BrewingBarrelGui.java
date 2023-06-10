@@ -47,7 +47,6 @@ public class BrewingBarrelGui extends KKGui<BrewingBarrelMenu> {
         var be = this.menu.blockEntity;
         be.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY).ifPresent(handler -> {
             if (handler instanceof IFluidTank tank) {
-                Supplier<Integer> progress = () -> be.getMaxProgress() - be.getProgress();
 
                 addRenderableWidget(new ProgressWidget(this, TEXTURE, leftPos + 21, topPos + 23,
                         182, 0, 9, 42, true,
