@@ -70,7 +70,7 @@ public class JeiPlugin implements IModPlugin {
 
     @Override
     public void registerGuiHandlers(IGuiHandlerRegistration registration) {
-        registration.addRecipeClickArea(AirCompressorGui.class, 79, 34, 24, 17, AIR_COMPRESSOR);
+        registration.addRecipeClickArea(AirCompressorGui.class, 105, 52, 21, 19, AIR_COMPRESSOR);
         registration.addRecipeClickArea(BrewingBarrelGui.class, 151, 22, 6, 44, BREWING_BARREL);
     }
 
