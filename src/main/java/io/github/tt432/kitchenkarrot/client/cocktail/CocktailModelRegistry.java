@@ -1,6 +1,7 @@
 package io.github.tt432.kitchenkarrot.client.cocktail;
 
 import io.github.tt432.kitchenkarrot.Kitchenkarrot;
+import io.github.tt432.kitchenkarrot.client.plate.PlateList;
 import io.github.tt432.kitchenkarrot.util.json.JsonUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.block.model.BlockModel;
@@ -34,8 +35,8 @@ public class CocktailModelRegistry {
         return new ResourceLocation(modelResourceLocation.getNamespace(), modelResourceLocation.getPath().split("cocktail/")[1]);
     }
 
-    static ModelResourceLocation to(ResourceLocation resourceLocation) {
-        return new ModelResourceLocation(resourceLocation.getNamespace(), "cocktail/" + resourceLocation.getPath(), "inventory");
+    public static ResourceLocation to(ResourceLocation resourceLocation) {
+        return new ResourceLocation(resourceLocation.getNamespace(), "cocktail/" + resourceLocation.getPath());
     }
 
     @SuppressWarnings("unused")
@@ -57,32 +58,36 @@ public class CocktailModelRegistry {
             }
         }
 
-        for (String cocktailName : CocktailList.INSTANCE.cocktails) {
-            ResourceLocation name = new ResourceLocation(cocktailName);
-            String namespace = name.getNamespace();
-            String path = name.getPath();
-            String json = "{\"parent\": \"minecraft:item/generated\", \"textures\": {\"layer0\":\"" + namespace + ":item/cocktail/" + path + "\"}}";
-            ForgeModelBakery.addSpecialModel(to(new ResourceLocation(cocktailName)));
-            ForgeModelBakery instance = ForgeModelBakery.instance();
-            BlockModel model = BlockModel.fromString(json);
-            instance.unbakedCache.put(to(name), model);
-            instance.topLevelModels.put(to(name), model);
+        for (var info : CocktailList.INSTANCE.cocktails) {
+            ForgeModelBakery.addSpecialModel(to(new ResourceLocation(info)));
         }
     }
 
-    public static void bakeModel(ModelBakeEvent evt) {
-        MODEL_MAP.clear();
+    /*public static void bakeModel(ModelBakeEvent evt) {
+        *//*MODEL_MAP.clear();
 
         for (String cocktailName : CocktailList.INSTANCE.cocktails) {
             ModelResourceLocation modelName = to(new ResourceLocation(cocktailName));
             MODEL_MAP.put(from(modelName), evt.getModelManager().getModel(modelName));
-        }
+        }*//*
+
+        *//*for (String cocktailName : CocktailList.INSTANCE.cocktails) {
+            ResourceLocation name = new ResourceLocation(cocktailName);
+            String namespace = name.getNamespace();
+            String path = name.getPath();
+            String json = "{\"parent\": \"minecraft:item/generated\", \"textures\": {\"layer0\":\"" + namespace + ":item/cocktail/" + path + "\"}}";
+            //ForgeModelBakery.addSpecialModel(to(new ResourceLocation(cocktailName)));
+            ForgeModelBakery instance = ForgeModelBakery.instance();
+            BlockModel model = BlockModel.fromString(json);
+            instance.unbakedCache.put(to(name), model);
+            instance.topLevelModels.put(to(name), model);
+        }*//*
 
         evt.getModelRegistry().put(new ModelResourceLocation(
                 Kitchenkarrot.MOD_ID,
                 "cocktail",
                 "inventory"
         ), new CocktailBakedModel());
-    }
+    }*/
 
 }

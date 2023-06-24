@@ -26,26 +26,26 @@ import java.util.Map;
  **/
 public class PlateModelRegistry {
 
-    private static final Map<ResourceLocation, BakedModel> MODEL_MAP = new HashMap<>();
+    public static final Map<ResourceLocation, ResourceLocation> MODEL_MAP = new HashMap<>();
 
     public static ResourceLocation DEFAULT_NAME = new ResourceLocation(Kitchenkarrot.MOD_ID, "plate");
     public static BakedModel DEFAULT_MODEL;
 
-    public static BakedModel get(ResourceLocation resourceLocation) {
+    /*public static BakedModel get(ResourceLocation resourceLocation) {
         return MODEL_MAP.getOrDefault(resourceLocation,
                 DEFAULT_MODEL != null ? DEFAULT_MODEL : (DEFAULT_MODEL = MODEL_MAP.get(DEFAULT_NAME))
         );
-    }
+    }*/
 
     static ResourceLocation from(ModelResourceLocation modelResourceLocation) {
         return new ResourceLocation(modelResourceLocation.getNamespace(), modelResourceLocation.getPath().split("plates/")[1]);
     }
 
-    static ModelResourceLocation to(ResourceLocation resourceLocation) {
-        return new ModelResourceLocation(resourceLocation.getNamespace(), "plates/" + resourceLocation.getPath(), "inventory");
+    public static ResourceLocation to(ResourceLocation resourceLocation) {
+        return new ResourceLocation(resourceLocation.getNamespace(), "plates/" + resourceLocation.getPath());
     }
 
-    @SuppressWarnings("unused")
+
     public static void register(ModelRegistryEvent e) {
         ResourceManager manager = Minecraft.getInstance().getResourceManager();
         for (String namespace : manager.getNamespaces()) {
@@ -64,17 +64,13 @@ public class PlateModelRegistry {
             }
         }
 
-        ForgeModelBakery instance = ForgeModelBakery.instance();
-        BlockModel defaultUnbakedModel = getModel(DEFAULT_NAME.toString());
-        if (instance != null) {
-            instance.unbakedCache.put(DEFAULT_NAME, defaultUnbakedModel);
-            instance.topLevelModels.put(DEFAULT_NAME, defaultUnbakedModel);
-            for (var info : PlateList.INSTANCE.plates) {
-                BlockModel model = getModel(info);
-                instance.unbakedCache.put(to(new ResourceLocation(info)), model);
-                instance.topLevelModels.put(to(new ResourceLocation(info)), model);
-            }
+        ForgeModelBakery.addSpecialModel(to(DEFAULT_NAME));
+        for (var info : PlateList.INSTANCE.plates) {
+            ForgeModelBakery.addSpecialModel(to(new ResourceLocation(info)));
         }
+
+        //bakeModel();
+
     }
 
     static BlockModel getModel(String info) {
@@ -82,7 +78,6 @@ public class PlateModelRegistry {
         ResourceLocation name = new ResourceLocation(info);
         String namespace = name.getNamespace();
         String path = name.getPath();
-        ForgeModelBakery.addSpecialModel(to(new ResourceLocation(info)));
         ResourceLocation modelName = new ResourceLocation(namespace, "models/plates/" + path + ".json");
         if (manager.hasResource(modelName)) {
             try {
@@ -97,13 +92,13 @@ public class PlateModelRegistry {
         return null;
     }
 
-    public static void bakeModel(ModelBakeEvent evt) {
+    /*public static void bakeModel(*//*ModelBakeEvent evt*//*) {
         MODEL_MAP.clear();
-        MODEL_MAP.put(DEFAULT_NAME, evt.getModelManager().getModel(DEFAULT_NAME));
+        MODEL_MAP.put(DEFAULT_NAME, DEFAULT_NAME);
         for (String info : PlateList.INSTANCE.plates) {
             ModelResourceLocation modelName = to(new ResourceLocation(info));
-            MODEL_MAP.put(from(modelName), evt.getModelManager().getModel(modelName));
+            MODEL_MAP.put(from(modelName), modelName);
         }
-    }
+    }*/
 
 }

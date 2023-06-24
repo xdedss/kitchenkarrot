@@ -3,6 +3,7 @@ package io.github.tt432.kitchenkarrot.client;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import io.github.tt432.kitchenkarrot.Kitchenkarrot;
+import io.github.tt432.kitchenkarrot.client.cocktail.CocktailBakedModel;
 import io.github.tt432.kitchenkarrot.client.cocktail.CocktailModelRegistry;
 import io.github.tt432.kitchenkarrot.client.plate.PlateBakedModel;
 import io.github.tt432.kitchenkarrot.client.plate.PlateModelRegistry;
@@ -41,8 +42,13 @@ public class ModModelRegistry {
 
     @SubscribeEvent
     public static void onModelBake(ModelBakeEvent evt) {
-        CocktailModelRegistry.bakeModel(evt);
-        PlateModelRegistry.bakeModel(evt);
+        //CocktailModelRegistry.bakeModel(evt);
+        //PlateModelRegistry.bakeModel(evt);
+        evt.getModelRegistry().put(new ModelResourceLocation(
+                Kitchenkarrot.MOD_ID,
+                "cocktail",
+                "inventory"
+        ), new CocktailBakedModel());
 
         evt.getModelRegistry().put(new ModelResourceLocation(
                 Kitchenkarrot.MOD_ID,

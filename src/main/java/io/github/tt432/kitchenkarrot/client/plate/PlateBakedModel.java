@@ -1,5 +1,6 @@
 package io.github.tt432.kitchenkarrot.client.plate;
 
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.renderer.block.model.BakedQuad;
 import net.minecraft.client.renderer.block.model.ItemOverrides;
@@ -60,15 +61,17 @@ public class PlateBakedModel implements BakedModel {
             public BakedModel resolve(BakedModel model, ItemStack stack, @Nullable ClientLevel p_173467_, @Nullable LivingEntity p_173468_, int p_173469_) {
                 var tag = stack.getTag();
 
-                if (tag != null && tag.contains("plate_type") && tag.contains("plate_amount")) {
+                if (tag != null && tag.contains("plate_type") && !tag.getString("plate_type").equals("minecraft:air")  && tag.contains("plate_amount")) {
                     var location = new ResourceLocation(
                             tag.getString("plate_type") + "_" + tag.getInt("plate_amount")
                     );
 
-                    return PlateModelRegistry.get(location);
+                    BakedModel model1 = Minecraft.getInstance().getModelManager().getModel(PlateModelRegistry.to(location));
+                    return model1;
                 }
 
-                return PlateModelRegistry.DEFAULT_MODEL;
+                BakedModel model1 = Minecraft.getInstance().getModelManager().getModel(PlateModelRegistry.to(PlateModelRegistry.DEFAULT_NAME));
+                return model1;
             }
         };
     }
