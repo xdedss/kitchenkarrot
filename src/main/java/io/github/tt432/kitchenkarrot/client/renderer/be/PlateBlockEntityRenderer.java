@@ -6,6 +6,7 @@ import io.github.tt432.kitchenkarrot.block.CoasterBlock;
 import io.github.tt432.kitchenkarrot.blockentity.PlateBlockEntity;
 import io.github.tt432.kitchenkarrot.client.ModModelRegistry;
 import io.github.tt432.kitchenkarrot.client.plate.PlateModelRegistry;
+import net.minecraft.client.renderer.ItemBlockRenderTypes;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.block.ModelBlockRenderer;
@@ -62,7 +63,7 @@ public class PlateBlockEntityRenderer implements BlockEntityRenderer<PlateBlockE
 
             poseStack.translate(-.5, -.5, -.5);
             //ModModelRegistry.render(model, bufferSource, pBlockEntity, poseStack, packedLight, packedOverlay);
-            this.modelRenderer.renderModel(poseStack.last(), bufferSource.getBuffer(RenderType.solid()), pBlockEntity.getBlockState(), model, 1.0F, 1.0F, 1.0F, packedLight, packedOverlay, EmptyModelData.INSTANCE);
+            this.modelRenderer.renderModel(poseStack.last(), bufferSource.getBuffer(ItemBlockRenderTypes.getRenderType(pBlockEntity.getBlockState(), false)), pBlockEntity.getBlockState(), model, 1.0F, 1.0F, 1.0F, packedLight, packedOverlay, EmptyModelData.INSTANCE);
             poseStack.popPose();
         });
     }

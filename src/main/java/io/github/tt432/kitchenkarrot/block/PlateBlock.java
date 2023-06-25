@@ -128,7 +128,7 @@ public class PlateBlock extends FacingEntityBlock<PlateBlockEntity> {
     boolean interactWithDish(ItemStack dishItem, ItemStack heldItem,Level level, Player player, IItemHandler handler){
         AtomicBoolean result = new AtomicBoolean(false);
             if (canHoldItem(handler, heldItem)) {
-                result.set(addToPlate(handler, heldItem));
+                result.set(addToPlate(handler, heldItem, player));
             } else if (heldItem.isEmpty() || heldItem.is(ModItemTags.KNIFE_ITEM)) {
                 result.set(removeFromPlate(level, player, handler, dishItem, heldItem));
             }
@@ -163,10 +163,13 @@ public class PlateBlock extends FacingEntityBlock<PlateBlockEntity> {
         return result.get();
     }
 
-    boolean addToPlate( IItemHandler handler, ItemStack heldItem) {
+    boolean addToPlate( IItemHandler handler, ItemStack heldItem, Player player) {
         AtomicBoolean result = new AtomicBoolean(false);
         ItemStack Stack = heldItem.split(1);
         handler.insertItem(0, Stack, false);
+        if (player.isCreative()) {
+            heldItem.grow(1);
+        }
         result.set(true);
         return result.get();
     }
