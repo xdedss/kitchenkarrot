@@ -12,7 +12,7 @@ import net.minecraftforge.registries.RegistryObject;
  **/
 public class ModBlockEntities {
     public static final DeferredRegister<BlockEntityType<?>> BLOCK_ENTITIES =
-            DeferredRegister.create(ForgeRegistries.BLOCK_ENTITIES, Kitchenkarrot.MOD_ID);
+            DeferredRegister.create(ForgeRegistries.BLOCK_ENTITY_TYPES, Kitchenkarrot.MOD_ID);
 
     public static final RegistryObject<BlockEntityType<AirCompressorBlockEntity>> AIR_COMPRESSOR =
             BLOCK_ENTITIES.register("air_compressor", () -> BlockEntityType.Builder

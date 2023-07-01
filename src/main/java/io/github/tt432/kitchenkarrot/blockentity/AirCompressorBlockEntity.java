@@ -21,15 +21,14 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.common.capabilities.Capability;
+import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import javax.annotation.Nonnull;
 import java.util.List;
-import java.util.Optional;
 
 /**
  * @author DustW
@@ -128,7 +127,7 @@ public class AirCompressorBlockEntity extends MenuBlockEntity {
 
     private boolean isSlotAvailable(AirCompressorRecipe recipe) {
         ItemStack resultStack = output.getStackInSlot(0);
-        return resultStack.isEmpty() || (resultStack.sameItem(recipe.getResultItem())
+        return resultStack.isEmpty() || (resultStack.is(recipe.getResultItem().getItem())
                 && resultStack.getCount() < resultStack.getMaxStackSize());
     }
 
@@ -201,7 +200,7 @@ public class AirCompressorBlockEntity extends MenuBlockEntity {
     @NotNull
     @Override
     public <T> LazyOptional<T> getCapability(@NotNull Capability<T> cap, @Nullable Direction side) {
-        return side == null ? LazyOptional.empty() : CapabilityItemHandler.ITEM_HANDLER_CAPABILITY
+        return side == null ? LazyOptional.empty() : ForgeCapabilities.ITEM_HANDLER
                 .orEmpty(cap, LazyOptional.of(() -> switch (side) {
                     case DOWN -> output;
                     case UP -> input1;

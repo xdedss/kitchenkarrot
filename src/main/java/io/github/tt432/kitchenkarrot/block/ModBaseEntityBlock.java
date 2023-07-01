@@ -13,6 +13,7 @@ import net.minecraft.world.level.block.entity.BlockEntityTicker;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.storage.loot.LootContext;
+import net.minecraft.world.level.storage.loot.LootParams;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Collections;
@@ -41,7 +42,7 @@ public abstract class ModBaseEntityBlock<T extends BaseBlockEntity> extends Base
     }
 
     @Override
-    public List<ItemStack> getDrops(BlockState pState, LootContext.Builder pBuilder) {
+    public List<ItemStack> getDrops(BlockState p_287732_, LootParams.Builder p_287596_) {
         return Collections.singletonList(new ItemStack(this));
     }
 

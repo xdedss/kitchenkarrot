@@ -8,8 +8,8 @@ import io.github.tt432.kitchenkarrot.recipes.register.RecipeTypes;
 import io.github.tt432.kitchenkarrot.sound.ModSoundEvents;
 import io.github.tt432.kitchenkarrot.tag.ModItemTags;
 import net.minecraft.core.BlockPos;
+import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.Style;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
@@ -25,15 +25,15 @@ import net.minecraft.world.level.block.RenderShape;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.storage.loot.LootContext;
+import net.minecraft.world.level.storage.loot.LootParams;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import net.minecraftforge.items.CapabilityItemHandler;
+import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.items.IItemHandler;
+import net.minecraftforge.registries.ForgeRegistries;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.Collections;
@@ -87,7 +87,7 @@ public class PlateBlock extends FacingEntityBlock<PlateBlockEntity> {
         BlockEntity blockEntity = level.getBlockEntity(pos);
 
         if (blockEntity != null) {
-            blockEntity.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).ifPresent(handler -> {
+            blockEntity.getCapability(ForgeCapabilities.ITEM_HANDLER).ifPresent(handler -> {
                 ItemStack heldItem = player.getItemInHand(hand);
                 ItemStack dishItem = handler.getStackInSlot(0);
                 if (player.isShiftKeyDown()) {
@@ -98,7 +98,7 @@ public class PlateBlock extends FacingEntityBlock<PlateBlockEntity> {
                         //如果盘子中装有食物，则端起来时会显示"盘装的XXX"
                         if (stack.getOrCreateTag().contains("plate_type") && !dishItem.is(Items.AIR)) {
                             String inputName = dishItem.getDisplayName().getString().replace("[", "").replace("]", "");
-                            stack.setHoverName((new TranslatableComponent("info.kitchenkarrot.dished", inputName)).setStyle(Style.EMPTY.withItalic(false)));
+                            stack.setHoverName((Component.translatable("info.kitchenkarrot.dished", inputName)).setStyle(Style.EMPTY.withItalic(false)));
                         }
                         player.setItemInHand(hand, stack);
                         level.setBlock(pos, Blocks.AIR.defaultBlockState(), Block.UPDATE_ALL_IMMEDIATE);
@@ -122,7 +122,7 @@ public class PlateBlock extends FacingEntityBlock<PlateBlockEntity> {
     boolean canHoldItem(IItemHandler handler, ItemStack heldItem){
         ItemStack dishItem = handler.getStackInSlot(0);
         return plateHolder.containsKey(heldItem.getItem()) &&
-                (dishItem.isEmpty() || (dishItem.sameItem(heldItem) && dishItem.getCount() < plateHolder.get(dishItem.getItem())));
+                (dishItem.isEmpty() || (dishItem.is(heldItem.getItem()) && dishItem.getCount() < plateHolder.get(dishItem.getItem())));
     }
 
     boolean interactWithDish(ItemStack dishItem, ItemStack heldItem,Level level, Player player, IItemHandler handler){
@@ -191,15 +191,14 @@ public class PlateBlock extends FacingEntityBlock<PlateBlockEntity> {
 
     public static void setPlate(ItemStack self, ItemStack content) {
         self.getOrCreateTag().putInt("plate_amount", content.getCount());
-        if (content.getItem().getRegistryName() != null) {
-            self.getOrCreateTag().putString("plate_type", content.getItem().getRegistryName().toString());
+        if (ForgeRegistries.ITEMS.getKey(content.getItem()) != null) {
+            self.getOrCreateTag().putString("plate_type", ForgeRegistries.ITEMS.getKey(content.getItem()).toString());
         }
     }
     @Override
-    public List<ItemStack> getDrops(BlockState pState, LootContext.Builder pBuilder) {
-        return List.of(new ItemStack(ModItems.PLATE_PIECES.get(),3));
+    public List<ItemStack> getDrops(BlockState p_287732_, LootParams.Builder p_287596_) {
+        return List.of(new ItemStack(ModItems.PLATE_PIECES.get()));
     }
-
     @Override
     protected void spawnDestroyParticles(Level pLevel, Player pPlayer, BlockPos pPos, BlockState pState) {}
 

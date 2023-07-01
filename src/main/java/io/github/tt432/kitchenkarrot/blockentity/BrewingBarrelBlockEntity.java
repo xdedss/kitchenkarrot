@@ -22,6 +22,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.Fluids;
 import net.minecraftforge.common.capabilities.Capability;
+import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandler;
@@ -91,7 +92,7 @@ public class BrewingBarrelBlockEntity extends MenuBlockEntity {
     private void finishBrewing(){
         ItemStack resultStack = result.getStackInSlot(0);
         if (resultStack.isEmpty() ||
-                (resultStack.sameItem(getRecipe().getResultItem()) && resultStack.getCount() < resultStack.getMaxStackSize())) {
+                (resultStack.is(getRecipe().getResultItem().getItem()) && resultStack.getCount() < resultStack.getMaxStackSize())) {
             result.insertItem(0, getRecipe().getResultItem(), false);
             for (int i = 0; i < input.getSlots(); i++) {
                 input.extractItem(i, 1, false);
@@ -167,7 +168,7 @@ public class BrewingBarrelBlockEntity extends MenuBlockEntity {
     @NotNull
     @Override
     public <T> LazyOptional<T> getCapability(@NotNull Capability<T> cap, @Nullable Direction side) {
-        return CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY.orEmpty(cap, LazyOptional.of(() -> tank.get()));
+        return ForgeCapabilities.FLUID_HANDLER.orEmpty(cap, LazyOptional.of(() -> tank.get()));
     }
 
     public Integer getMaxProgress() {

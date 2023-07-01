@@ -18,7 +18,7 @@ apply plugin: 'org.spongepowered.mixin'
 apply plugin: 'org.parchmentmc.librarian.forgegradle'
 
 group = 'io.github.tt432'
-version = '1.18.2-0.3.7'
+version = '1.20.1-0.3.7'
 
 java {
     archivesBaseName = 'kitchenkarrot'
@@ -26,7 +26,7 @@ java {
 }
 
 minecraft {
-    mappings channel: 'parchment', version: '2022.03.13-1.18.2'
+    mappings channel: 'official', version: '1.20.1'
 
     accessTransformer = file('src/main/resources/META-INF/accesstransformer.cfg')
 
@@ -163,8 +163,8 @@ repositories {
     // }
     maven {
         // location of the maven that hosts JEI files
-        name = "Progwml6 maven"
-        url = "https://dvs1.progwml6.com/files/maven/"
+        name = "Jared's maven"
+        url = "https://maven.blamejared.com/"
     }
 
     maven {
@@ -176,9 +176,9 @@ repositories {
 }
 
 dependencies {
-    minecraft 'net.minecraftforge:forge:1.18.2-40.1.0'
+    minecraft 'net.minecraftforge:forge:1.20.1-47.0.19'
 
-    implementation fg.deobf("mezz.jei:jei-1.18.2-forge:10.0.0.191")
+    implementation fg.deobf("mezz.jei:jei-1.20.1-forge:15.1.0.19")
 
     annotationProcessor 'org.spongepowered:mixin:0.8.5:processor'
 }

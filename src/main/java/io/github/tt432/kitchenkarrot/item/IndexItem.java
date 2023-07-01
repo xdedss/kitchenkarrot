@@ -39,7 +39,7 @@ public class IndexItem extends Item {
     public void appendHoverText(ItemStack pStack, Level pLevel, List<Component> tooltip, TooltipFlag pIsAdvanced) {
         super.appendHoverText(pStack, pLevel, tooltip, pIsAdvanced);
         if (this.canPutOnPlate()){
-            tooltip.add(new TranslatableComponent("info.kitchenkarrot.can_be_dished"));
+            tooltip.add(Component.translatable("info.kitchenkarrot.can_be_dished"));
         }
     }
 }

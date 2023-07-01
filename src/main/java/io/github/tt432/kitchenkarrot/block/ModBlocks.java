@@ -8,8 +8,6 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.material.Material;
-import net.minecraft.world.level.material.MaterialColor;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
@@ -41,12 +39,12 @@ public class ModBlocks {
     public static final RegistryObject<Block> ACORN_OIL = oil("acorn_oil");
     public static final RegistryObject<Block> CHORUS_OIL = oil("chorus_oil");
 
-    public static final RegistryObject<Block> COASTER = BLOCKS.register("coaster", () -> new CoasterBlock(BlockBehaviour.Properties.of(Material.WOOD, MaterialColor.WOOD).strength(0.5F, 0.5F).sound(SoundType.WOOD)));
+    public static final RegistryObject<Block> COASTER = BLOCKS.register("coaster", () -> new CoasterBlock(BlockBehaviour.Properties.of().strength(0.5F, 0.5F).sound(SoundType.WOOD)));
 
-    public static final RegistryObject<Block> PLATE = BLOCKS.register("plate", () -> new PlateBlock(BlockBehaviour.Properties.of(Material.GLASS).strength(1F, 1F).sound(SoundType.GLASS)));
+    public static final RegistryObject<Block> PLATE = BLOCKS.register("plate", () -> new PlateBlock(BlockBehaviour.Properties.of().strength(1F, 1F).sound(SoundType.GLASS)));
 
     private static RegistryObject<Block> oil(String name) {
-        return BLOCKS.register(name, () -> new Block(BlockBehaviour.Properties.of(Material.STONE)
+        return BLOCKS.register(name, () -> new Block(BlockBehaviour.Properties.of()
                 .noOcclusion()
                 .strength(1f, 1f)) {
             @Override
@@ -59,7 +57,7 @@ public class ModBlocks {
     }
 
     private static RegistryObject<Block> salt(String name) {
-        return BLOCKS.register(name, () -> new Block(BlockBehaviour.Properties.of(Material.STONE)
+        return BLOCKS.register(name, () -> new Block(BlockBehaviour.Properties.of()
                 .noOcclusion()
                 .strength(1f, 1f)) {
             @Override

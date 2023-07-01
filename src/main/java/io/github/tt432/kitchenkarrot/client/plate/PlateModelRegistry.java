@@ -10,6 +10,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.resources.Resource;
 import net.minecraft.server.packs.resources.ResourceManager;
 import net.minecraftforge.client.event.ModelBakeEvent;
+import net.minecraftforge.client.event.ModelEvent;
 import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.client.model.ForgeModelBakery;
 import org.apache.commons.io.IOUtils;
@@ -20,6 +21,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 /**
  * @author DustW
@@ -46,19 +48,18 @@ public class PlateModelRegistry {
     }
 
 
-    public static void register(ModelRegistryEvent e) {
+    public static void register(ModelEvent e) {
         ResourceManager manager = Minecraft.getInstance().getResourceManager();
         for (String namespace : manager.getNamespaces()) {
             try {
                 ResourceLocation resourceName = new ResourceLocation(namespace, "plate/list.json");
-                if (manager.hasResource(resourceName)) {
-                    List<Resource> resources = manager.getResources(resourceName);
-                    for (Resource resource : resources) {
-                        InputStreamReader reader = new InputStreamReader(resource.getInputStream());
-                        PlateList list = JsonUtils.INSTANCE.noExpose.fromJson(reader, PlateList.class);
-                        PlateList.INSTANCE.plates.addAll(list.plates);
-                    }
-                }
+                if (manager.getResource(resourceName).isPresent()) {
+                    Optional<Resource> resources = manager.getResource(resourceName);
+                    InputStreamReader reader = new InputStreamReader(resources.get().open());
+                    PlateList list = JsonUtils.INSTANCE.noExpose.fromJson(reader, PlateList.class);
+                    PlateList.INSTANCE.plates.addAll(list.plates);
+
+                };
             } catch (IOException exception) {
                 exception.printStackTrace();
             }
@@ -79,10 +80,10 @@ public class PlateModelRegistry {
         String namespace = name.getNamespace();
         String path = name.getPath();
         ResourceLocation modelName = new ResourceLocation(namespace, "models/plates/" + path + ".json");
-        if (manager.hasResource(modelName)) {
+        if (manager.getResource(modelName).isPresent()) {
             try {
-                Resource resource = manager.getResource(modelName);
-                String json = IOUtils.toString(resource.getInputStream(), StandardCharsets.UTF_8);
+                Optional<Resource> resource = manager.getResource(modelName);
+                String json = IOUtils.toString(resource.get().open(), StandardCharsets.UTF_8);
                 return BlockModel.fromString(json);
             } catch (IOException ex) {
                 ex.printStackTrace();

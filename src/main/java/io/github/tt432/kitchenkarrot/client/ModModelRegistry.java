@@ -15,6 +15,7 @@ import net.minecraft.client.resources.model.ModelResourceLocation;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.ModelBakeEvent;
+import net.minecraftforge.client.event.ModelEvent;
 import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -35,7 +36,7 @@ public class ModModelRegistry {
     }
 
     @SubscribeEvent
-    public static void registerModelUnBake(ModelRegistryEvent e) {
+    public static void registerModelUnBake(ModelEvent e) {
         CocktailModelRegistry.register(e);
         PlateModelRegistry.register(e);
     }

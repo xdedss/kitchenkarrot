@@ -16,7 +16,7 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import net.minecraftforge.items.CapabilityItemHandler;
+import net.minecraftforge.common.capabilities.ForgeCapabilities;
 
 import java.util.concurrent.atomic.AtomicBoolean;
 
@@ -57,7 +57,7 @@ public class CoasterBlock extends FacingEntityBlock<CoasterBlockEntity> {
 
         AtomicBoolean success = new AtomicBoolean(false);
 
-        pLevel.getBlockEntity(pPos).getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).ifPresent(handler -> {
+        pLevel.getBlockEntity(pPos).getCapability(ForgeCapabilities.ITEM_HANDLER).ifPresent(handler -> {
             if (handler.getStackInSlot(0).isEmpty() && !pPlayer.getItemInHand(pHand).isEmpty()) {
                 handler.insertItem(0, pPlayer.getItemInHand(pHand), false);
                 pPlayer.setItemInHand(pHand, ItemStack.EMPTY);

@@ -6,23 +6,29 @@ import io.github.tt432.kitchenkarrot.util.json.JsonUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.block.model.BlockModel;
 import net.minecraft.client.resources.model.BakedModel;
+import net.minecraft.client.resources.model.ModelBakery;
 import net.minecraft.client.resources.model.ModelResourceLocation;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.resources.Resource;
 import net.minecraft.server.packs.resources.ResourceManager;
 import net.minecraftforge.client.event.ModelBakeEvent;
+import net.minecraftforge.client.event.ModelEvent;
 import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.client.model.ForgeModelBakery;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.common.Mod;
 
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 /**
  * @author DustW
  **/
+@Mod.EventBusSubscriber(modid = Kitchenkarrot.MOD_ID)
 public class CocktailModelRegistry {
 
     private static final Map<ResourceLocation, BakedModel> MODEL_MAP = new HashMap<>();
@@ -40,15 +46,15 @@ public class CocktailModelRegistry {
     }
 
     @SuppressWarnings("unused")
-    public static void register(ModelRegistryEvent e) {
+    public static void register(ModelEvent e) {
         ResourceManager manager = Minecraft.getInstance().getResourceManager();
         for (String namespace : manager.getNamespaces()) {
             try {
                 ResourceLocation resourceName = new ResourceLocation(namespace, "cocktail/list.json");
-                if (manager.hasResource(resourceName)) {
-                    List<Resource> resources = manager.getResources(resourceName);
-                    for (Resource resource : resources) {
-                        InputStreamReader reader = new InputStreamReader(resource.getInputStream());
+                if (manager.getResource(resourceName).isPresent()) {
+                    Optional<Resource> resource = manager.getResource(resourceName);
+                    if (resource.isPresent()) {
+                        InputStreamReader reader = new InputStreamReader(resource.get().open());
                         CocktailList list = JsonUtils.INSTANCE.noExpose.fromJson(reader, CocktailList.class);
                         CocktailList.INSTANCE.cocktails.addAll(list.cocktails);
                     }
@@ -59,7 +65,8 @@ public class CocktailModelRegistry {
         }
 
         for (var info : CocktailList.INSTANCE.cocktails) {
-            ForgeModelBakery.addSpecialModel(to(new ResourceLocation(info)));
+            ModelEvent.
+            ModelBakery.(to(new ResourceLocation(info)));
         }
     }
 

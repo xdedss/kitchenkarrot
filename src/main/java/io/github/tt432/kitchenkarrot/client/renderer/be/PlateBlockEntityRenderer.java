@@ -19,6 +19,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.client.model.data.EmptyModelData;
+import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.items.CapabilityItemHandler;
 
 import javax.annotation.ParametersAreNonnullByDefault;
@@ -43,7 +44,7 @@ public class PlateBlockEntityRenderer implements BlockEntityRenderer<PlateBlockE
     @Override
     @ParametersAreNonnullByDefault
     public void render(PlateBlockEntity pBlockEntity, float partialTick, PoseStack poseStack, MultiBufferSource bufferSource, int packedLight, int packedOverlay) {
-        pBlockEntity.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).ifPresent(handler -> {
+        pBlockEntity.getCapability(ForgeCapabilities.ITEM_HANDLER).ifPresent(handler -> {
             ItemStack stack = handler.getStackInSlot(0);
             //BakedModel model = PlateModelRegistry.get(new ResourceLocation(stack.getItem().getRegistryName() + "_" + stack.getCount()));
             //ResourceLocation modelLocation = PlateModelRegistry.MODEL_MAP.get(new ResourceLocation(stack.getItem().getRegistryName() + "_" + stack.getCount()));

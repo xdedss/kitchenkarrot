@@ -1,7 +1,6 @@
 package io.github.tt432.kitchenkarrot.client.renderer.be;
 
 import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.math.Vector3f;
 import io.github.tt432.kitchenkarrot.block.CoasterBlock;
 import io.github.tt432.kitchenkarrot.blockentity.CoasterBlockEntity;
 import net.minecraft.client.Minecraft;
@@ -12,7 +11,8 @@ import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.minecraft.client.renderer.entity.ItemRenderer;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraftforge.items.CapabilityItemHandler;
+import net.minecraftforge.common.capabilities.ForgeCapabilities;
+import net.minecraftforge.registries.ForgeRegistries;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 
@@ -24,7 +24,7 @@ public class CoasterBlockEntityRenderer implements BlockEntityRenderer<CoasterBl
     @Override
     @ParametersAreNonnullByDefault
     public void render(CoasterBlockEntity blockEntity, float partialTick, PoseStack poseStack, MultiBufferSource bufferSource, int packedLight, int packedOverlay) {
-        blockEntity.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).ifPresent(handler -> {
+        blockEntity.getCapability(ForgeCapabilities.ITEM_HANDLER).ifPresent(handler -> {
             poseStack.pushPose();
             poseStack.translate(0.5, 4 / 16., 0.5);
             poseStack.scale(1.7f, 1.7f, 1.7f);
@@ -42,7 +42,7 @@ public class CoasterBlockEntityRenderer implements BlockEntityRenderer<CoasterBl
             ItemStack item = handler.getStackInSlot(0);
             itemRenderer.renderStatic(item, ItemTransforms.TransformType.GROUND,
                     LightTexture.FULL_BRIGHT, packedOverlay,
-                    poseStack, bufferSource, item.getItem().getRegistryName().hashCode());
+                    poseStack, bufferSource, ForgeRegistries.ITEMS.getKey(item.getItem()).hashCode());
 
             poseStack.popPose();
         });

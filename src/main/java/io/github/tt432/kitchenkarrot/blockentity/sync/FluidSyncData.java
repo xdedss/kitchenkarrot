@@ -16,7 +16,7 @@ public class FluidSyncData extends SyncData<FluidStack> {
     @Override
     protected CompoundTag toTag() {
         var result = new CompoundTag();
-        result.putString("name", get().getFluid().getRegistryName().toString());
+        result.putString("name", ForgeRegistries.FLUIDS.getKey(get().getFluid()).toString());
         result.putInt("amount", get().getAmount());
         if (get().getTag() != null) {
             result.put("tag", get().getTag());

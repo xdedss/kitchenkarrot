@@ -158,11 +158,11 @@ public class ModItems {
     public static final RegistryObject<Item> PLATE_PIECES = ITEMS.register("plate_pieces", () -> new IndexItem(defaultProperties(),500));
 
     public static Item.Properties defaultProperties() {
-        return new Item.Properties().tab(MAIN_TAB);
+        return new Item.Properties();
     }
 
     public static Item.Properties cocktailProperties() {
-        return new Item.Properties().tab(COCKTAIL_TAB);
+        return new Item.Properties();
     }
 
 

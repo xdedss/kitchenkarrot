@@ -58,7 +58,7 @@ public class ProgressWidget extends TooltipWidget {
                           boolean vertical,
                           Supplier<Integer> maxGetter, Supplier<Integer> currentGetter) {
         this(screen, texture, x, y, texX, texY, width, height, vertical,
-                new TextComponent(""), false, maxGetter, currentGetter);
+                Component.empty(), false, maxGetter, currentGetter);
     }
 
     @Override
