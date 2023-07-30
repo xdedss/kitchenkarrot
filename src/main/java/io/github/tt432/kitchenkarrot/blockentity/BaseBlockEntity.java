@@ -61,8 +61,7 @@ public abstract class BaseBlockEntity extends BlockEntity {
         super.saveAdditional(pTag);
         syncDataManager.save(pTag, false, true);
     }
-
-    boolean forceOnce;
+        boolean forceOnce;
 
     public void forceOnce() {
         forceOnce = true;

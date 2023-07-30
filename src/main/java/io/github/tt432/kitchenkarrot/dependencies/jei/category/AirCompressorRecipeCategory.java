@@ -31,7 +31,7 @@ public class AirCompressorRecipeCategory extends BaseRecipeCategory<AirCompresso
         super(JeiPlugin.AIR_COMPRESSOR,
                 helper.createDrawableIngredient(VanillaTypes.ITEM_STACK, new ItemStack(ModBlockItems.AIR_COMPRESSOR.get())),
                 helper.createDrawable(BACKGROUND, 0, 141, 104, 78));
-        arrow = helper.drawableBuilder(BACKGROUND, 176 ,0, 20, 19).buildAnimated(40, IDrawableAnimated.StartDirection.LEFT, false);
+        arrow = helper.drawableBuilder(BACKGROUND, 176 ,0, 20, 19).buildAnimated(40, IDrawableAnimated.StartDirection.BOTTOM, false);
     }
 
     @Override
