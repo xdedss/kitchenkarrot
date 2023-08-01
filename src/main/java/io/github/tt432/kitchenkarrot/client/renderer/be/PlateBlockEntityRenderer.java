@@ -53,12 +53,12 @@ public class PlateBlockEntityRenderer implements BlockEntityRenderer<PlateBlockE
             poseStack.pushPose();
             BlockState state = pBlockEntity.getBlockState();
             poseStack.translate(.5, .5, .5);
-            poseStack.mulPose(new Quaternionf().rotationY(
+            poseStack.mulPose(new Quaternionf().rotateY(
                     switch (state.getValue(CoasterBlock.FACING)) {
-                        case EAST -> 90;
-                        case WEST -> -90;
-                        case SOUTH -> 180;
-                        default -> 0;
+                        case EAST -> 90 * (float) Math.PI / 4;
+                        case WEST -> -90 * (float) Math.PI / 4;
+                        case SOUTH -> 180 * (float) Math.PI / 2;
+                        default -> -180 * (float) Math.PI / 4;
                     }
             ));
 //            poseStack.mulPose(Vector3f.YP.rotationDegrees(

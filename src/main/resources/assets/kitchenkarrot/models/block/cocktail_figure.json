@@ -1,8 +1,8 @@
 {
 	"credit": "Made with Blockbench",
 	"textures": {
-		"0": "kitchenkarrot:models/cocktail_figure",
-		"particle": "kitchenkarrot:models/cocktail_figure"
+		"0": "kitchenkarrot:block/cocktail_figure",
+		"particle": "kitchenkarrot:block/cocktail_figure"
 	},
 	"elements": [
 		{

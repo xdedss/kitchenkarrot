@@ -1,8 +1,8 @@
 {
 	"credit": "Made with Blockbench",
 	"textures": {
-		"0": "kitchenkarrot:models/coaster",
-		"particle": "kitchenkarrot:models/coaster"
+		"0": "kitchenkarrot:block/coaster",
+		"particle": "kitchenkarrot:block/coaster"
 	},
 	"elements": [
 		{

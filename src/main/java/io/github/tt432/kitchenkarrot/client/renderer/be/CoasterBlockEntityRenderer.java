@@ -30,12 +30,12 @@ public class CoasterBlockEntityRenderer implements BlockEntityRenderer<CoasterBl
             poseStack.translate(0.5, 4 / 16., 0.5);
             poseStack.scale(1.7f, 1.7f, 1.7f);
             BlockState state = blockEntity.getBlockState();
-            poseStack.mulPose(new Quaternionf().rotationY(
+            poseStack.mulPose(new Quaternionf().rotateY(
                     switch (state.getValue(CoasterBlock.FACING)) {
-                        case EAST -> 90;
-                        case WEST -> -90;
-                        case SOUTH -> 180;
-                        default -> 0;
+                        case EAST -> 90 * (float) Math.PI / 4;
+                        case WEST -> -90 * (float) Math.PI / 4;
+                        case SOUTH -> 180 * (float) Math.PI / 2;
+                        default -> -180 * (float) Math.PI / 4;
                     }
             ));
 //            poseStack.mulPose(Vector3f.YP.rotationDegrees(

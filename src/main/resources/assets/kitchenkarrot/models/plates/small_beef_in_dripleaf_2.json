@@ -1,8 +1,8 @@
 {
 	"credit": "Made with Blockbench",
 	"textures": {
-		"0": "kitchenkarrot:models/plates/beef_in_dripleaf",
-		"particle": "kitchenkarrot:models/plates/beef_in_dripleaf"
+		"0": "kitchenkarrot:block/plates/beef_in_dripleaf",
+		"particle": "kitchenkarrot:block/plates/beef_in_dripleaf"
 	},
 	"elements": [
 		{

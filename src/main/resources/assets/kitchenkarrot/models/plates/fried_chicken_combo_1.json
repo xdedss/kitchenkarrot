@@ -1,8 +1,8 @@
 {
 	"credit": "Made with Blockbench",
 	"textures": {
-		"0": "kitchenkarrot:models/plates/fried_chicken_combo",
-		"particle": "kitchenkarrot:models/plates/fried_chicken_combo"
+		"0": "kitchenkarrot:block/plates/fried_chicken_combo",
+		"particle": "kitchenkarrot:block/plates/fried_chicken_combo"
 	},
 	"elements": [
 		{
