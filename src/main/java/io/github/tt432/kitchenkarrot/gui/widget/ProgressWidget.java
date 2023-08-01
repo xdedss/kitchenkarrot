@@ -1,10 +1,9 @@
 package io.github.tt432.kitchenkarrot.gui.widget;
 
 import com.mojang.blaze3d.systems.RenderSystem;
-import com.mojang.blaze3d.vertex.PoseStack;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TextComponent;
 import net.minecraft.resources.ResourceLocation;
 
 import java.util.function.Supplier;
@@ -39,13 +38,13 @@ public class ProgressWidget extends TooltipWidget {
     }
 
     public ProgressWidget(AbstractContainerScreen<?> screen,
-                               ResourceLocation texture,
-                               int x, int y,
-                               int texX, int texY,
-                               int width, int height,
-                               boolean vertical,
-                               Component message, boolean needTooltip,
-                               Supplier<Integer> maxGetter, Supplier<Integer> currentGetter) {
+                          ResourceLocation texture,
+                          int x, int y,
+                          int texX, int texY,
+                          int width, int height,
+                          boolean vertical,
+                          Component message, boolean needTooltip,
+                          Supplier<Integer> maxGetter, Supplier<Integer> currentGetter) {
         this(screen, texture, x, y, texX, texY, width, height, vertical,
                 () -> message, needTooltip, maxGetter, currentGetter);
     }
@@ -62,7 +61,7 @@ public class ProgressWidget extends TooltipWidget {
     }
 
     @Override
-    public void render(PoseStack poseStack, int pMouseX, int pMouseY, float pPartialTick) {
+    public void render(GuiGraphics p_282421_, int p_93658_, int p_93659_, float p_93660_) {
         if (!visible) {
             return;
         }
@@ -75,17 +74,42 @@ public class ProgressWidget extends TooltipWidget {
 
         if (vertical) {
             var trueHeight = (int) (height * p);
-            var trueY = y + height - trueHeight;
+            var trueY = getY() + height - trueHeight;
             var trueTexY = texY + height - trueHeight;
-            screen.blit(poseStack, x, trueY, texX, trueTexY, width, trueHeight);
-        }
-        else {
+            p_282421_.blit(texture, getX(), trueY, texX, trueTexY, width, trueHeight);
+        } else {
             var trueWidth = width - (int) (this.width * p);
-            screen.blit(poseStack, x, y, texX, texY, trueWidth, this.height);
+            p_282421_.blit(texture, getX(), getY(), texX, texY, trueWidth, this.height);
         }
 
-        super.render(poseStack, pMouseX, pMouseY, pPartialTick);
+        super.render(p_282421_, p_93658_, p_93659_, p_93660_);
     }
+
+//    @Override
+//    public void render(PoseStack poseStack, int pMouseX, int pMouseY, float pPartialTick) {
+//        if (!visible) {
+//            return;
+//        }
+//
+//        var current = currentGetter.get();
+//        var max = maxGetter.get();
+//
+//        RenderSystem.setShaderTexture(0, texture);
+//        var p = current * 1. / max;
+//
+//        if (vertical) {
+//            var trueHeight = (int) (height * p);
+//            var trueY = y + height - trueHeight;
+//            var trueTexY = texY + height - trueHeight;
+//            screen.blit(poseStack, x, trueY, texX, trueTexY, width, trueHeight);
+//        }
+//        else {
+//            var trueWidth = width - (int) (this.width * p);
+//            screen.blit(poseStack, x, y, texX, texY, trueWidth, this.height);
+//        }
+//
+//        super.render(poseStack, pMouseX, pMouseY, pPartialTick);
+//    }
 
     @Override
     public boolean mouseClicked(double pMouseX, double pMouseY, int pButton) {

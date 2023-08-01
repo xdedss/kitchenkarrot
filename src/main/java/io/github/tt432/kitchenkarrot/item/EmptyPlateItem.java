@@ -5,7 +5,6 @@ import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
@@ -169,13 +168,17 @@ public class EmptyPlateItem extends IndexItem {
 
     public void appendHoverText(ItemStack stack, @Nullable Level level, List<Component> tooltip, TooltipFlag flag) {
         this.getBlock().appendHoverText(stack, level, tooltip, flag);
-        tooltip.add(new TranslatableComponent("info.kitchenkarrot.text1"));
-        tooltip.add(new TranslatableComponent("info.kitchenkarrot.text2"));
-        tooltip.add(new TranslatableComponent("info.kitchenkarrot.text3"));
+        tooltip.add(Component.translatable("info.kitchenkarrot.text1"));
+        tooltip.add(Component.translatable("info.kitchenkarrot.text2"));
+        tooltip.add(Component.translatable("info.kitchenkarrot.text3"));
+//        tooltip.add(new TranslatableComponent("info.kitchenkarrot.text1"));
+//        tooltip.add(new TranslatableComponent("info.kitchenkarrot.text2"));
+//        tooltip.add(new TranslatableComponent("info.kitchenkarrot.text3"));
     }
 
     public Block getBlock() {
-        return ModBlocks.PLATE.get().delegate.get();
+        return ModBlocks.PLATE.get();
+//        return ModBlocks.PLATE.get().delegate.get();
     }
 
     @Nullable

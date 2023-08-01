@@ -1,13 +1,10 @@
 package io.github.tt432.kitchenkarrot.item;
 
 import io.github.tt432.kitchenkarrot.Kitchenkarrot;
-import io.github.tt432.kitchenkarrot.client.cocktail.CocktailList;
 import io.github.tt432.kitchenkarrot.recipes.object.EffectStack;
 import io.github.tt432.kitchenkarrot.recipes.recipe.CocktailRecipe;
 import io.github.tt432.kitchenkarrot.recipes.register.RecipeTypes;
-import net.minecraft.core.NonNullList;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.effect.MobEffect;
@@ -15,7 +12,10 @@ import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.food.FoodProperties;
-import net.minecraft.world.item.*;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.item.UseAnim;
 import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -38,16 +38,16 @@ public class CocktailItem extends Item {
         super(ModItems.defaultProperties().food(new FoodProperties.Builder().alwaysEat().build()));
     }
 
-    @Override
-    public void fillItemCategory(CreativeModeTab p_41391_, NonNullList<ItemStack> itemStackNonNullList) {
-        if (p_41391_ == ModItems.COCKTAIL_TAB) {
-            for (String cocktail : CocktailList.INSTANCE.cocktails) {
-                ItemStack stack = new ItemStack(this);
-                setCocktail(stack, new ResourceLocation(cocktail));
-                itemStackNonNullList.add(stack);
-            }
-        }
-    }
+//    @Override
+//    public void fillItemCategory(CreativeModeTab p_41391_, NonNullList<ItemStack> itemStackNonNullList) {
+//        if (p_41391_ == ModItems.COCKTAIL_TAB) {
+//            for (String cocktail : CocktailList.INSTANCE.cocktails) {
+//                ItemStack stack = new ItemStack(this);
+//                setCocktail(stack, new ResourceLocation(cocktail));
+//                itemStackNonNullList.add(stack);
+//            }
+//        }
+//    }
 
     public static ItemStack unknownCocktail() {
         var stack = new ItemStack(ModItems.COCKTAIL.get());
@@ -72,7 +72,8 @@ public class CocktailItem extends Item {
                     }
                 } else if (cocktail.equals(UNKNOWN_COCKTAIL)) {
                     List<MobEffect> array = ForgeRegistries.MOB_EFFECTS.getValues().stream()
-                            .filter(eff -> "minecraft".equals(Objects.requireNonNull(eff.getRegistryName()).getNamespace()) &&
+                            .filter(eff -> "minecraft".equals(Objects.requireNonNull(eff.getDescriptionId())) &&
+//                                    .filter(eff -> "minecraft".equals(Objects.requireNonNull(eff.getRegistryName()).getNamespace())) &&
                                     eff != MobEffects.HEAL && eff != MobEffects.HARM &&
                                     eff != MobEffects.BAD_OMEN && eff != MobEffects.HERO_OF_THE_VILLAGE).toList();
                     player.addEffect(new MobEffectInstance(array.get(pLevel.random.nextInt(array.size())), 20 * 5, 0));
@@ -106,10 +107,10 @@ public class CocktailItem extends Item {
     public void appendHoverText(ItemStack stack, @Nullable Level level, List<Component> tooltip, TooltipFlag flag) {
         ResourceLocation name = getCocktail(stack);
         if (name != null && level != null) {
-            tooltip.add(new TranslatableComponent(name.toString().replace(":", ".") + ".tooltip"));
+            tooltip.add(Component.translatable(name.toString().replace(":", ".") + ".tooltip"));
             CocktailRecipe recipe = get(level, Objects.requireNonNull(getCocktail(stack)));
             if (recipe != null) {
-                tooltip.add(new TranslatableComponent("item.cocktail.author", recipe.author));
+                tooltip.add(Component.translatable("item.cocktail.author", recipe.author));
             }
         }
     }

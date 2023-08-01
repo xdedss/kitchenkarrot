@@ -7,14 +7,14 @@ import io.github.tt432.kitchenkarrot.menu.reg.ModMenuTypes;
 import io.github.tt432.kitchenkarrot.menu.slot.KKResultSlot;
 import io.github.tt432.kitchenkarrot.recipes.register.RecipeManager;
 import io.github.tt432.kitchenkarrot.sound.ModSoundEvents;
+import net.minecraft.core.RegistryAccess;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
-import net.minecraftforge.items.CapabilityItemHandler;
+import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.SlotItemHandler;
-import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -41,20 +41,21 @@ public class ShakerMenu extends KKMenu {
 
     private void finishRecipe(Player player) {
         if (ShakerItem.getFinish(itemStack)) {
-            itemStack.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).ifPresent(handler -> {
-                if (player.level.isClientSide) {
+            itemStack.getCapability(ForgeCapabilities.ITEM_HANDLER).ifPresent(handler -> {
+                if (player.level().isClientSide) {
                     return;
                 }
 
                 var list = getInputs(handler);
 
-                var recipe = RecipeManager.getCocktailRecipes(inventory.player.level).stream()
+                var recipe = RecipeManager.getCocktailRecipes(inventory.player.level()).stream()
                     .filter(r -> r.matches(list)).findFirst();
 
                 var recipeResult = CocktailItem.unknownCocktail();
 
                 if (recipe.isPresent()) {
-                    recipeResult = recipe.get().getResultItem();
+                    recipeResult = recipe.get().getResultItem(RegistryAccess.EMPTY);
+//                    recipeResult = recipe.get().getResultItem();
                 }
 
                 if (list.stream().anyMatch(ItemStack::isEmpty)) {
@@ -96,7 +97,7 @@ public class ShakerMenu extends KKMenu {
 
         var list = getInputs(handler);
 
-        var recipe = RecipeManager.getCocktailRecipes(inventory.player.level)
+        var recipe = RecipeManager.getCocktailRecipes(inventory.player.level())
                 .stream().filter(r -> r.matches(list)).findFirst();
         if (recipe.isPresent()) {
             ShakerItem.setRecipeTime(itemStack, recipe.get().getContent().getCraftingTime());
@@ -133,7 +134,7 @@ public class ShakerMenu extends KKMenu {
     protected void sound() {
         var player = inventory.player;
 
-        if (player.level.isClientSide) {
+        if (player.level().isClientSide) {
             player.playSound(ModSoundEvents.SHAKER_COCKTAIL.get(), 0.5F,
                     player.getRandom().nextFloat() * 0.1F + 0.9F);
         }
@@ -151,7 +152,7 @@ public class ShakerMenu extends KKMenu {
     }
 
     void addSlots() {
-        itemStack.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).ifPresent(h -> {
+        itemStack.getCapability(ForgeCapabilities.ITEM_HANDLER).ifPresent(h -> {
             addSlot(h, 0, 110 + 1, 25 + 1);
             addSlot(h, 1, 128 + 1, 25 + 1);
             addSlot(h, 2, 146 + 1, 25 + 1);
@@ -174,7 +175,7 @@ public class ShakerMenu extends KKMenu {
     public void removed(Player pPlayer) {
         super.removed(pPlayer);
 
-        if (pPlayer.level.isClientSide) {
+        if (pPlayer.level().isClientSide) {
             pPlayer.playSound(ModSoundEvents.SHAKER_CLOSE.get(), 0.5F,
                     pPlayer.getRandom().nextFloat() * 0.1F + 0.9F);
         }

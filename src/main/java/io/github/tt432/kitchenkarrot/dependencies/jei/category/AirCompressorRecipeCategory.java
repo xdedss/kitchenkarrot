@@ -12,6 +12,8 @@ import mezz.jei.api.gui.ingredient.IRecipeSlotsView;
 import mezz.jei.api.helpers.IGuiHelper;
 import mezz.jei.api.recipe.IFocusGroup;
 import mezz.jei.api.recipe.RecipeIngredientRole;
+import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.core.RegistryAccess;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
@@ -31,7 +33,7 @@ public class AirCompressorRecipeCategory extends BaseRecipeCategory<AirCompresso
         super(JeiPlugin.AIR_COMPRESSOR,
                 helper.createDrawableIngredient(VanillaTypes.ITEM_STACK, new ItemStack(ModBlockItems.AIR_COMPRESSOR.get())),
                 helper.createDrawable(BACKGROUND, 0, 141, 104, 78));
-        arrow = helper.drawableBuilder(BACKGROUND, 176 ,0, 20, 19).buildAnimated(40, IDrawableAnimated.StartDirection.LEFT, false);
+        arrow = helper.drawableBuilder(BACKGROUND, 176, 0, 20, 19).buildAnimated(40, IDrawableAnimated.StartDirection.LEFT, false);
     }
 
     @Override
@@ -47,11 +49,16 @@ public class AirCompressorRecipeCategory extends BaseRecipeCategory<AirCompresso
         var container = Objects.requireNonNullElse(recipe.getContainer(), Ingredient.EMPTY);
         builder.addSlot(RecipeIngredientRole.INPUT, 49, 9).addIngredients(container);
 
-        builder.addSlot(RecipeIngredientRole.OUTPUT, 75, 32).addItemStack(recipe.getResultItem());
+        builder.addSlot(RecipeIngredientRole.OUTPUT, 75, 32).addItemStack(recipe.getResultItem(RegistryAccess.EMPTY));
+//        builder.addSlot(RecipeIngredientRole.OUTPUT, 75, 32).addItemStack(recipe.getResultItem());
     }
 
     @Override
-    public void draw(AirCompressorRecipe recipe, IRecipeSlotsView recipeSlotsView, PoseStack stack, double mouseX, double mouseY) {
-        arrow.draw(stack, 70, 53);
+    public void draw(AirCompressorRecipe recipe, IRecipeSlotsView recipeSlotsView, GuiGraphics guiGraphics, double mouseX, double mouseY) {
+        arrow.draw(guiGraphics, 70, 53);
     }
+    //    @Override
+//    public void draw(AirCompressorRecipe recipe, IRecipeSlotsView recipeSlotsView, PoseStack stack, double mouseX, double mouseY) {
+//        arrow.draw(stack, 70, 53);
+//    }
 }

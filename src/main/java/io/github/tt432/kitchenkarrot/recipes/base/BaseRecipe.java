@@ -1,6 +1,7 @@
 package io.github.tt432.kitchenkarrot.recipes.base;
 
 import com.google.gson.annotations.Expose;
+import net.minecraft.core.RegistryAccess;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.Container;
 import net.minecraft.world.item.ItemStack;
@@ -26,9 +27,14 @@ public abstract class BaseRecipe<SELF extends BaseRecipe<SELF>> implements Recip
     }
 
     @Override
-    public ItemStack assemble(Container pContainer) {
-        return getResultItem();
+    public ItemStack assemble(Container p_44001_, RegistryAccess p_267165_) {
+        return getResultItem(p_267165_);
     }
+
+//    @Override
+//    public ItemStack assemble(Container pContainer) {
+//        return getResultItem();
+//    }
 
     @Override
     public boolean canCraftInDimensions(int pWidth, int pHeight) {

@@ -11,6 +11,7 @@ import io.github.tt432.kitchenkarrot.item.ModItems;
 import io.github.tt432.kitchenkarrot.menu.AirCompressorMenu;
 import io.github.tt432.kitchenkarrot.menu.BrewingBarrelMenu;
 import io.github.tt432.kitchenkarrot.menu.ShakerMenu;
+import io.github.tt432.kitchenkarrot.menu.reg.ModMenuTypes;
 import io.github.tt432.kitchenkarrot.recipes.recipe.AirCompressorRecipe;
 import io.github.tt432.kitchenkarrot.recipes.recipe.BrewingBarrelRecipe;
 import io.github.tt432.kitchenkarrot.recipes.recipe.CocktailRecipe;
@@ -76,12 +77,18 @@ public class JeiPlugin implements IModPlugin {
 
     @Override
     public void registerRecipeTransferHandlers(IRecipeTransferRegistration registration) {
-        registration.addRecipeTransferHandler(AirCompressorMenu.class, AIR_COMPRESSOR,
+        registration.addRecipeTransferHandler(AirCompressorMenu.class, ModMenuTypes.AIR_COMPRESSOR.get(), AIR_COMPRESSOR,
                 36, 5, 0, 36);
-        registration.addRecipeTransferHandler(ShakerMenu.class, COCKTAIL,
+        registration.addRecipeTransferHandler(ShakerMenu.class, ModMenuTypes.SHAKER.get(), COCKTAIL,
                 36, 5, 0, 36);
-        registration.addRecipeTransferHandler(BrewingBarrelMenu.class, BREWING_BARREL,
+        registration.addRecipeTransferHandler(BrewingBarrelMenu.class, ModMenuTypes.BREWING_BARREL.get(), BREWING_BARREL,
                 36, 6, 0, 36);
+//        registration.addRecipeTransferHandler(AirCompressorMenu.class, AIR_COMPRESSOR,
+//                36, 5, 0, 36);
+//        registration.addRecipeTransferHandler(ShakerMenu.class, COCKTAIL,
+//                36, 5, 0, 36);
+//        registration.addRecipeTransferHandler(BrewingBarrelMenu.class, BREWING_BARREL,
+//                36, 6, 0, 36);
     }
 
     public static final ResourceLocation UID = new ResourceLocation(Kitchenkarrot.MOD_ID, "jei_plugin");

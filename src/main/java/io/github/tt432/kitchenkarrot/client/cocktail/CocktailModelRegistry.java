@@ -1,27 +1,19 @@
 package io.github.tt432.kitchenkarrot.client.cocktail;
 
 import io.github.tt432.kitchenkarrot.Kitchenkarrot;
-import io.github.tt432.kitchenkarrot.client.plate.PlateList;
 import io.github.tt432.kitchenkarrot.util.json.JsonUtils;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.block.model.BlockModel;
 import net.minecraft.client.resources.model.BakedModel;
-import net.minecraft.client.resources.model.ModelBakery;
 import net.minecraft.client.resources.model.ModelResourceLocation;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.resources.Resource;
 import net.minecraft.server.packs.resources.ResourceManager;
-import net.minecraftforge.client.event.ModelBakeEvent;
 import net.minecraftforge.client.event.ModelEvent;
-import net.minecraftforge.client.event.ModelRegistryEvent;
-import net.minecraftforge.client.model.ForgeModelBakery;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
@@ -46,7 +38,7 @@ public class CocktailModelRegistry {
     }
 
     @SuppressWarnings("unused")
-    public static void register(ModelEvent e) {
+    public static void register(ModelEvent.RegisterAdditional e) {
         ResourceManager manager = Minecraft.getInstance().getResourceManager();
         for (String namespace : manager.getNamespaces()) {
             try {
@@ -65,8 +57,9 @@ public class CocktailModelRegistry {
         }
 
         for (var info : CocktailList.INSTANCE.cocktails) {
-            ModelEvent.
-            ModelBakery.(to(new ResourceLocation(info)));
+            e.register(to(new ResourceLocation(info)));
+//            ModelEvent.
+//            ModelBakery.(to(new ResourceLocation(info)));
         }
     }
 

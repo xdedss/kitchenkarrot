@@ -22,7 +22,8 @@ public class ItemStackSerializer implements JsonSerializer<ItemStack>, JsonDeser
         JsonObject result = new JsonObject();
         CompoundTag allTag = src.serializeNBT();
 
-        String item = src.getItem().getRegistryName().toString();
+        String item = src.getItem().getDescriptionId();
+//        String item = src.getItem().getRegistryName().toString();
         result.addProperty("item", item);
 
         var tag = allTag.getCompound("tag");

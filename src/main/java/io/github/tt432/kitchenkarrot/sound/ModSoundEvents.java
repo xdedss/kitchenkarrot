@@ -22,6 +22,7 @@ public class ModSoundEvents {
     public static final RegistryObject<SoundEvent> COCKTAIL_COMPLETE = register("cocktail.complete");
 
     protected static RegistryObject<SoundEvent> register(String key) {
-        return SOUNDS.register(key, () -> new SoundEvent(new ResourceLocation(Kitchenkarrot.MOD_ID, key)));
+        return SOUNDS.register(key, () -> SoundEvent.createVariableRangeEvent(new ResourceLocation(Kitchenkarrot.MOD_ID, key)));
+//        return SOUNDS.register(key, () -> new SoundEvent(new ResourceLocation(Kitchenkarrot.MOD_ID, key)));
     }
 }

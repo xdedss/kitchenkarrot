@@ -12,6 +12,7 @@ import io.github.tt432.kitchenkarrot.tag.ModItemTags;
 import io.github.tt432.kitchenkarrot.util.ItemHandlerUtils;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.RegistryAccess;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
@@ -35,11 +36,15 @@ import java.util.List;
  **/
 public class AirCompressorBlockEntity extends MenuBlockEntity {
     static final int MAX_ENERGY = 120;
-    /** 原料 / 容器输入 */
+    /**
+     * 原料 / 容器输入
+     */
     ItemStackHandler input1 = new KKItemStackHandler(this, 5) {
         @Override
         public void setStackInSlot(int slot, @Nonnull ItemStack stack) {
-            if (!isItemValid(slot, stack)) {return;}
+            if (!isItemValid(slot, stack)) {
+                return;
+            }
             super.setStackInSlot(slot, stack);
         }
 
@@ -48,11 +53,15 @@ public class AirCompressorBlockEntity extends MenuBlockEntity {
             return slot != 4 || stack.is(ModItemTags.CONTAINER_ITEM);
         }
     };
-    /** 燃料输入 */
+    /**
+     * 燃料输入
+     */
     ItemStackHandler input2 = new KKItemStackHandler(this, 1) {
         @Override
         public void setStackInSlot(int slot, @Nonnull ItemStack stack) {
-            if (!isItemValid(slot, stack)) {return;}
+            if (!isItemValid(slot, stack)) {
+                return;
+            }
             super.setStackInSlot(slot, stack);
         }
 
@@ -61,7 +70,9 @@ public class AirCompressorBlockEntity extends MenuBlockEntity {
             return stack.is(Items.REDSTONE);
         }
     };
-    /** 成品输出 */
+    /**
+     * 成品输出
+     */
     ItemStackHandler output = new KKItemStackHandler(this, 1);
 
     public AirCompressorBlockEntity(BlockPos pWorldPosition, BlockState pBlockState) {
@@ -127,8 +138,10 @@ public class AirCompressorBlockEntity extends MenuBlockEntity {
 
     private boolean isSlotAvailable(AirCompressorRecipe recipe) {
         ItemStack resultStack = output.getStackInSlot(0);
-        return resultStack.isEmpty() || (resultStack.is(recipe.getResultItem().getItem())
+        return resultStack.isEmpty() || (resultStack.is(recipe.getResultItem(RegistryAccess.EMPTY).getItem())
                 && resultStack.getCount() < resultStack.getMaxStackSize());
+//        return resultStack.isEmpty() || (resultStack.is(recipe.getResultItem().getItem())
+//                && resultStack.getCount() < resultStack.getMaxStackSize());
     }
 
     private void finish() {
@@ -136,7 +149,8 @@ public class AirCompressorBlockEntity extends MenuBlockEntity {
             input1.extractItem(i, 1, false);
         }
         energy.reduce(10, 0);
-        output.insertItem(0, getRecipe().getResultItem(), false);
+        output.insertItem(0, getRecipe().getResultItem(RegistryAccess.EMPTY), false);
+//        output.insertItem(0, getRecipe().getResultItem(), false);
         stop();
     }
 
@@ -177,9 +191,13 @@ public class AirCompressorBlockEntity extends MenuBlockEntity {
     }
 
     protected boolean canCharge() {
-        return input2.getStackInSlot(0).is(Items.REDSTONE) && getEnergy() < 10 ;
+        return input2.getStackInSlot(0).is(Items.REDSTONE) && getEnergy() < 10;
     }
-    public int getEnergy() { return energy.get(); }
+
+    public int getEnergy() {
+        return energy.get();
+    }
+
     public int getAtomicEnergy() {
         return getEnergy() / 10;
     }

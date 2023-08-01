@@ -5,6 +5,7 @@ import io.github.tt432.kitchenkarrot.item.ModItems;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.protocol.Packet;
+import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
@@ -21,7 +22,6 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.network.NetworkHooks;
-import org.jetbrains.annotations.NotNull;
 
 
 public class CanEntity extends Mob {
@@ -44,7 +44,8 @@ public class CanEntity extends Mob {
     public boolean hurt(DamageSource pSource, float pAmount) {
         if (pSource.getEntity() instanceof Player) {
             this.discard();
-            if (level instanceof ServerLevel serverLevel) {
+            if (level() instanceof ServerLevel serverLevel) {
+//            if (level instanceof ServerLevel serverLevel) {
                 serverLevel.sendParticles(ParticleTypes.CLOUD, getX(), getY(), getZ(), 30, 0, 0, 0, 0.1);
             }
             return false;
@@ -59,7 +60,8 @@ public class CanEntity extends Mob {
     @Override
     public InteractionResult mobInteract(Player pPlayer, InteractionHand pHand) {
         if (pPlayer.getItemInHand(pHand) == ItemStack.EMPTY) {
-            returnItem(level, pPlayer);
+            returnItem(level(), pPlayer);
+//            returnItem(level, pPlayer);
             return InteractionResult.SUCCESS;
         }
         return InteractionResult.PASS;
@@ -89,7 +91,8 @@ public class CanEntity extends Mob {
         if (MaxAge >= 0){
             this.entityData.set(AGE, this.entityData.get(AGE) + 1);
             if (entityData.get(AGE) >= getMaxAge()) {
-                if (level instanceof ServerLevel serverLevel) {
+                if (level() instanceof ServerLevel serverLevel) {
+//                if (level instanceof ServerLevel serverLevel) {
                     serverLevel.sendParticles(ParticleTypes.CLOUD, getX(), getY(), getZ(), 30, 0, 0, 0, 0.1);
                 }
                 this.remove(RemovalReason.DISCARDED);
@@ -103,11 +106,15 @@ public class CanEntity extends Mob {
         return false;
     }
 
-    @NotNull
     @Override
-    public Packet<?> getAddEntityPacket() {
+    public Packet<ClientGamePacketListener> getAddEntityPacket() {
         return NetworkHooks.getEntitySpawningPacket(this);
     }
+//    @NotNull
+//    @Override
+//    public Packet<?> getAddEntityPacket() {
+//        return NetworkHooks.getEntitySpawningPacket(this);
+//    }
 
     public void returnItem(Level level, Player player) {
         level.addFreshEntity(new ItemEntity(level, player.getX(), player.getY(), player.getZ(), ModItems.EMPTY_CAN.get().getDefaultInstance()));

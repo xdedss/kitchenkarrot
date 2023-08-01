@@ -9,17 +9,13 @@ import net.minecraft.client.resources.model.ModelResourceLocation;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.resources.Resource;
 import net.minecraft.server.packs.resources.ResourceManager;
-import net.minecraftforge.client.event.ModelBakeEvent;
 import net.minecraftforge.client.event.ModelEvent;
-import net.minecraftforge.client.event.ModelRegistryEvent;
-import net.minecraftforge.client.model.ForgeModelBakery;
 import org.apache.commons.io.IOUtils;
 
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
@@ -48,7 +44,7 @@ public class PlateModelRegistry {
     }
 
 
-    public static void register(ModelEvent e) {
+    public static void register(ModelEvent.RegisterAdditional e) {
         ResourceManager manager = Minecraft.getInstance().getResourceManager();
         for (String namespace : manager.getNamespaces()) {
             try {
@@ -59,15 +55,16 @@ public class PlateModelRegistry {
                     PlateList list = JsonUtils.INSTANCE.noExpose.fromJson(reader, PlateList.class);
                     PlateList.INSTANCE.plates.addAll(list.plates);
 
-                };
+                }
             } catch (IOException exception) {
                 exception.printStackTrace();
             }
         }
-
-        ForgeModelBakery.addSpecialModel(to(DEFAULT_NAME));
+        e.register(to(DEFAULT_NAME));
+//        ForgeModelBakery.addSpecialModel(to(DEFAULT_NAME));
         for (var info : PlateList.INSTANCE.plates) {
-            ForgeModelBakery.addSpecialModel(to(new ResourceLocation(info)));
+            e.register(to(new ResourceLocation(info)));
+//            ForgeModelBakery.addSpecialModel(to(new ResourceLocation(info)));
         }
 
         //bakeModel();

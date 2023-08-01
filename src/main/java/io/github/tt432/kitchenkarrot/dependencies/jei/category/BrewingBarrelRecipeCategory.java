@@ -3,13 +3,13 @@ package io.github.tt432.kitchenkarrot.dependencies.jei.category;
 import io.github.tt432.kitchenkarrot.Kitchenkarrot;
 import io.github.tt432.kitchenkarrot.dependencies.jei.JeiPlugin;
 import io.github.tt432.kitchenkarrot.item.ModBlockItems;
-import io.github.tt432.kitchenkarrot.item.ModItems;
 import io.github.tt432.kitchenkarrot.recipes.recipe.BrewingBarrelRecipe;
 import mezz.jei.api.constants.VanillaTypes;
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder;
 import mezz.jei.api.helpers.IGuiHelper;
 import mezz.jei.api.recipe.IFocusGroup;
 import mezz.jei.api.recipe.RecipeIngredientRole;
+import net.minecraft.core.RegistryAccess;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 
@@ -37,6 +37,7 @@ public class BrewingBarrelRecipeCategory extends BaseRecipeCategory<BrewingBarre
         builder.addSlot(RecipeIngredientRole.INPUT, 62, 37).addIngredients(ingredients.get(4));
         builder.addSlot(RecipeIngredientRole.INPUT, 82, 37).addIngredients(ingredients.get(5));
 
-        builder.addSlot(RecipeIngredientRole.OUTPUT, 109, 27).addItemStack(recipe.getResultItem());
+        builder.addSlot(RecipeIngredientRole.OUTPUT, 109, 27).addItemStack(recipe.getResultItem(RegistryAccess.EMPTY));
+//        builder.addSlot(RecipeIngredientRole.OUTPUT, 109, 27).addItemStack(recipe.getResultItem());
     }
 }

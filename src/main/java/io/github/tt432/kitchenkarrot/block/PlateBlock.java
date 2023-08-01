@@ -8,6 +8,7 @@ import io.github.tt432.kitchenkarrot.recipes.register.RecipeTypes;
 import io.github.tt432.kitchenkarrot.sound.ModSoundEvents;
 import io.github.tt432.kitchenkarrot.tag.ModItemTags;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.RegistryAccess;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.Style;
 import net.minecraft.sounds.SoundEvents;
@@ -176,7 +177,8 @@ public class PlateBlock extends FacingEntityBlock<PlateBlockEntity> {
 
     boolean giveRecipeResult(Level level, PlateRecipe recipe, IItemHandler handler) {
         Optional<PlateRecipe> outputRecipe = level.getRecipeManager().getAllRecipesFor(RecipeTypes.PLATE.get())
-                .stream().filter(or -> or.matches(Collections.singletonList(recipe.getResultItem()))).findFirst();
+                .stream().filter(or -> or.matches(Collections.singletonList(recipe.getResultItem(RegistryAccess.EMPTY)))).findFirst();
+//                .stream().filter(or -> or.matches(Collections.singletonList(recipe.getResultItem()))).findFirst();
 
         AtomicBoolean result = new AtomicBoolean(false);
 

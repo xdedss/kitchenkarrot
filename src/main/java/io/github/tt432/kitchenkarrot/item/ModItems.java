@@ -1,19 +1,24 @@
 package io.github.tt432.kitchenkarrot.item;
 
 import io.github.tt432.kitchenkarrot.block.ModBlocks;
+import io.github.tt432.kitchenkarrot.client.cocktail.CocktailList;
 import io.github.tt432.kitchenkarrot.item.food.*;
-import net.minecraft.core.NonNullList;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraftforge.event.BuildCreativeModeTabContentsEvent;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
-import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.ParametersAreNonnullByDefault;
-import java.util.Comparator;
+import java.util.stream.Collectors;
 
 import static io.github.tt432.kitchenkarrot.Kitchenkarrot.MOD_ID;
 
@@ -70,16 +75,19 @@ public class ModItems {
     public static final RegistryObject<Item> COOKED_VEGAN_MUTTON = ITEMS.register("cooked_vegan_mutton", () -> new FoodItem(6, 8.2F).setIndex(134));
     public static final RegistryObject<Item> GEM_CARROT = ITEMS.register("gem_carrot", () -> new FoodItem(6, 8F).setIndex(12));
     public static final RegistryObject<Item> CRISPY_BREAD_WITH_KELP = ITEMS.register("crispy_bread_with_kelp", () -> new FoodItem(6, 8F).setIndex(44));
-    public static final RegistryObject<Item> RAW_BEEF_IN_DRIPLEAF = ITEMS.register("raw_beef_in_dripleaf", () -> new FoodItem(4,4).setIndex(24));
-    public static final RegistryObject<Item> SWEET_ROLL = ITEMS.register("sweet_roll", () -> new FoodItem(11,1.1F).setIndex(38));
+    public static final RegistryObject<Item> RAW_BEEF_IN_DRIPLEAF = ITEMS.register("raw_beef_in_dripleaf", () -> new FoodItem(4, 4).setIndex(24));
+    public static final RegistryObject<Item> SWEET_ROLL = ITEMS.register("sweet_roll", () -> new FoodItem(11, 1.1F).setIndex(38));
 
 
-    public static final RegistryObject<Item> SOOTHING_TEA = ITEMS.register("soothing_tea", () -> new DrinkItem(1,3.6F) {
+    public static final RegistryObject<Item> SOOTHING_TEA = ITEMS.register("soothing_tea", () -> new DrinkItem(1, 3.6F) {
         @Override
         public int getUseDuration(ItemStack pStack) {
             return 48;
         }
-        {setIndex(62);}
+
+        {
+            setIndex(62);
+        }
     });
     public static final RegistryObject<Item> BIRCH_SAP = ITEMS.register("birch_sap", () -> new DrinkItem(1, 2).setIndex(20));
     public static final RegistryObject<Item> ICED_MELON_LAGER = ITEMS.register("iced_melon_lager", () -> new DrinkItem(3, 2.4F, EffectEntry.of(MobEffects.FIRE_RESISTANCE, 300, 2, 1)).setIndex(109));
@@ -89,19 +97,19 @@ public class ModItems {
     public static final RegistryObject<Item> RUM = ITEMS.register("rum", () -> new DrinkItem(1, 0F, EffectEntry.of(MobEffects.DOLPHINS_GRACE, 300, 1)).setIndex(117));
     public static final RegistryObject<Item> VODKA = ITEMS.register("vodka", () -> new DrinkItem(1, 0F, EffectEntry.of(MobEffects.DAMAGE_BOOST, 300, 1)).setIndex(118));
 
-    public static final RegistryObject<Item> KELP_WITH_SUNFLOWER_SEED = ITEMS.register("kelp_with_sunflower_seed", () -> new SnackItem(2, 2, 12,64).setIndex(21));
+    public static final RegistryObject<Item> KELP_WITH_SUNFLOWER_SEED = ITEMS.register("kelp_with_sunflower_seed", () -> new SnackItem(2, 2, 12, 64).setIndex(21));
     public static final RegistryObject<Item> FRIED_PUMPKIN_CAKE = ITEMS.register("fried_pumpkin_cake", () -> new SnackItem(4, 3.2F, 24).setIndex(22));
     public static final RegistryObject<Item> SEED_PIE = ITEMS.register("seed_pie", () -> new SnackItem(4, 2.4F, 24).setIndex(23));
     public static final RegistryObject<Item> RICE_CAKE = ITEMS.register("rice_cake", () -> new SnackItem(4, 4, 18).setIndex(85));
     public static final RegistryObject<Item> LEAFY_FRESH_CHOCOLATE = ITEMS.register("leafy_fresh_chocolate", () -> new SnackItem(2, 4.8F, 18).setIndex(86));
-    public static final RegistryObject<Item> BACON_WRAPPED_POTATO = ITEMS.register("bacon_wrapped_potato", () -> new SnackItem(5, 3.6F, 24,64).setIndex(43));
+    public static final RegistryObject<Item> BACON_WRAPPED_POTATO = ITEMS.register("bacon_wrapped_potato", () -> new SnackItem(5, 3.6F, 24, 64).setIndex(43));
 
     public static final RegistryObject<Item> LIGHT_SODA = ITEMS.register("light_soda", () -> new SnackDrinkItem(1, 0, 24).setIndex(119));
     public static final RegistryObject<Item> KELP_SODA = ITEMS.register("kelp_soda", () -> new SnackDrinkItem(1, 0F, 24, EffectEntry.of(MobEffects.WATER_BREATHING, 180, 1)).setIndex(120));
     public static final RegistryObject<Item> TWISTING_SODA = ITEMS.register("twisting_soda", () -> new SnackDrinkItem(1, 0F, 24, EffectEntry.of(MobEffects.ABSORPTION, 60, 1)).setIndex(121));
-    public static final RegistryObject<Item> DANDELION_COKE = ITEMS.register("dandelion_coke", () -> new SnackDrinkItem(1, 0F, 24, EffectEntry.of(MobEffects.MOVEMENT_SPEED, 180, 2,1), EffectEntry.of(MobEffects.DIG_SPEED, 180,1)).setIndex(122));
+    public static final RegistryObject<Item> DANDELION_COKE = ITEMS.register("dandelion_coke", () -> new SnackDrinkItem(1, 0F, 24, EffectEntry.of(MobEffects.MOVEMENT_SPEED, 180, 2, 1), EffectEntry.of(MobEffects.DIG_SPEED, 180, 1)).setIndex(122));
     public static final RegistryObject<Item> CORAL_COKE = ITEMS.register("coral_coke", () -> new SnackDrinkItem(1, 0F, 24, EffectEntry.of(MobEffects.MOVEMENT_SPEED, 180, 1), EffectEntry.of(MobEffects.DIG_SPEED, 180, 2, 1)).setIndex(123));
-    public static final RegistryObject<Item> DRAGON_BREATH_COKE = ITEMS.register("dragon_breath_coke", () -> new SnackDrinkItem(1, 3F, 24, EffectEntry.of(MobEffects.MOVEMENT_SPEED, 180, 2,1), EffectEntry.of(MobEffects.DIG_SPEED, 180, 2, 1)).setIndex(124));
+    public static final RegistryObject<Item> DRAGON_BREATH_COKE = ITEMS.register("dragon_breath_coke", () -> new SnackDrinkItem(1, 3F, 24, EffectEntry.of(MobEffects.MOVEMENT_SPEED, 180, 2, 1), EffectEntry.of(MobEffects.DIG_SPEED, 180, 2, 1)).setIndex(124));
 
     public static final RegistryObject<Item> FISHERMENS_DELIGHT = ITEMS.register("fishermens_delight", () -> new BowlFoodItem(10, 10.4F).setIndex(46));
     public static final RegistryObject<Item> LUSH_SALAD = ITEMS.register("lush_salad", () -> new BowlFoodItem(7, 6.4F).setIndex(50));
@@ -129,13 +137,17 @@ public class ModItems {
 
     public static final RegistryObject<Item> CURRY_UDON = ITEMS.register("curry_udon", () -> new CurryUdonItem(18, 16F, EffectEntry.of(MobEffects.REGENERATION, 60, 0, 1)).setIndex(84));
 
-    public static final RegistryObject<Item> POPACORN = ITEMS.register("popacorn", () -> new PopacornItem(){{setIndex(83);}});
+    public static final RegistryObject<Item> POPACORN = ITEMS.register("popacorn", () -> new PopacornItem() {{
+        setIndex(83);
+    }});
 
     public static final RegistryObject<Item> EMPTY_PLATE = ITEMS.register("plate_item", () -> new EmptyPlateItem(defaultProperties()).setIndex(1));
 
     public static final RegistryObject<Item> FOOD_FILLED_PLATE = ITEMS.register("plate", () -> new FilledPlateItem(ModBlocks.PLATE.get(), new Item.Properties()));
 
-    public static final RegistryObject<Item> KNIFE = ITEMS.register("knife", ()->new KnifeItem(){{setIndex(2);}});
+    public static final RegistryObject<Item> KNIFE = ITEMS.register("knife", () -> new KnifeItem() {{
+        setIndex(2);
+    }});
 
     public static final RegistryObject<Item> SHAKER = ITEMS.register("shaker", ShakerItem::new);
 
@@ -145,17 +157,17 @@ public class ModItems {
     public static final RegistryObject<Item> ACORN_WINE_BASE = ITEMS.register("acorn_wine_base", BaseLiquorItem::new);
 
     public static final RegistryObject<Item> COCKTAIL = ITEMS.register("cocktail", CocktailItem::new);
-    public static final RegistryObject<Item> WATER = ITEMS.register("water", () -> new IndexItem(defaultProperties(),15));
-    public static final RegistryObject<Item> MILK = ITEMS.register("milk", () -> new IndexItem(defaultProperties(),16));
-    public static final RegistryObject<Item> EMPTY_CAN = ITEMS.register("empty_can", () -> new IndexItem(defaultProperties(),18));
-    public static final RegistryObject<Item> ICE_CUBES = ITEMS.register("ice_cubes", () -> new IndexItem(defaultProperties(),14));
-    public static final RegistryObject<Item> CARROT_SPICES = ITEMS.register("carrot_spices", () -> new IndexItem(defaultProperties(),13));
-    public static final RegistryObject<Item> ACORN = ITEMS.register("acorn", () -> new IndexItem(FoodUtil.food(defaultProperties(), 2, 1F),17));
-    public static final RegistryObject<Item> DUNGEON_PIZZA = ITEMS.register("dungeon_pizza", () -> new IndexItem(defaultProperties(),71));
-    public static final RegistryObject<Item> FEAST_PIZZA = ITEMS.register("feast_pizza", () -> new IndexItem(defaultProperties(),67));
-    public static final RegistryObject<Item> SHINY_PIZZA = ITEMS.register("shiny_pizza", () -> new IndexItem(defaultProperties(),69));
-    public static final RegistryObject<Item> RAW_SWEET_LOAF = ITEMS.register("raw_sweet_loaf", () -> new IndexItem(defaultProperties(),73));
-    public static final RegistryObject<Item> PLATE_PIECES = ITEMS.register("plate_pieces", () -> new IndexItem(defaultProperties(),500));
+    public static final RegistryObject<Item> WATER = ITEMS.register("water", () -> new IndexItem(defaultProperties(), 15));
+    public static final RegistryObject<Item> MILK = ITEMS.register("milk", () -> new IndexItem(defaultProperties(), 16));
+    public static final RegistryObject<Item> EMPTY_CAN = ITEMS.register("empty_can", () -> new IndexItem(defaultProperties(), 18));
+    public static final RegistryObject<Item> ICE_CUBES = ITEMS.register("ice_cubes", () -> new IndexItem(defaultProperties(), 14));
+    public static final RegistryObject<Item> CARROT_SPICES = ITEMS.register("carrot_spices", () -> new IndexItem(defaultProperties(), 13));
+    public static final RegistryObject<Item> ACORN = ITEMS.register("acorn", () -> new IndexItem(FoodUtil.food(defaultProperties(), 2, 1F), 17));
+    public static final RegistryObject<Item> DUNGEON_PIZZA = ITEMS.register("dungeon_pizza", () -> new IndexItem(defaultProperties(), 71));
+    public static final RegistryObject<Item> FEAST_PIZZA = ITEMS.register("feast_pizza", () -> new IndexItem(defaultProperties(), 67));
+    public static final RegistryObject<Item> SHINY_PIZZA = ITEMS.register("shiny_pizza", () -> new IndexItem(defaultProperties(), 69));
+    public static final RegistryObject<Item> RAW_SWEET_LOAF = ITEMS.register("raw_sweet_loaf", () -> new IndexItem(defaultProperties(), 73));
+    public static final RegistryObject<Item> PLATE_PIECES = ITEMS.register("plate_pieces", () -> new IndexItem(defaultProperties(), 500));
 
     public static Item.Properties defaultProperties() {
         return new Item.Properties();
@@ -166,31 +178,74 @@ public class ModItems {
     }
 
 
-    public static final CreativeModeTab COCKTAIL_TAB = new CreativeModeTab(MOD_ID + ".cocktail") {
-        @NotNull
-        @Override
-        public ItemStack makeIcon() {
-            return new ItemStack(ModItems.SHAKER.get());
-        }
-    };
-    public static final CreativeModeTab MAIN_TAB = new CreativeModeTab(MOD_ID + ".main") {
-        @NotNull
-        @Override
-        public ItemStack makeIcon() {
-            return new ItemStack(ModItems.CARROT_SPICES.get());
-        }
+    @Mod.EventBusSubscriber(modid = MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD)
+    public static class ModTabs {
+        public static final DeferredRegister<CreativeModeTab> TABS = DeferredRegister.create(Registries.CREATIVE_MODE_TAB, MOD_ID);
+        public static final RegistryObject<CreativeModeTab> COCKTAIL_TAB = TABS.register("cocktail", () -> CreativeModeTab.builder()
+                .icon(() -> new ItemStack(ModItems.SHAKER.get()))
+                .title(Component.translatable("itemGroup.kitchenkarrot.cocktail"))
+                .build());
+        public static final RegistryObject<CreativeModeTab> MAIN_TAB = TABS.register("main", () -> CreativeModeTab.builder()
+                .icon(() -> new ItemStack(ModItems.CARROT_SPICES.get()))
+                .title(Component.translatable("itemGroup.kitchenkarrot.main"))
+                .build());
 
-        @Override
-        public void fillItemList(NonNullList<ItemStack> pItems) {
-            super.fillItemList(pItems);
-            pItems.sort(Comparator.comparing(itemStack -> sorter(itemStack)));
+        @SubscribeEvent
+        public static void addCreative(BuildCreativeModeTabContentsEvent event) {
+            if (event.getTab() == ModTabs.COCKTAIL_TAB.get()) {
+                for (String cocktail : CocktailList.INSTANCE.cocktails) {
+                    ItemStack itemStack = new ItemStack(COCKTAIL.get());
+                    CocktailItem.setCocktail(itemStack, new ResourceLocation(cocktail));
+                    event.accept(itemStack);
+                }
+            }
+            if (event.getTab() == ModTabs.MAIN_TAB.get()) {
+                event.acceptAll(ITEMS.getEntries()
+                        .stream()
+                        .filter(reg -> reg != COCKTAIL && reg != FOOD_FILLED_PLATE)
+                        .map(RegistryObject::get)
+                        .sorted((item, compare) -> {
+                            if (item instanceof IndexItem indexItem) {
+                                return indexItem.getIndex();
+                            }
+                            return 0;
+                        })
+                        .map(Item::getDefaultInstance)
+                        .collect(Collectors.toList()));
+                event.acceptAll(ModBlockItems.BLOCK_ITEMS.getEntries()
+                        .stream()
+                        .map(reg -> reg.get().getDefaultInstance())
+                        .collect(Collectors.toList()));
+            }
         }
-        private static int sorter(ItemStack itemStack){
-            if (itemStack.getItem() instanceof IndexItem) {
-                IndexItem item = (IndexItem) itemStack.getItem();
-                return item.getIndex();
-            }else return 0;
-        }
-    };
+    }
+
+//    public static final CreativeModeTab COCKTAIL_TAB = new CreativeModeTab(MOD_ID + ".cocktail") {
+//        @NotNull
+//        @Override
+//        public ItemStack makeIcon() {
+//            return new ItemStack(ModItems.SHAKER.get());
+//        }
+//    };
+//    public static final CreativeModeTab MAIN_TAB = new CreativeModeTab(MOD_ID + ".main") {
+//        @NotNull
+//        @Override
+//        public ItemStack makeIcon() {
+//            return new ItemStack(ModItems.CARROT_SPICES.get());
+//        }
+//
+//        @Override
+//        public void fillItemList(NonNullList<ItemStack> pItems) {
+//            super.fillItemList(pItems);
+//            pItems.sort(Comparator.comparing(itemStack -> sorter(itemStack)));
+//        }
+//
+//        private static int sorter(ItemStack itemStack) {
+//            if (itemStack.getItem() instanceof IndexItem) {
+//                IndexItem item = (IndexItem) itemStack.getItem();
+//                return item.getIndex();
+//            } else return 0;
+//        }
+//    };
 
 }

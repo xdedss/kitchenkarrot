@@ -17,8 +17,8 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.UseAnim;
 import net.minecraft.world.level.Level;
+import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
-import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
 import net.minecraftforge.network.NetworkHooks;
 import org.jetbrains.annotations.Nullable;
@@ -42,7 +42,7 @@ public class ShakerItem extends Item {
         if (pUsedHand == InteractionHand.MAIN_HAND) {
             if (pPlayer.isShiftKeyDown()) {
                 if (!pLevel.isClientSide) {
-                    NetworkHooks.openGui((ServerPlayer) pPlayer, new SimpleMenuProvider(
+                    NetworkHooks.openScreen((ServerPlayer) pPlayer, new SimpleMenuProvider(
                             (id, inv, player) -> new ShakerMenu(id, inv), stack.getDisplayName()));
                 } else {
                     pPlayer.playSound(ModSoundEvents.SHAKER_OPEN.get(), 0.5F,
@@ -127,7 +127,7 @@ public class ShakerItem extends Item {
     @Override
     public CompoundTag getShareTag(ItemStack stack) {
         var result = Objects.requireNonNullElse(super.getShareTag(stack), new CompoundTag());
-        stack.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY)
+        stack.getCapability(ForgeCapabilities.ITEM_HANDLER)
                 .ifPresent(h -> result.put("items", ((ItemStackHandler) h).serializeNBT()));
         result.putBoolean("finish", getFinish(stack));
         return result;
@@ -138,7 +138,7 @@ public class ShakerItem extends Item {
         super.readShareTag(stack, nbt);
 
         if (nbt != null) {
-            stack.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY)
+            stack.getCapability(ForgeCapabilities.ITEM_HANDLER)
                     .ifPresent(h -> ((ItemStackHandler) h).deserializeNBT(nbt.getCompound("items")));
             setFinish(stack, nbt.getBoolean("finish"));
         }
