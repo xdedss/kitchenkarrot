@@ -9,6 +9,7 @@ import io.github.tt432.kitchenkarrot.recipes.register.RecipeTypes;
 import io.github.tt432.kitchenkarrot.util.ItemHandlerUtils;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.RegistryAccess;
 import net.minecraft.core.Vec3i;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
@@ -18,13 +19,11 @@ import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.Fluids;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.items.IItemHandler;
 import org.jetbrains.annotations.NotNull;
@@ -92,8 +91,10 @@ public class BrewingBarrelBlockEntity extends MenuBlockEntity {
     private void finishBrewing(){
         ItemStack resultStack = result.getStackInSlot(0);
         if (resultStack.isEmpty() ||
-                (resultStack.is(getRecipe().getResultItem().getItem()) && resultStack.getCount() < resultStack.getMaxStackSize())) {
-            result.insertItem(0, getRecipe().getResultItem(), false);
+                (resultStack.is(getRecipe().getResultItem(RegistryAccess.EMPTY).getItem()) && resultStack.getCount() < resultStack.getMaxStackSize())) {
+//                (resultStack.is(getRecipe().getResultItem().getItem()) && resultStack.getCount() < resultStack.getMaxStackSize())) {
+            result.insertItem(0, getRecipe().getResultItem(RegistryAccess.EMPTY), false);
+//            result.insertItem(0, getRecipe().getResultItem(), false);
             for (int i = 0; i < input.getSlots(); i++) {
                 input.extractItem(i, 1, false);
             }

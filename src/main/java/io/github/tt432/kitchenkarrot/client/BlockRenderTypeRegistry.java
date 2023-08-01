@@ -15,6 +15,7 @@ import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 public class BlockRenderTypeRegistry {
     @SubscribeEvent
     public static void clientSetup(FMLClientSetupEvent event) {
+        //TODO 使用Json进行设置RenderType
         event.enqueueWork(() -> {
             ItemBlockRenderTypes.setRenderLayer(ModBlocks.ACORN_OIL.get(), RenderType.cutout());
             ItemBlockRenderTypes.setRenderLayer(ModBlocks.CHORUS_OIL.get(), RenderType.cutout());

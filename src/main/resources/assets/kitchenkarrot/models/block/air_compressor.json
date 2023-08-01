@@ -1,8 +1,8 @@
 {
 	"credit": "Made with Blockbench",
 	"textures": {
-		"0": "kitchenkarrot:models/air_compressor",
-		"particle": "kitchenkarrot:models/air_compressor_particle"
+		"0": "kitchenkarrot:block/air_compressor",
+		"particle": "kitchenkarrot:block/air_compressor_particle"
 	},
 	"ambientocclusion" : false,
 	"elements": [

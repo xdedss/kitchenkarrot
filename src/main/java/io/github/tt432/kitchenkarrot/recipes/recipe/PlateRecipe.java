@@ -5,6 +5,7 @@ import io.github.tt432.kitchenkarrot.recipes.base.BaseRecipe;
 import io.github.tt432.kitchenkarrot.recipes.register.RecipeSerializers;
 import io.github.tt432.kitchenkarrot.recipes.register.RecipeTypes;
 import io.github.tt432.kitchenkarrot.tag.ModItemTags;
+import net.minecraft.core.RegistryAccess;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -69,8 +70,13 @@ public class PlateRecipe extends BaseRecipe<PlateRecipe> {
         return item.item() == inputs.get(0).getItem();
     }
 
+//    @Override
+//    public ItemStack getResultItem() {
+//        return cut != null && cut.out != null ? new ItemStack(cut.out()) : ItemStack.EMPTY;
+//    }
+
     @Override
-    public ItemStack getResultItem() {
+    public ItemStack getResultItem(RegistryAccess p_267052_) {
         return cut != null && cut.out != null ? new ItemStack(cut.out()) : ItemStack.EMPTY;
     }
 

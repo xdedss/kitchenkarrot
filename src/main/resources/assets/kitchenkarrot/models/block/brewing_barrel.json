@@ -1,8 +1,8 @@
 {
 	"credit": "Made with Blockbench",
 	"textures": {
-		"0": "kitchenkarrot:models/brewing_barrel",
-		"particle": "kitchenkarrot:models/brewing_barrel_particle"
+		"0": "kitchenkarrot:block/brewing_barrel",
+		"particle": "kitchenkarrot:block/brewing_barrel_particle"
 	},
 	"elements": [
 		{

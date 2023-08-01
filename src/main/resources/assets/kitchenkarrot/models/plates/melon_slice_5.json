@@ -1,8 +1,8 @@
 {
 	"credit": "Made with Blockbench",
 	"textures": {
-		"0": "kitchenkarrot:models/plates/melon",
-		"particle": "kitchenkarrot:models/plates/melon"
+		"0": "kitchenkarrot:block/plates/melon",
+		"particle": "kitchenkarrot:block/plates/melon"
 	},
 	"elements": [
 		{

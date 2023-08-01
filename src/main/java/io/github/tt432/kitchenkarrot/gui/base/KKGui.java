@@ -1,7 +1,7 @@
 package io.github.tt432.kitchenkarrot.gui.base;
 
 import com.mojang.blaze3d.systems.RenderSystem;
-import com.mojang.blaze3d.vertex.PoseStack;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.network.chat.Component;
@@ -21,17 +21,31 @@ public abstract class KKGui<T extends AbstractContainerMenu> extends AbstractCon
     }
 
     @Override
-    public void render(PoseStack pPoseStack, int pMouseX, int pMouseY, float pPartialTick) {
-        this.renderBackground(pPoseStack);
-        super.render(pPoseStack, pMouseX, pMouseY, pPartialTick);
-        this.renderTooltip(pPoseStack, pMouseX, pMouseY);
+    public void render(GuiGraphics p_283479_, int p_283661_, int p_281248_, float p_281886_) {
+        this.renderBackground(p_283479_);
+        super.render(p_283479_, p_283661_, p_281248_, p_281886_);
+        this.renderTooltip(p_283479_, p_283661_, p_281248_);
     }
 
+//    @Override
+//    public void render(PoseStack pPoseStack, int pMouseX, int pMouseY, float pPartialTick) {
+//        this.renderBackground(pPoseStack);
+//        super.render(pPoseStack, pMouseX, pMouseY, pPartialTick);
+//        this.renderTooltip(pPoseStack, pMouseX, pMouseY);
+//    }
+
+
     @Override
-    protected void renderBg(PoseStack matrixStack, float partialTicks, int mouseX, int mouseY) {
+    protected void renderBg(GuiGraphics p_283065_, float p_97788_, int p_97789_, int p_97790_) {
         RenderSystem.setShaderTexture(0, GUI);
-        this.blit(matrixStack, leftPos, topPos, 0, 0, this.imageWidth, this.imageHeight);
+        p_283065_.blit(GUI, leftPos, topPos, 0, 0, this.imageWidth, this.imageHeight);
     }
+
+//    @Override
+//    protected void renderBg(PoseStack matrixStack, float partialTicks, int mouseX, int mouseY) {
+//        RenderSystem.setShaderTexture(0, GUI);
+//        this.blit(matrixStack, leftPos, topPos, 0, 0, this.imageWidth, this.imageHeight);
+//    }
 
     protected <W extends AbstractWidget> W close(W widget) {
         widget.active = false;

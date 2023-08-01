@@ -1,8 +1,8 @@
 {
 	"credit": "Made with Blockbench",
 	"textures": {
-		"0": "kitchenkarrot:models/sunflower_oil",
-		"particle": "kitchenkarrot:models/sunflower_oil"
+		"0": "kitchenkarrot:block/sunflower_oil",
+		"particle": "kitchenkarrot:block/sunflower_oil"
 	},
 	"elements": [
 		{

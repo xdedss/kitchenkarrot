@@ -6,6 +6,7 @@ import io.github.tt432.kitchenkarrot.recipes.base.BaseRecipe;
 import io.github.tt432.kitchenkarrot.recipes.register.RecipeSerializers;
 import io.github.tt432.kitchenkarrot.recipes.register.RecipeTypes;
 import net.minecraft.core.NonNullList;
+import net.minecraft.core.RegistryAccess;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.RecipeSerializer;
@@ -46,9 +47,14 @@ public class AirCompressorRecipe extends BaseRecipe<AirCompressorRecipe> {
     }
 
     @Override
-    public ItemStack getResultItem() {
+    public ItemStack getResultItem(RegistryAccess p_267052_) {
         return result.copy();
     }
+
+//    @Override
+//    public ItemStack getResultItem() {
+//        return result.copy();
+//    }
 
     public int getCraftingTime() {
         return craftingTime;

@@ -9,6 +9,7 @@ import mezz.jei.api.gui.builder.IRecipeLayoutBuilder;
 import mezz.jei.api.helpers.IGuiHelper;
 import mezz.jei.api.recipe.IFocusGroup;
 import mezz.jei.api.recipe.RecipeIngredientRole;
+import net.minecraft.core.RegistryAccess;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 
@@ -35,6 +36,7 @@ public class CocktailRecipeCategory extends BaseRecipeCategory<CocktailRecipe> {
         builder.addSlot(RecipeIngredientRole.INPUT, 61, 32).addIngredients(ingredients.get(3));
         builder.addSlot(RecipeIngredientRole.INPUT, 83, 32).addIngredients(ingredients.get(4));
 
-        builder.addSlot(RecipeIngredientRole.OUTPUT, 15, 32).addItemStack(recipe.getResultItem());
+        builder.addSlot(RecipeIngredientRole.OUTPUT, 15, 32).addItemStack(recipe.getResultItem(RegistryAccess.EMPTY));
+//        builder.addSlot(RecipeIngredientRole.OUTPUT, 15, 32).addItemStack(recipe.getResultItem());
     }
 }

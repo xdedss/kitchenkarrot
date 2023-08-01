@@ -1,8 +1,8 @@
 {
 	"credit": "Made with Blockbench",
 	"textures": {
-		"0": "kitchenkarrot:models/plates/sweet_loaf",
-		"particle": "kitchenkarrot:models/plates/sweet_loaf"
+		"0": "kitchenkarrot:block/plates/sweet_loaf",
+		"particle": "kitchenkarrot:block/plates/sweet_loaf"
 	},
 	"elements": [
 		{

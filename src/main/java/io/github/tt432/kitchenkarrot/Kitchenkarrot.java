@@ -25,7 +25,7 @@ public class Kitchenkarrot {
     public static final String MOD_ID = "kitchenkarrot";
 
     // Mod version here.
-    public static final String VERSION = "1.18.2-0.3.3";
+    public static final String VERSION = "1.20.1-0.3.7";
 
     private static Kitchenkarrot INSTANCE;
 
@@ -39,6 +39,7 @@ public class Kitchenkarrot {
         ModBlocks.BLOCKS.register(bus);
         ModItems.ITEMS.register(bus);
         ModBlockItems.BLOCK_ITEMS.register(bus);
+        ModItems.ModTabs.TABS.register(bus);
         ModMenuTypes.MENUS.register(bus);
         ModBlockEntities.BLOCK_ENTITIES.register(bus);
         ModSoundEvents.SOUNDS.register(bus);
