@@ -1,24 +1,15 @@
 package io.github.tt432.kitchenkarrot.item;
 
 import io.github.tt432.kitchenkarrot.block.ModBlocks;
-import io.github.tt432.kitchenkarrot.client.cocktail.CocktailList;
 import io.github.tt432.kitchenkarrot.item.food.*;
-import net.minecraft.core.registries.Registries;
-import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.effect.MobEffects;
-import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraftforge.event.BuildCreativeModeTabContentsEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 
 import javax.annotation.ParametersAreNonnullByDefault;
-import java.util.stream.Collectors;
 
 import static io.github.tt432.kitchenkarrot.Kitchenkarrot.MOD_ID;
 
@@ -101,7 +92,7 @@ public class ModItems {
     public static final RegistryObject<Item> FRIED_PUMPKIN_CAKE = ITEMS.register("fried_pumpkin_cake", () -> new SnackItem(4, 3.2F, 24).setIndex(22));
     public static final RegistryObject<Item> SEED_PIE = ITEMS.register("seed_pie", () -> new SnackItem(4, 2.4F, 24).setIndex(23));
     public static final RegistryObject<Item> RICE_CAKE = ITEMS.register("rice_cake", () -> new SnackItem(4, 4, 18).setIndex(85));
-    public static final RegistryObject<Item> LEAFY_FRESH_CHOCOLATE = ITEMS.register("leafy_fresh_chocolate", () -> new SnackItem(2, 4.8F, 18).setIndex(86));
+    public static final RegistryObject<Item> VERDANT_NAMA_CHOCO = ITEMS.register("leafy_fresh_chocolate", () -> new SnackItem(2, 4.8F, 18).setIndex(86));
     public static final RegistryObject<Item> BACON_WRAPPED_POTATO = ITEMS.register("bacon_wrapped_potato", () -> new SnackItem(5, 3.6F, 24, 64).setIndex(43));
 
     public static final RegistryObject<Item> LIGHT_SODA = ITEMS.register("light_soda", () -> new SnackDrinkItem(1, 0, 24).setIndex(119));

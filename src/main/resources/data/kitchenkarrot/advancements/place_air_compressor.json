@@ -19,7 +19,12 @@
     "air_compressor": {
       "trigger": "minecraft:placed_block",
       "conditions": {
-        "block": "kitchenkarrot:air_compressor"
+        "location": [
+          {
+            "block": "kitchenkarrot:air_compressor",
+            "condition": "minecraft:block_state_property"
+          }
+        ]
       }
     }
   },
