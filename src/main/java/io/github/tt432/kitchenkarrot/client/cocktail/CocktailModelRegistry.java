@@ -1,6 +1,5 @@
 package io.github.tt432.kitchenkarrot.client.cocktail;
 
-import io.github.tt432.kitchenkarrot.Kitchenkarrot;
 import io.github.tt432.kitchenkarrot.util.json.JsonUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.resources.model.BakedModel;
@@ -9,7 +8,6 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.resources.Resource;
 import net.minecraft.server.packs.resources.ResourceManager;
 import net.minecraftforge.client.event.ModelEvent;
-import net.minecraftforge.fml.common.Mod;
 
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -20,7 +18,6 @@ import java.util.Optional;
 /**
  * @author DustW
  **/
-@Mod.EventBusSubscriber(modid = Kitchenkarrot.MOD_ID)
 public class CocktailModelRegistry {
 
     private static final Map<ResourceLocation, BakedModel> MODEL_MAP = new HashMap<>();
