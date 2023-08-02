@@ -178,49 +178,7 @@ public class ModItems {
     }
 
 
-    @Mod.EventBusSubscriber(modid = MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD)
-    public static class ModTabs {
-        public static final DeferredRegister<CreativeModeTab> TABS = DeferredRegister.create(Registries.CREATIVE_MODE_TAB, MOD_ID);
-        public static final RegistryObject<CreativeModeTab> COCKTAIL_TAB = TABS.register("cocktail", () -> CreativeModeTab.builder()
-                .icon(() -> new ItemStack(ModItems.SHAKER.get()))
-                .title(Component.translatable("itemGroup.kitchenkarrot.cocktail"))
-                .build());
-        public static final RegistryObject<CreativeModeTab> MAIN_TAB = TABS.register("main", () -> CreativeModeTab.builder()
-                .icon(() -> new ItemStack(ModItems.CARROT_SPICES.get()))
-                .title(Component.translatable("itemGroup.kitchenkarrot.main"))
-                .build());
-
-        @SubscribeEvent
-        public static void addCreative(BuildCreativeModeTabContentsEvent event) {
-            if (event.getTab() == ModTabs.COCKTAIL_TAB.get()) {
-                for (String cocktail : CocktailList.INSTANCE.cocktails) {
-                    ItemStack itemStack = new ItemStack(COCKTAIL.get());
-                    CocktailItem.setCocktail(itemStack, new ResourceLocation(cocktail));
-                    event.accept(itemStack);
-                }
-            }
-            if (event.getTab() == ModTabs.MAIN_TAB.get()) {
-                event.acceptAll(ITEMS.getEntries()
-                        .stream()
-                        .filter(reg -> reg != COCKTAIL && reg != FOOD_FILLED_PLATE)
-                        .map(RegistryObject::get)
-                        .sorted((item, compare) -> {
-                            if (item instanceof IndexItem indexItem) {
-                                return indexItem.getIndex();
-                            }
-                            return 0;
-                        })
-                        .map(Item::getDefaultInstance)
-                        .collect(Collectors.toList()));
-                event.acceptAll(ModBlockItems.BLOCK_ITEMS.getEntries()
-                        .stream()
-                        .map(reg -> reg.get().getDefaultInstance())
-                        .collect(Collectors.toList()));
-            }
-        }
-    }
-
-//    public static final CreativeModeTab COCKTAIL_TAB = new CreativeModeTab(MOD_ID + ".cocktail") {
+    //    public static final CreativeModeTab COCKTAIL_TAB = new CreativeModeTab(MOD_ID + ".cocktail") {
 //        @NotNull
 //        @Override
 //        public ItemStack makeIcon() {
