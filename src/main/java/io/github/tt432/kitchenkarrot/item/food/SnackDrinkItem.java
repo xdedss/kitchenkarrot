@@ -1,13 +1,13 @@
 package io.github.tt432.kitchenkarrot.item.food;
 
 import io.github.tt432.kitchenkarrot.item.EffectEntry;
-import io.github.tt432.kitchenkarrot.item.IndexItem;
+import io.github.tt432.kitchenkarrot.item.ModBaseItem;
 import io.github.tt432.kitchenkarrot.item.ModItems;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.UseAnim;
 import org.jetbrains.annotations.NotNull;
 
-public class SnackDrinkItem extends IndexItem {
+public class SnackDrinkItem extends ModBaseItem {
     int tick;
 
     public SnackDrinkItem(int nutrition, float saturation, int tick, EffectEntry... effectEntries) {
@@ -20,11 +20,6 @@ public class SnackDrinkItem extends IndexItem {
         return tick;
     }
 
-    @Override
-    public SnackDrinkItem setIndex(int index) {
-        super.setIndex(index);
-        return this;
-    }
 
     @Override
     @NotNull

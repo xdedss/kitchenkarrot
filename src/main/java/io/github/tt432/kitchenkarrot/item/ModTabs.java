@@ -163,6 +163,8 @@ public class ModTabs {
             event.accept(ModItems.COOKED_VEGAN_PORK);
             event.accept(ModItems.RAW_VEGAN_BEEF);
             event.accept(ModItems.COOKED_VEGAN_BEEF);
+
+            event.accept(ModItems.PLATE_PIECES);
         }
     }
 }

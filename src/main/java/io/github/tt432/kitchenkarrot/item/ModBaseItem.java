@@ -11,22 +11,9 @@ import java.util.List;
 
 import static io.github.tt432.kitchenkarrot.block.PlateHolderMap.plateHolder;
 
-public class IndexItem extends Item {
-    private int index;
-    public int getIndex() {
-        return index;
-    }
-
-    public IndexItem setIndex(int index) {
-        this.index = index;
-        return this;
-    }
-    public IndexItem(Properties pProperties) {
+public class ModBaseItem extends Item {
+    public ModBaseItem(Properties pProperties) {
         super(pProperties);
-    }
-    public IndexItem(Properties pProperties,int index) {
-        super(pProperties);
-        this.setIndex(index);
     }
 
     private boolean canPutOnPlate(){

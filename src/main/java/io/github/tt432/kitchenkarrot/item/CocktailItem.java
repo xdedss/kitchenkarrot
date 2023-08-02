@@ -38,17 +38,6 @@ public class CocktailItem extends Item {
         super(ModItems.defaultProperties().food(new FoodProperties.Builder().alwaysEat().build()));
     }
 
-//    @Override
-//    public void fillItemCategory(CreativeModeTab p_41391_, NonNullList<ItemStack> itemStackNonNullList) {
-//        if (p_41391_ == ModItems.COCKTAIL_TAB) {
-//            for (String cocktail : CocktailList.INSTANCE.cocktails) {
-//                ItemStack stack = new ItemStack(this);
-//                setCocktail(stack, new ResourceLocation(cocktail));
-//                itemStackNonNullList.add(stack);
-//            }
-//        }
-//    }
-
     public static ItemStack unknownCocktail() {
         var stack = new ItemStack(ModItems.COCKTAIL.get());
         setCocktail(stack, UNKNOWN_COCKTAIL);
