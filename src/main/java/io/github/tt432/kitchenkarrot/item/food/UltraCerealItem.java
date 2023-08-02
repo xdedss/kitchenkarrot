@@ -1,6 +1,6 @@
 package io.github.tt432.kitchenkarrot.item.food;
 
-import io.github.tt432.kitchenkarrot.item.ModBaseItem;
+import io.github.tt432.kitchenkarrot.item.ModFood;
 import io.github.tt432.kitchenkarrot.item.ModItems;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
@@ -10,7 +10,7 @@ import net.minecraft.world.item.Rarity;
 import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.NotNull;
 
-public class UltraCerealItem extends ModBaseItem {
+public class UltraCerealItem extends ModFood {
     public UltraCerealItem(int nutrition, float saturation) {
         super(FoodUtil.food(ModItems.defaultProperties(), nutrition, saturation).rarity(Rarity.UNCOMMON).stacksTo(16));
     }

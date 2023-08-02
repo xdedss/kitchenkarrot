@@ -140,17 +140,17 @@ public class ModItems {
     public static final RegistryObject<Item> ACORN_WINE_BASE = ITEMS.register("acorn_wine_base", BaseLiquorItem::new);
 
     public static final RegistryObject<Item> COCKTAIL = ITEMS.register("cocktail", CocktailItem::new);
-    public static final RegistryObject<Item> WATER = ITEMS.register("water", () -> new ModBaseItem(defaultProperties()));
-    public static final RegistryObject<Item> MILK = ITEMS.register("milk", () -> new ModBaseItem(defaultProperties()));
-    public static final RegistryObject<Item> EMPTY_CAN = ITEMS.register("empty_can", () -> new ModBaseItem(defaultProperties()));
-    public static final RegistryObject<Item> ICE_CUBES = ITEMS.register("ice_cubes", () -> new ModBaseItem(defaultProperties()));
-    public static final RegistryObject<Item> CARROT_SPICES = ITEMS.register("carrot_spices", () -> new ModBaseItem(defaultProperties()));
-    public static final RegistryObject<Item> ACORN = ITEMS.register("acorn", () -> new ModBaseItem(FoodUtil.food(defaultProperties(), 2, 1F)));
-    public static final RegistryObject<Item> DUNGEON_PIZZA = ITEMS.register("dungeon_pizza", () -> new ModBaseItem(defaultProperties()));
-    public static final RegistryObject<Item> FEAST_PIZZA = ITEMS.register("feast_pizza", () -> new ModBaseItem(defaultProperties()));
-    public static final RegistryObject<Item> SHINY_PIZZA = ITEMS.register("shiny_pizza", () -> new ModBaseItem(defaultProperties()));
-    public static final RegistryObject<Item> RAW_SWEET_LOAF = ITEMS.register("raw_sweet_loaf", () -> new ModBaseItem(defaultProperties()));
-    public static final RegistryObject<Item> PLATE_PIECES = ITEMS.register("plate_pieces", () -> new ModBaseItem(defaultProperties()));
+    public static final RegistryObject<Item> WATER = ITEMS.register("water", () -> new Item(defaultProperties()));
+    public static final RegistryObject<Item> MILK = ITEMS.register("milk", () -> new Item(defaultProperties()));
+    public static final RegistryObject<Item> EMPTY_CAN = ITEMS.register("empty_can", () -> new Item(defaultProperties()));
+    public static final RegistryObject<Item> ICE_CUBES = ITEMS.register("ice_cubes", () -> new Item(defaultProperties()));
+    public static final RegistryObject<Item> CARROT_SPICES = ITEMS.register("carrot_spices", () -> new Item(defaultProperties()));
+    public static final RegistryObject<Item> ACORN = ITEMS.register("acorn", () -> new Item(FoodUtil.food(defaultProperties(), 2, 1F)));
+    public static final RegistryObject<Item> DUNGEON_PIZZA = ITEMS.register("dungeon_pizza", () -> new Item(defaultProperties()));
+    public static final RegistryObject<Item> FEAST_PIZZA = ITEMS.register("feast_pizza", () -> new Item(defaultProperties()));
+    public static final RegistryObject<Item> SHINY_PIZZA = ITEMS.register("shiny_pizza", () -> new Item(defaultProperties()));
+    public static final RegistryObject<Item> RAW_SWEET_LOAF = ITEMS.register("raw_sweet_loaf", () -> new Item(defaultProperties()));
+    public static final RegistryObject<Item> PLATE_PIECES = ITEMS.register("plate_pieces", () -> new Item(defaultProperties()));
 
     public static Item.Properties defaultProperties() {
         return new Item.Properties();

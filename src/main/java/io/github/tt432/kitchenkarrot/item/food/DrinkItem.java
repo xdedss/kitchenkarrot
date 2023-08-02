@@ -1,14 +1,14 @@
 package io.github.tt432.kitchenkarrot.item.food;
 
 import io.github.tt432.kitchenkarrot.item.EffectEntry;
-import io.github.tt432.kitchenkarrot.item.ModBaseItem;
+import io.github.tt432.kitchenkarrot.item.ModFood;
 import io.github.tt432.kitchenkarrot.item.ModItems;
 import net.minecraft.world.food.FoodProperties;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.UseAnim;
 import org.jetbrains.annotations.NotNull;
 
-public class DrinkItem extends ModBaseItem {
+public class DrinkItem extends ModFood {
     public DrinkItem(float pSaturationModifier) {
         super(ModItems.defaultProperties().food(new FoodProperties.Builder().saturationMod(pSaturationModifier).build()).stacksTo(16));
     }

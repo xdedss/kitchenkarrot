@@ -32,7 +32,7 @@ import java.util.List;
 import java.util.Objects;
 
 @ParametersAreNonnullByDefault
-public class EmptyPlateItem extends ModBaseItem {
+public class EmptyPlateItem extends ModFood {
 
     public EmptyPlateItem(Properties properties) {
         super(properties);

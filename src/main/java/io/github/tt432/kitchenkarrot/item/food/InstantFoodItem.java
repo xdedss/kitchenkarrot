@@ -4,14 +4,14 @@ import io.github.tt432.kitchenkarrot.config.ModCommonConfigs;
 import io.github.tt432.kitchenkarrot.entity.CanEntity;
 import io.github.tt432.kitchenkarrot.entity.ModEntitys;
 import io.github.tt432.kitchenkarrot.item.EffectEntry;
-import io.github.tt432.kitchenkarrot.item.ModBaseItem;
+import io.github.tt432.kitchenkarrot.item.ModFood;
 import io.github.tt432.kitchenkarrot.item.ModItems;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.NotNull;
 
-public class InstantFoodItem extends ModBaseItem {
+public class InstantFoodItem extends ModFood {
     public InstantFoodItem(int nutrition, float saturation, EffectEntry... effectEntries) {
         super(FoodUtil.effectFood(ModItems.defaultProperties(), nutrition, saturation,false, effectEntries));
     }
