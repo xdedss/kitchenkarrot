@@ -171,14 +171,10 @@ public class EmptyPlateItem extends ModFood {
         tooltip.add(Component.translatable("info.kitchenkarrot.text1"));
         tooltip.add(Component.translatable("info.kitchenkarrot.text2"));
         tooltip.add(Component.translatable("info.kitchenkarrot.text3"));
-//        tooltip.add(new TranslatableComponent("info.kitchenkarrot.text1"));
-//        tooltip.add(new TranslatableComponent("info.kitchenkarrot.text2"));
-//        tooltip.add(new TranslatableComponent("info.kitchenkarrot.text3"));
     }
 
     public Block getBlock() {
         return ModBlocks.PLATE.get();
-//        return ModBlocks.PLATE.get().delegate.get();
     }
 
     @Nullable

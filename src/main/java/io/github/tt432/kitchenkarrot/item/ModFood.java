@@ -39,7 +39,7 @@ public class ModFood extends Item {
     }
 
     @Override
-    public int getUseDuration(ItemStack p_41454_) {
+    public int getUseDuration(ItemStack stack) {
         return duration.time;
     }
 
@@ -55,7 +55,7 @@ public class ModFood extends Item {
 
     enum Duration {
         VeryFast(16), Fast(24), Normal(32), Slow(48), VerySlow(64);
-        private int time;
+        private final int time;
 
         Duration(int duration) {
             this.time = duration;

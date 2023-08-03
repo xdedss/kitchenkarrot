@@ -4,6 +4,7 @@ import com.google.gson.*;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.common.crafting.CraftingHelper;
+import net.minecraftforge.registries.ForgeRegistries;
 
 import java.lang.reflect.Type;
 
@@ -22,8 +23,7 @@ public class ItemStackSerializer implements JsonSerializer<ItemStack>, JsonDeser
         JsonObject result = new JsonObject();
         CompoundTag allTag = src.serializeNBT();
 
-        String item = src.getItem().getDescriptionId();
-//        String item = src.getItem().getRegistryName().toString();
+        String item = ForgeRegistries.ITEMS.getKey(src.getItem()).toString();
         result.addProperty("item", item);
 
         var tag = allTag.getCompound("tag");

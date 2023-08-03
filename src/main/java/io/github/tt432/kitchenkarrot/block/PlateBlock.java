@@ -26,6 +26,8 @@ import net.minecraft.world.level.block.RenderShape;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.StateDefinition;
+import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.storage.loot.LootParams;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
@@ -58,9 +60,11 @@ public class PlateBlock extends FacingEntityBlock<PlateBlockEntity> {
     }
 
     public static final VoxelShape SHAPE;
+    public static final BooleanProperty CREATIVE = BooleanProperty.create("creative");
 
     public PlateBlock(Properties properties) {
         super(properties);
+        this.registerDefaultState(defaultBlockState().setValue(CREATIVE, false));
     }
 
     @Override
@@ -87,31 +91,33 @@ public class PlateBlock extends FacingEntityBlock<PlateBlockEntity> {
         AtomicBoolean success = new AtomicBoolean(false);
         BlockEntity blockEntity = level.getBlockEntity(pos);
 
-        if (blockEntity != null) {
-            blockEntity.getCapability(ForgeCapabilities.ITEM_HANDLER).ifPresent(handler -> {
-                ItemStack heldItem = player.getItemInHand(hand);
-                ItemStack dishItem = handler.getStackInSlot(0);
-                if (player.isShiftKeyDown()) {
-                    if (heldItem.isEmpty()) {
-                        ItemStack stack = new ItemStack(this);
-                        blockEntity.saveToItem(stack);
-                        setPlate(stack, dishItem);
-                        //如果盘子中装有食物，则端起来时会显示"盘装的XXX"
-                        if (stack.getOrCreateTag().contains("plate_type") && !dishItem.is(Items.AIR)) {
-                            String inputName = dishItem.getDisplayName().getString().replace("[", "").replace("]", "");
-                            stack.setHoverName((Component.translatable("info.kitchenkarrot.dished", inputName)).setStyle(Style.EMPTY.withItalic(false)));
+        if (!state.getValue(CREATIVE) || player.isCreative()) {
+            if (blockEntity != null) {
+                blockEntity.getCapability(ForgeCapabilities.ITEM_HANDLER).ifPresent(handler -> {
+                    ItemStack heldItem = player.getItemInHand(hand);
+                    ItemStack dishItem = handler.getStackInSlot(0);
+                    if (player.isShiftKeyDown()) {
+                        if (heldItem.isEmpty()) {
+                            ItemStack stack = new ItemStack(this);
+                            blockEntity.saveToItem(stack);
+                            setPlate(stack, dishItem);
+                            //如果盘子中装有食物，则端起来时会显示"盘装的XXX"
+                            if (stack.getOrCreateTag().contains("plate_type") && !dishItem.is(Items.AIR)) {
+                                String inputName = dishItem.getDisplayName().getString().replace("[", "").replace("]", "");
+                                stack.setHoverName((Component.translatable("info.kitchenkarrot.dished", inputName)).setStyle(Style.EMPTY.withItalic(false)));
+                            }
+                            player.setItemInHand(hand, stack);
+                            level.setBlock(pos, Blocks.AIR.defaultBlockState(), Block.UPDATE_ALL_IMMEDIATE);
                         }
-                        player.setItemInHand(hand, stack);
-                        level.setBlock(pos, Blocks.AIR.defaultBlockState(), Block.UPDATE_ALL_IMMEDIATE);
+                    } else {
+                        if (hand == InteractionHand.MAIN_HAND) {
+                            success.set(interactWithDish(dishItem, heldItem, level, player, handler));
+                        } else if (!heldItem.isEmpty() && !success.get()) {
+                            success.set(interactWithDish(dishItem, heldItem, level, player, handler));
+                        }
                     }
-                } else {
-                    if (hand == InteractionHand.MAIN_HAND){
-                        success.set(interactWithDish(dishItem, heldItem, level, player, handler));
-                    } else if (!heldItem.isEmpty() && !success.get()){
-                        success.set(interactWithDish(dishItem, heldItem, level, player, handler));
-                    }
-                }
-            });
+                });
+            }
         }
 
         if (success.get()) {
@@ -120,13 +126,13 @@ public class PlateBlock extends FacingEntityBlock<PlateBlockEntity> {
         return InteractionResult.PASS;
     }
 
-    boolean canHoldItem(IItemHandler handler, ItemStack heldItem){
+    private boolean canHoldItem(IItemHandler handler, ItemStack heldItem){
         ItemStack dishItem = handler.getStackInSlot(0);
         return plateHolder.containsKey(heldItem.getItem()) &&
                 (dishItem.isEmpty() || (dishItem.is(heldItem.getItem()) && dishItem.getCount() < plateHolder.get(dishItem.getItem())));
     }
 
-    boolean interactWithDish(ItemStack dishItem, ItemStack heldItem,Level level, Player player, IItemHandler handler){
+    private boolean interactWithDish(ItemStack dishItem, ItemStack heldItem,Level level, Player player, IItemHandler handler){
         AtomicBoolean result = new AtomicBoolean(false);
             if (canHoldItem(handler, heldItem)) {
                 result.set(addToPlate(handler, heldItem, player));
@@ -136,7 +142,7 @@ public class PlateBlock extends FacingEntityBlock<PlateBlockEntity> {
         return result.get();
     }
 
-    boolean removeFromPlate(Level level, Player player, IItemHandler handler, ItemStack input, ItemStack heldItem) {
+    private boolean removeFromPlate(Level level, Player player, IItemHandler handler, ItemStack input, ItemStack heldItem) {
         Optional<PlateRecipe> recipe = level.getRecipeManager()
                 .getAllRecipesFor(RecipeTypes.PLATE.get())
                 .stream()
@@ -164,7 +170,7 @@ public class PlateBlock extends FacingEntityBlock<PlateBlockEntity> {
         return result.get();
     }
 
-    boolean addToPlate( IItemHandler handler, ItemStack heldItem, Player player) {
+    private boolean addToPlate( IItemHandler handler, ItemStack heldItem, Player player) {
         AtomicBoolean result = new AtomicBoolean(false);
         ItemStack Stack = heldItem.split(1);
         handler.insertItem(0, Stack, false);
@@ -175,10 +181,9 @@ public class PlateBlock extends FacingEntityBlock<PlateBlockEntity> {
         return result.get();
     }
 
-    boolean giveRecipeResult(Level level, PlateRecipe recipe, IItemHandler handler) {
+    private boolean giveRecipeResult(Level level, PlateRecipe recipe, IItemHandler handler) {
         Optional<PlateRecipe> outputRecipe = level.getRecipeManager().getAllRecipesFor(RecipeTypes.PLATE.get())
                 .stream().filter(or -> or.matches(Collections.singletonList(recipe.getResultItem(RegistryAccess.EMPTY)))).findFirst();
-//                .stream().filter(or -> or.matches(Collections.singletonList(recipe.getResultItem()))).findFirst();
 
         AtomicBoolean result = new AtomicBoolean(false);
 
@@ -208,5 +213,11 @@ public class PlateBlock extends FacingEntityBlock<PlateBlockEntity> {
     public void playerWillDestroy(Level pLevel, BlockPos pPos, BlockState pState, Player pPlayer) {
         pLevel.playSound(null, pPos, SoundEvents.GLASS_BREAK, SoundSource.BLOCKS,1,1);
         super.playerWillDestroy(pLevel, pPos, pState, pPlayer);
+    }
+
+    @Override
+    protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
+        super.createBlockStateDefinition(builder);
+        builder.add(CREATIVE);
     }
 }
