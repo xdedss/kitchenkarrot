@@ -1,4 +1,4 @@
-package io.github.tt432.kitchenkarrot.menu.reg;
+package io.github.tt432.kitchenkarrot.registries;
 
 import io.github.tt432.kitchenkarrot.Kitchenkarrot;
 import io.github.tt432.kitchenkarrot.menu.AirCompressorMenu;

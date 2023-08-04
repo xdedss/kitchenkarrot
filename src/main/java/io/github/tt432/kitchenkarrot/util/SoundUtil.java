@@ -1,6 +1,6 @@
 package io.github.tt432.kitchenkarrot.util;
 
-import io.github.tt432.kitchenkarrot.sound.ModSoundEvents;
+import io.github.tt432.kitchenkarrot.registries.ModSoundEvents;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.resources.sounds.SimpleSoundInstance;
 import net.minecraft.client.resources.sounds.SoundInstance;

@@ -2,7 +2,7 @@ package io.github.tt432.kitchenkarrot.item;
 
 import io.github.tt432.kitchenkarrot.capability.ShakerCapabilityProvider;
 import io.github.tt432.kitchenkarrot.menu.ShakerMenu;
-import io.github.tt432.kitchenkarrot.sound.ModSoundEvents;
+import io.github.tt432.kitchenkarrot.registries.ModSoundEvents;
 import io.github.tt432.kitchenkarrot.util.SoundUtil;
 import net.minecraft.client.Minecraft;
 import net.minecraft.nbt.CompoundTag;

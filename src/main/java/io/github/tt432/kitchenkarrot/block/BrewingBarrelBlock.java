@@ -1,7 +1,7 @@
 package io.github.tt432.kitchenkarrot.block;
 
 import io.github.tt432.kitchenkarrot.blockentity.BrewingBarrelBlockEntity;
-import io.github.tt432.kitchenkarrot.blockentity.ModBlockEntities;
+import io.github.tt432.kitchenkarrot.registries.ModBlockEntities;
 import io.github.tt432.kitchenkarrot.registries.ModItems;
 import net.minecraft.core.BlockPos;
 import net.minecraft.sounds.SoundEvents;

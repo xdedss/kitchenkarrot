@@ -1,4 +1,4 @@
-package io.github.tt432.kitchenkarrot.sound;
+package io.github.tt432.kitchenkarrot.registries;
 
 import io.github.tt432.kitchenkarrot.Kitchenkarrot;
 import net.minecraft.resources.ResourceLocation;

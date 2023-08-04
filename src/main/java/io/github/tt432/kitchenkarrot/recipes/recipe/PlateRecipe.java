@@ -2,8 +2,8 @@ package io.github.tt432.kitchenkarrot.recipes.recipe;
 
 import com.google.gson.annotations.Expose;
 import io.github.tt432.kitchenkarrot.recipes.base.BaseRecipe;
-import io.github.tt432.kitchenkarrot.recipes.register.RecipeSerializers;
-import io.github.tt432.kitchenkarrot.recipes.register.RecipeTypes;
+import io.github.tt432.kitchenkarrot.registries.RecipeSerializers;
+import io.github.tt432.kitchenkarrot.registries.RecipeTypes;
 import io.github.tt432.kitchenkarrot.tag.ModItemTags;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.resources.ResourceLocation;

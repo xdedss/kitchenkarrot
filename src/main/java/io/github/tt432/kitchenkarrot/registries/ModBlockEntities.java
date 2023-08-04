@@ -1,6 +1,10 @@
-package io.github.tt432.kitchenkarrot.blockentity;
+package io.github.tt432.kitchenkarrot.registries;
 
 import io.github.tt432.kitchenkarrot.Kitchenkarrot;
+import io.github.tt432.kitchenkarrot.blockentity.AirCompressorBlockEntity;
+import io.github.tt432.kitchenkarrot.blockentity.BrewingBarrelBlockEntity;
+import io.github.tt432.kitchenkarrot.blockentity.CoasterBlockEntity;
+import io.github.tt432.kitchenkarrot.blockentity.PlateBlockEntity;
 import io.github.tt432.kitchenkarrot.registries.ModBlocks;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraftforge.registries.DeferredRegister;

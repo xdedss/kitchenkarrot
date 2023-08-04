@@ -14,6 +14,6 @@ public class ModEntities {
 
     public static final RegistryObject<EntityType<CanEntity>> CAN = ENTITYS.register("can", () -> EntityType.Builder
             .of(CanEntity::new, MobCategory.MISC)
-            .sized(0.5f, 0.5f).build("can")
+            .sized(0.25f, 0.25f).build("can")
     );
 }

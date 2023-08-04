@@ -1,11 +1,11 @@
 package io.github.tt432.kitchenkarrot.block;
 
-import io.github.tt432.kitchenkarrot.blockentity.ModBlockEntities;
+import io.github.tt432.kitchenkarrot.registries.ModBlockEntities;
 import io.github.tt432.kitchenkarrot.blockentity.PlateBlockEntity;
 import io.github.tt432.kitchenkarrot.registries.ModItems;
 import io.github.tt432.kitchenkarrot.recipes.recipe.PlateRecipe;
-import io.github.tt432.kitchenkarrot.recipes.register.RecipeTypes;
-import io.github.tt432.kitchenkarrot.sound.ModSoundEvents;
+import io.github.tt432.kitchenkarrot.registries.RecipeTypes;
+import io.github.tt432.kitchenkarrot.registries.ModSoundEvents;
 import io.github.tt432.kitchenkarrot.tag.ModItemTags;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.RegistryAccess;

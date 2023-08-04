@@ -3,7 +3,7 @@ package io.github.tt432.kitchenkarrot.gui.reg;
 import io.github.tt432.kitchenkarrot.gui.AirCompressorGui;
 import io.github.tt432.kitchenkarrot.gui.BrewingBarrelGui;
 import io.github.tt432.kitchenkarrot.gui.ShakerGui;
-import io.github.tt432.kitchenkarrot.menu.reg.ModMenuTypes;
+import io.github.tt432.kitchenkarrot.registries.ModMenuTypes;
 import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.eventbus.api.SubscribeEvent;

@@ -1,9 +1,11 @@
-package io.github.tt432.kitchenkarrot.recipes.register;
+package io.github.tt432.kitchenkarrot.recipes;
 
 import io.github.tt432.kitchenkarrot.Kitchenkarrot;
 import io.github.tt432.kitchenkarrot.recipes.base.BaseRecipe;
 import io.github.tt432.kitchenkarrot.recipes.recipe.AirCompressorRecipe;
 import io.github.tt432.kitchenkarrot.recipes.recipe.CocktailRecipe;
+import io.github.tt432.kitchenkarrot.registries.RecipeSerializers;
+import io.github.tt432.kitchenkarrot.registries.RecipeTypes;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.Level;
