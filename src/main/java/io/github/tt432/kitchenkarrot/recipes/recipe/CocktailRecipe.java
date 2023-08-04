@@ -3,7 +3,7 @@ package io.github.tt432.kitchenkarrot.recipes.recipe;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 import io.github.tt432.kitchenkarrot.item.CocktailItem;
-import io.github.tt432.kitchenkarrot.item.ModItems;
+import io.github.tt432.kitchenkarrot.registries.ModItems;
 import io.github.tt432.kitchenkarrot.recipes.base.BaseRecipe;
 import io.github.tt432.kitchenkarrot.recipes.object.EffectStack;
 import io.github.tt432.kitchenkarrot.recipes.register.RecipeSerializers;

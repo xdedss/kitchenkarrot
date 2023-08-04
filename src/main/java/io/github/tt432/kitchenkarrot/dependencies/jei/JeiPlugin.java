@@ -7,7 +7,7 @@ import io.github.tt432.kitchenkarrot.dependencies.jei.category.CocktailRecipeCat
 import io.github.tt432.kitchenkarrot.gui.AirCompressorGui;
 import io.github.tt432.kitchenkarrot.gui.BrewingBarrelGui;
 import io.github.tt432.kitchenkarrot.item.ModBlockItems;
-import io.github.tt432.kitchenkarrot.item.ModItems;
+import io.github.tt432.kitchenkarrot.registries.ModItems;
 import io.github.tt432.kitchenkarrot.menu.AirCompressorMenu;
 import io.github.tt432.kitchenkarrot.menu.BrewingBarrelMenu;
 import io.github.tt432.kitchenkarrot.menu.ShakerMenu;

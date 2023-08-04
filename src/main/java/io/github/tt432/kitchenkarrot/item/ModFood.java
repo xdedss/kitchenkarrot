@@ -1,13 +1,16 @@
 package io.github.tt432.kitchenkarrot.item;
 
 
+import io.github.tt432.kitchenkarrot.registries.ModItems;
 import net.minecraft.network.chat.Component;
-import net.minecraft.world.item.Item;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.TooltipFlag;
-import net.minecraft.world.item.UseAnim;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.*;
 import net.minecraft.world.level.Level;
+import org.jetbrains.annotations.NotNull;
 
+import javax.annotation.Nullable;
+import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.List;
 
 import static io.github.tt432.kitchenkarrot.block.PlateHolderMap.plateHolder;
@@ -15,10 +18,26 @@ import static io.github.tt432.kitchenkarrot.block.PlateHolderMap.plateHolder;
 public class ModFood extends Item {
     private UseAnim foodType = UseAnim.EAT;
     private Duration duration = Duration.Normal;
+    private Item returnItem;
 
 
     public ModFood(Properties pProperties) {
         super(pProperties);
+    }
+    public ModFood(int nutrition, float saturation, EffectEntry... effectEntries) {
+        this(nutrition, saturation, false, effectEntries);
+    }
+    public ModFood(int nutrition, float saturation, boolean alwaysEat, EffectEntry... effectEntries) {
+        super(FoodUtil.effectFood(ModItems.defaultProperties(), nutrition, saturation, alwaysEat, effectEntries));
+    }
+    public ModFood(int nutrition, float saturation, int stackSize, EffectEntry... effectEntries) {
+        this(nutrition, saturation, stackSize, false, effectEntries);
+    }
+    public ModFood(int nutrition, float saturation, int stackSize, boolean alwaysEat, EffectEntry... effectEntries) {
+        super(FoodUtil.effectFood(ModItems.defaultProperties(), nutrition, saturation, alwaysEat, effectEntries).stacksTo(stackSize));
+    }
+    public static ModFood drinkItem(int nutrition, float saturation, EffectEntry... effectEntries) {
+        return new ModFood(nutrition, saturation, true, effectEntries).setDrinkAnim();
     }
     private boolean canPutOnPlate(){
         return plateHolder.containsKey(this);
@@ -26,7 +45,8 @@ public class ModFood extends Item {
 
 
     @Override
-    public void appendHoverText(ItemStack pStack, Level pLevel, List<Component> tooltip, TooltipFlag pIsAdvanced) {
+    @ParametersAreNonnullByDefault
+    public void appendHoverText(ItemStack pStack, @Nullable Level pLevel, List<Component> tooltip, TooltipFlag pIsAdvanced) {
         super.appendHoverText(pStack, pLevel, tooltip, pIsAdvanced);
         if (this.canPutOnPlate()){
             tooltip.add(Component.translatable("info.kitchenkarrot.can_be_dished"));
@@ -34,6 +54,7 @@ public class ModFood extends Item {
     }
 
     @Override
+    @NotNull
     public UseAnim getUseAnimation(ItemStack stack) {
         return foodType;
     }
@@ -43,18 +64,45 @@ public class ModFood extends Item {
         return duration.time;
     }
 
-    public ModFood setFoodType(UseAnim foodType) {
+    @Override
+    public ItemStack finishUsingItem(@NotNull ItemStack stack, @NotNull Level level, LivingEntity livingEntity) {
+        stack = livingEntity.eat(level, stack);
+        if (returnItem == null) return stack;
+        if (livingEntity instanceof Player player) {
+            player.getInventory().add(new ItemStack(returnItem));
+        }
+        return stack;
+    }
+
+    public ModFood setFoodType(@NotNull UseAnim foodType) {
         this.foodType = foodType;
         return this;
     }
+    public ModFood setDrinkAnim() {
+        setFoodType(UseAnim.DRINK);
+        return this;
+    }
 
-    public ModFood setDuration(Duration duration) {
+    public ModFood setDuration(@NotNull Duration duration) {
         this.duration = duration;
         return this;
     }
 
-    enum Duration {
-        VeryFast(16), Fast(24), Normal(32), Slow(48), VerySlow(64);
+    public ModFood setBowlFood() {
+        setReturnItem(Items.BOWL);
+        return this;
+    }
+    public ModFood setBottleFood() {
+        setReturnItem(Items.GLASS_BOTTLE);
+        return this;
+    }
+    public ModFood setReturnItem(@NotNull Item item) {
+        this.returnItem = item;
+        return this;
+    }
+
+    public enum Duration {
+        SunflowerKelp(12), VeryFast(16), Fast(24), Normal(32), Slow(48), VerySlow(64), CurryUdon(96);
         private final int time;
 
         Duration(int duration) {

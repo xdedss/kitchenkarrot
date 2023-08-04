@@ -1,6 +1,6 @@
 package io.github.tt432.kitchenkarrot.client;
 
-import io.github.tt432.kitchenkarrot.block.ModBlocks;
+import io.github.tt432.kitchenkarrot.registries.ModBlocks;
 import net.minecraft.client.renderer.ItemBlockRenderTypes;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraftforge.api.distmarker.Dist;

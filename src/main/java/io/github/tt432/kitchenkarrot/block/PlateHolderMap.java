@@ -1,7 +1,7 @@
 package io.github.tt432.kitchenkarrot.block;
 
 import com.google.common.collect.ImmutableMap;
-import io.github.tt432.kitchenkarrot.item.ModItems;
+import io.github.tt432.kitchenkarrot.registries.ModItems;
 import net.minecraft.world.item.Item;
 
 import java.util.Map;

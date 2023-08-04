@@ -1,4 +1,4 @@
-package io.github.tt432.kitchenkarrot.item.food;
+package io.github.tt432.kitchenkarrot.item;
 
 import io.github.tt432.kitchenkarrot.item.EffectEntry;
 import net.minecraft.world.food.FoodProperties;

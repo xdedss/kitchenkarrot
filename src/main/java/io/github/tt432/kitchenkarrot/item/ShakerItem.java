@@ -25,7 +25,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.Objects;
 
-import static io.github.tt432.kitchenkarrot.item.ModItems.cocktailProperties;
+import static io.github.tt432.kitchenkarrot.registries.ModItems.cocktailProperties;
 
 /**
  * @author DustW

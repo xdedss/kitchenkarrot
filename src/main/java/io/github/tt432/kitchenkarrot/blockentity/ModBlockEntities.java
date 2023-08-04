@@ -1,7 +1,7 @@
 package io.github.tt432.kitchenkarrot.blockentity;
 
 import io.github.tt432.kitchenkarrot.Kitchenkarrot;
-import io.github.tt432.kitchenkarrot.block.ModBlocks;
+import io.github.tt432.kitchenkarrot.registries.ModBlocks;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;

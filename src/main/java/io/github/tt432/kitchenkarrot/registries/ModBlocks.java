@@ -1,6 +1,10 @@
-package io.github.tt432.kitchenkarrot.block;
+package io.github.tt432.kitchenkarrot.registries;
 
 import io.github.tt432.kitchenkarrot.Kitchenkarrot;
+import io.github.tt432.kitchenkarrot.block.AirCompressorBlock;
+import io.github.tt432.kitchenkarrot.block.BrewingBarrelBlock;
+import io.github.tt432.kitchenkarrot.block.CoasterBlock;
+import io.github.tt432.kitchenkarrot.block.PlateBlock;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.block.Block;

@@ -1,21 +1,18 @@
-package io.github.tt432.kitchenkarrot.item;
+package io.github.tt432.kitchenkarrot.registries;
 
-import io.github.tt432.kitchenkarrot.block.ModBlocks;
 import io.github.tt432.kitchenkarrot.client.cocktail.CocktailList;
+import io.github.tt432.kitchenkarrot.item.CocktailItem;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.CreativeModeTabs;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.event.BuildCreativeModeTabContentsEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.RegistryObject;
-
-import java.util.stream.Collectors;
 
 import static io.github.tt432.kitchenkarrot.Kitchenkarrot.MOD_ID;
 

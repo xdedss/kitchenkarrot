@@ -1,6 +1,6 @@
 package io.github.tt432.kitchenkarrot.item;
 
-import io.github.tt432.kitchenkarrot.block.ModBlocks;
+import io.github.tt432.kitchenkarrot.registries.ModBlocks;
 import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;

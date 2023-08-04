@@ -2,7 +2,7 @@ package io.github.tt432.kitchenkarrot.block;
 
 import io.github.tt432.kitchenkarrot.blockentity.BrewingBarrelBlockEntity;
 import io.github.tt432.kitchenkarrot.blockentity.ModBlockEntities;
-import io.github.tt432.kitchenkarrot.item.ModItems;
+import io.github.tt432.kitchenkarrot.registries.ModItems;
 import net.minecraft.core.BlockPos;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.InteractionHand;
@@ -36,7 +36,7 @@ public class BrewingBarrelBlock extends FacingGuiEntityBlock<BrewingBarrelBlockE
 
     public static final VoxelShape SHAPE_Z = Block.box(1, 1, 0, 15, 15, 16);
     public static final VoxelShape SHAPE_X = Block.box(0, 1, 1, 16, 15, 15);
-    protected BrewingBarrelBlock(Properties p_49224_) {
+    public BrewingBarrelBlock(Properties p_49224_) {
         super(p_49224_);
         this.registerDefaultState(defaultBlockState().setValue(OPEN, false));
     }

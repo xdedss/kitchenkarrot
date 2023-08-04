@@ -1,7 +1,6 @@
-package io.github.tt432.kitchenkarrot.item.food;
+package io.github.tt432.kitchenkarrot.item;
 
-import io.github.tt432.kitchenkarrot.item.ModFood;
-import io.github.tt432.kitchenkarrot.item.ModItems;
+import io.github.tt432.kitchenkarrot.registries.ModItems;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -14,7 +13,7 @@ public class PopacornItem extends ModFood {
     }
 
     @Override
-    public ItemStack finishUsingItem(@NotNull ItemStack itemStack, @NotNull Level level, @NotNull LivingEntity livingEntity) {
+    public @NotNull ItemStack finishUsingItem(@NotNull ItemStack itemStack, @NotNull Level level, @NotNull LivingEntity livingEntity) {
         if (livingEntity instanceof Player pl) {
             itemStack.hurtAndBreak(1,livingEntity,(player) -> player.broadcastBreakEvent(player.getUsedItemHand()));
             if (!pl.isCreative()) {

@@ -4,6 +4,7 @@ import io.github.tt432.kitchenkarrot.Kitchenkarrot;
 import io.github.tt432.kitchenkarrot.recipes.object.EffectStack;
 import io.github.tt432.kitchenkarrot.recipes.recipe.CocktailRecipe;
 import io.github.tt432.kitchenkarrot.recipes.register.RecipeTypes;
+import io.github.tt432.kitchenkarrot.registries.ModItems;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;

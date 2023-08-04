@@ -14,7 +14,7 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 public class AirCompressorBlock extends FacingGuiEntityBlock<AirCompressorBlockEntity>{
     public static final VoxelShape SHAPE = Block.box(2, 0, 2, 16 - 2, 15, 16 - 2);
 
-    protected AirCompressorBlock() {
+    public AirCompressorBlock() {
         super(BlockBehaviour.Properties.of()
                 .strength(2.0f, 2.0f)
                 .noOcclusion());
