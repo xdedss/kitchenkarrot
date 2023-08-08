@@ -13,6 +13,7 @@ import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.state.BlockState;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Collections;
@@ -58,11 +59,17 @@ public class CocktailBakedModel implements BakedModel {
     @Override
     public ItemOverrides getOverrides() {
         return new ItemOverrides() {
-            @Nullable
+            @NotNull
             @Override
-            public BakedModel resolve(BakedModel p_173465_, ItemStack p_173466_, @Nullable ClientLevel p_173467_, @Nullable LivingEntity p_173468_, int p_173469_) {
+            public BakedModel resolve(@NotNull BakedModel p_173465_, @NotNull ItemStack p_173466_, @Nullable ClientLevel p_173467_, @Nullable LivingEntity p_173468_, int p_173469_) {
                 ResourceLocation cocktail = CocktailItem.getCocktail(p_173466_);
-                BakedModel model = Minecraft.getInstance().getModelManager().getModel(to(cocktail));
+                BakedModel model;
+                if (cocktail == null) {
+                    model = Minecraft.getInstance().getModelManager().getMissingModel();
+                } else {
+                    model = Minecraft.getInstance().getModelManager().getModel(to(cocktail));
+                }
+
                 return model;
             }
         };
