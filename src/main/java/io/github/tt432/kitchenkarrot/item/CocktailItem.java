@@ -17,6 +17,7 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.UseAnim;
+import net.minecraft.world.item.alchemy.PotionUtils;
 import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -101,8 +102,11 @@ public class CocktailItem extends Item {
             CocktailRecipe recipe = get(level, Objects.requireNonNull(getCocktail(stack)));
             if (recipe != null) {
                 tooltip.add(Component.translatable("item.cocktail.author", recipe.author));
+                List<MobEffectInstance> list = get(level, name).getContent().getEffect().stream().map(EffectStack::get).toList();
+                PotionUtils.addPotionTooltip(list, tooltip, 1.0F);
             }
         }
+
     }
 
     @Nullable

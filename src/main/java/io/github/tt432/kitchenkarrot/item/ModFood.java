@@ -3,14 +3,18 @@ package io.github.tt432.kitchenkarrot.item;
 
 import io.github.tt432.kitchenkarrot.registries.ModItems;
 import net.minecraft.network.chat.Component;
+import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.*;
+import net.minecraft.world.item.alchemy.PotionUtils;
 import net.minecraft.world.level.Level;
+import net.minecraftforge.registries.ForgeRegistries;
 import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
+import java.util.Arrays;
 import java.util.List;
 
 import static io.github.tt432.kitchenkarrot.block.PlateHolderMap.plateHolder;
@@ -18,6 +22,7 @@ import static io.github.tt432.kitchenkarrot.block.PlateHolderMap.plateHolder;
 public class ModFood extends Item {
     private UseAnim foodType = UseAnim.EAT;
     private Duration duration = Duration.Normal;
+    private EffectEntry[] effectEntries;
     private Item returnItem;
 
 
@@ -29,15 +34,20 @@ public class ModFood extends Item {
     }
     public ModFood(int nutrition, float saturation, boolean alwaysEat, EffectEntry... effectEntries) {
         super(FoodUtil.effectFood(ModItems.defaultProperties(), nutrition, saturation, alwaysEat, effectEntries));
+        this.effectEntries = effectEntries;
     }
     public ModFood(int nutrition, float saturation, int stackSize, EffectEntry... effectEntries) {
         this(nutrition, saturation, stackSize, false, effectEntries);
+        this.effectEntries = effectEntries;
     }
     public ModFood(int nutrition, float saturation, int stackSize, boolean alwaysEat, EffectEntry... effectEntries) {
         super(FoodUtil.effectFood(ModItems.defaultProperties(), nutrition, saturation, alwaysEat, effectEntries).stacksTo(stackSize));
+        this.effectEntries = effectEntries;
     }
     public static ModFood drinkItem(int nutrition, float saturation, EffectEntry... effectEntries) {
-        return new ModFood(nutrition, saturation, true, effectEntries).setDrinkAnim();
+        ModFood item = new ModFood(nutrition, saturation, true, effectEntries).setDrinkAnim();
+        item.effectEntries = effectEntries;
+        return item;
     }
     private boolean canPutOnPlate(){
         return plateHolder.containsKey(this);
@@ -48,8 +58,11 @@ public class ModFood extends Item {
     @ParametersAreNonnullByDefault
     public void appendHoverText(ItemStack pStack, @Nullable Level pLevel, List<Component> tooltip, TooltipFlag pIsAdvanced) {
         super.appendHoverText(pStack, pLevel, tooltip, pIsAdvanced);
-        if (this.canPutOnPlate()){
+        if (this.canPutOnPlate()) {
             tooltip.add(Component.translatable("info.kitchenkarrot.can_be_dished"));
+        }
+        if (this.effectEntries != null && this.effectEntries.length > 0) {
+            PotionUtils.addPotionTooltip(Arrays.stream(effectEntries).map(e -> e.effect.get()).toList(), tooltip, 1.0F);
         }
     }
 

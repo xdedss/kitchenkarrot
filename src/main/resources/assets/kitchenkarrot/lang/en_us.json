@@ -225,5 +225,11 @@
     "advancement.kitchenkarrot.eat_ultra_cereal.title":"Made in Abyss",
     "advancement.kitchenkarrot.eat_ultra_cereal.desc":"Enjoy your best breakfast ever with a nether star.",
     "advancement.kitchenkarrot.get_canned_hoglin_confit.title":"Who Would Have Known!",
-    "advancement.kitchenkarrot.get_canned_hoglin_confit.desc":"Exchange some of your gold ingots for piglin treats."
+    "advancement.kitchenkarrot.get_canned_hoglin_confit.desc":"Exchange some of your gold ingots for piglin treats.",
+
+    "potion.potency.6": "VI",
+    "potion.potency.7": "VII",
+    "potion.potency.8": "VIII",
+    "potion.potency.9": "IX",
+    "potion.potency.10": "X"
 }
