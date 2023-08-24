@@ -6,6 +6,7 @@ import io.github.tt432.kitchenkarrot.registries.ModSoundEvents;
 import io.github.tt432.kitchenkarrot.util.SoundUtil;
 import net.minecraft.client.Minecraft;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
@@ -51,7 +52,7 @@ public class ShakerItem extends Item {
 
                 return InteractionResultHolder.sidedSuccess(stack, pLevel.isClientSide);
             } else if (!getFinish(stack)) {
-                if (!pLevel.isClientSide) {
+                if (pLevel.isClientSide) {
                     pPlayer.startUsingItem(pUsedHand);
                     SoundUtil.shakerSound(pPlayer, pLevel);
                 }
