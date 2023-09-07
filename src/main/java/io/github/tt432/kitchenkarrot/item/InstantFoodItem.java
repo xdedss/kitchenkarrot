@@ -15,6 +15,9 @@ public class InstantFoodItem extends ModFood {
     public InstantFoodItem(int nutrition, float saturation, EffectEntry... effectEntries) {
         super(FoodUtil.effectFood(ModItems.defaultProperties(), nutrition, saturation,false, effectEntries));
     }
+    public InstantFoodItem(int nutrition, float saturation, boolean alwaysEat, EffectEntry... effectEntries) {
+        super(FoodUtil.effectFood(ModItems.defaultProperties(), nutrition, saturation,alwaysEat, effectEntries));
+    }
 
     @Override
     public int getUseDuration(@NotNull ItemStack pStack) {

@@ -1,9 +1,15 @@
 package io.github.tt432.kitchenkarrot.registries;
 
 import io.github.tt432.kitchenkarrot.item.*;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.effect.MobEffects;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Rarity;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
@@ -109,6 +115,13 @@ public class ModItems {
     public static final RegistryObject<Item> CANNED_BEEF_POTATO = ITEMS.register("canned_beef_potato", () -> new InstantFoodItem(5, 9.6F));
     public static final RegistryObject<Item> CANNED_SWEET_BERRY_MILK = ITEMS.register("canned_sweet_berry_milk", () -> new InstantFoodItem(2, 3.6F, EffectEntry.of(MobEffects.INVISIBILITY, 90, 1)));
     public static final RegistryObject<Item> CANNED_HOGLIN_CONFIT = ITEMS.register("canned_hoglin_confit", () -> new InstantFoodItem(6, 10.8F));
+    public static final RegistryObject<Item> CANNED_CAT_FOOD = ITEMS.register("canned_cat_food", () -> new InstantFoodItem(1, 1F, true) {
+        @Override
+        public void onUseTick(Level level, LivingEntity entity, ItemStack p_41430_, int p_41431_) {
+            super.onUseTick(level, entity, p_41430_, p_41431_);
+            level.playSound(((Player) entity), entity.getOnPos(), SoundEvents.CAT_AMBIENT, SoundSource.PLAYERS);
+        }
+    });
 
     public static final RegistryObject<Item> CREAM_OF_MUSHROOM_SOUP = ITEMS.register("cream_of_mushroom_soup", () -> new ModFood(8, 9.2F, 16).setBowlFood());
 
