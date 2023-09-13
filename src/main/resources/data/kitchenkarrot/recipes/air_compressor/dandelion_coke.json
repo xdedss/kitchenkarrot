@@ -17,5 +17,8 @@
   "result": {
     "item": "kitchenkarrot:dandelion_coke"
   },
+  "container": {
+    "item": "kitchenkarrot:empty_can"
+  },
   "craftingtime": 100
 }

@@ -55,7 +55,7 @@ public class AirCompressorRecipeCategory extends BaseRecipeCategory<AirCompresso
 
     @Override
     public void draw(AirCompressorRecipe recipe, IRecipeSlotsView recipeSlotsView, GuiGraphics guiGraphics, double mouseX, double mouseY) {
-        arrow.draw(guiGraphics, 70, 53);
+        arrow.draw(guiGraphics, 70, 52);
     }
     //    @Override
 //    public void draw(AirCompressorRecipe recipe, IRecipeSlotsView recipeSlotsView, PoseStack stack, double mouseX, double mouseY) {

@@ -31,6 +31,7 @@ public class ModFood extends Item {
     }
     public ModFood(int nutrition, float saturation, EffectEntry... effectEntries) {
         this(nutrition, saturation, false, effectEntries);
+        this.effectEntries = effectEntries;
     }
     public ModFood(int nutrition, float saturation, boolean alwaysEat, EffectEntry... effectEntries) {
         super(FoodUtil.effectFood(ModItems.defaultProperties(), nutrition, saturation, alwaysEat, effectEntries));
@@ -111,6 +112,11 @@ public class ModFood extends Item {
     }
     public ModFood setReturnItem(@NotNull Item item) {
         this.returnItem = item;
+        return this;
+    }
+
+    public ModFood setEffectEntries(EffectEntry[] effectEntries) {
+        this.effectEntries = effectEntries;
         return this;
     }
 
