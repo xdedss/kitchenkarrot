@@ -91,12 +91,12 @@ public class ModItems {
     public static final RegistryObject<Item> VERDANT_NAMA_CHOCO = ITEMS.register("leafy_fresh_chocolate", () -> new ModFood(2, 4.8F, 16).setDuration(ModFood.Duration.VeryFast));
     public static final RegistryObject<Item> BACON_WRAPPED_POTATO = ITEMS.register("bacon_wrapped_potato", () -> new ModFood(5, 3.6F, 16).setDuration(ModFood.Duration.Fast));
 
-    public static final RegistryObject<Item> LIGHT_SODA = ITEMS.register("light_soda", () -> ModFood.drinkItem(1, 0).setDuration(ModFood.Duration.Fast));
-    public static final RegistryObject<Item> KELP_SODA = ITEMS.register("kelp_soda", () -> ModFood.drinkItem(1, 0F, EffectEntry.of(MobEffects.WATER_BREATHING, 180, 1)).setDuration(ModFood.Duration.Fast));
-    public static final RegistryObject<Item> TWISTING_SODA = ITEMS.register("twisting_soda", () -> ModFood.drinkItem(1, 0F, EffectEntry.of(MobEffects.ABSORPTION, 60, 1)).setDuration(ModFood.Duration.Fast));
-    public static final RegistryObject<Item> DANDELION_COKE = ITEMS.register("dandelion_coke", () -> ModFood.drinkItem(1, 0F, EffectEntry.of(MobEffects.MOVEMENT_SPEED, 180, 2, 1), EffectEntry.of(MobEffects.DIG_SPEED, 180, 1)).setDuration(ModFood.Duration.Fast));
-    public static final RegistryObject<Item> CORAL_COKE = ITEMS.register("coral_coke", () -> ModFood.drinkItem(1, 0F, EffectEntry.of(MobEffects.MOVEMENT_SPEED, 180, 1), EffectEntry.of(MobEffects.DIG_SPEED, 180, 2, 1)).setDuration(ModFood.Duration.Fast));
-    public static final RegistryObject<Item> DRAGON_BREATH_COKE = ITEMS.register("dragon_breath_coke", () -> ModFood.drinkItem(1, 3F, EffectEntry.of(MobEffects.MOVEMENT_SPEED, 180, 2, 1), EffectEntry.of(MobEffects.DIG_SPEED, 180, 2, 1)).setDuration(ModFood.Duration.Fast));
+    public static final RegistryObject<Item> LIGHT_SODA = ITEMS.register("light_soda", () -> CannedFoodItem.drinkItem(1, 0).setDuration(ModFood.Duration.Fast));
+    public static final RegistryObject<Item> KELP_SODA = ITEMS.register("kelp_soda", () -> CannedFoodItem.drinkItem(1, 0F, EffectEntry.of(MobEffects.WATER_BREATHING, 180, 1)).setDuration(ModFood.Duration.Fast));
+    public static final RegistryObject<Item> TWISTING_SODA = ITEMS.register("twisting_soda", () -> CannedFoodItem.drinkItem(1, 0F, EffectEntry.of(MobEffects.ABSORPTION, 60, 1)).setDuration(ModFood.Duration.Fast));
+    public static final RegistryObject<Item> DANDELION_COKE = ITEMS.register("dandelion_coke", () -> CannedFoodItem.drinkItem(1, 0F, EffectEntry.of(MobEffects.MOVEMENT_SPEED, 180, 2, 1), EffectEntry.of(MobEffects.DIG_SPEED, 180, 1)).setDuration(ModFood.Duration.Fast));
+    public static final RegistryObject<Item> CORAL_COKE = ITEMS.register("coral_coke", () -> CannedFoodItem.drinkItem(1, 0F, EffectEntry.of(MobEffects.MOVEMENT_SPEED, 180, 1), EffectEntry.of(MobEffects.DIG_SPEED, 180, 2, 1)).setDuration(ModFood.Duration.Fast));
+    public static final RegistryObject<Item> DRAGON_BREATH_COKE = ITEMS.register("dragon_breath_coke", () -> CannedFoodItem.drinkItem(1, 3F, EffectEntry.of(MobEffects.MOVEMENT_SPEED, 180, 2, 1), EffectEntry.of(MobEffects.DIG_SPEED, 180, 2, 1)).setDuration(ModFood.Duration.Fast));
 
     public static final RegistryObject<Item> FISHERMENS_DELIGHT = ITEMS.register("fishermens_delight", () -> new ModFood(10, 10.4F, 16).setBowlFood());
     public static final RegistryObject<Item> LUSH_SALAD = ITEMS.register("lush_salad", () -> new ModFood(7, 6.4F, 16).setBowlFood());
@@ -125,11 +125,11 @@ public class ModItems {
 
     public static final RegistryObject<Item> CREAM_OF_MUSHROOM_SOUP = ITEMS.register("cream_of_mushroom_soup", () -> new ModFood(8, 9.2F, 16).setBowlFood());
 
-    public static final RegistryObject<Item> SWEET_BERRY_MILK = ITEMS.register("sweet_berry_milk", () -> new ModFood(4, 4.8F, 16, true, EffectEntry.of(MobEffects.INVISIBILITY, 60, 1)).setBottleFood());
+    public static final RegistryObject<Item> SWEET_BERRY_MILK = ITEMS.register("sweet_berry_milk", () -> new ModFood(4, 4.8F, 16, true, EffectEntry.of(MobEffects.INVISIBILITY, 60, 1)));
 
     public static final RegistryObject<Item> ULTRA_SUPER_DELICIOUS_CEREAL_PORRIDGE = ITEMS.register("ultra_super_delicious_cereal_porridge", () -> new ModFood(FoodUtil.food(defaultProperties(), 20, 100F).rarity(Rarity.UNCOMMON).stacksTo(16)));
 
-    public static final RegistryObject<Item> CURRY_UDON = ITEMS.register("curry_udon", () -> new ModFood(FoodUtil.effectFood(defaultProperties(), 18, 16F, false, EffectEntry.of(MobEffects.REGENERATION, 60, 0, 1)).stacksTo(1).rarity(Rarity.RARE)));
+    public static final RegistryObject<Item> CURRY_UDON = ITEMS.register("curry_udon", () -> new ModFood(FoodUtil.effectFood(defaultProperties(), 18, 16F, false, EffectEntry.of(MobEffects.REGENERATION, 60, 0, 1)).stacksTo(1).rarity(Rarity.RARE)).setEffectEntries(new EffectEntry[]{EffectEntry.of(MobEffects.REGENERATION, 60, 0, 1)}));
 
     public static final RegistryObject<Item> POPACORN = ITEMS.register("popacorn", PopacornItem::new);
 
