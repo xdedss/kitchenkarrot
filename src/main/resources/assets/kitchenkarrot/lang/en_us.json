@@ -228,9 +228,11 @@
     "advancement.kitchenkarrot.get_canned_hoglin_confit.title":"Who Would Have Known!",
     "advancement.kitchenkarrot.get_canned_hoglin_confit.desc":"Exchange some of your gold ingots for piglin treats.",
 
+    "entity.kitchenkarrot.can": "Empty Can",
     "potion.potency.6": "VI",
     "potion.potency.7": "VII",
     "potion.potency.8": "VIII",
     "potion.potency.9": "IX",
-    "potion.potency.10": "X"
+    "potion.potency.10": "X",
+    "item.kitchenkarrot.meow_translator":"喵喵翻译器"
 }

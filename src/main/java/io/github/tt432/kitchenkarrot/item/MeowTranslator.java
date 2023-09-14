@@ -1,7 +1,15 @@
 package io.github.tt432.kitchenkarrot.item;
 
+import io.github.tt432.kitchenkarrot.registries.ModItems;
+import net.minecraft.ChatFormatting;
+import net.minecraft.client.Minecraft;
 import net.minecraft.network.chat.Component;
-import net.minecraft.util.RandomSource;
+import net.minecraft.network.chat.MutableComponent;
+import net.minecraft.network.chat.Style;
+import net.minecraft.network.chat.TextColor;
+import net.minecraft.network.chat.contents.LiteralContents;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.player.Inventory;
@@ -16,12 +24,10 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
-import java.util.function.Predicate;
 
 public class MeowTranslator extends Item {
-    private static final Vec3 MissionPos = new Vec3(0f, 0f, 0f);
+    private static final Vec3 MissionPos = new Vec3(-431f, 93f, 124f);
     private long lastRespondTime;
     private final List<String> list = List.of(
             "kitchenkarrot:cocktails/sweet_berry_martini",
@@ -37,7 +43,9 @@ public class MeowTranslator extends Item {
             "kitchenkarrot:cocktails/twilight_forest",
             "kitchenkarrot:cocktails/birch_sap_vodka"
     );
-    private String current = "kitchenkarrot:cocktails/sweet_berry_martini";
+    private String current = null;
+    private int dialogStage = 0;
+    private int randomStage;
     public MeowTranslator(Properties p_41383_) {
         super(p_41383_);
     }
@@ -45,9 +53,10 @@ public class MeowTranslator extends Item {
     @Override
     public void appendHoverText(ItemStack stack, @Nullable Level level, List<Component> tooltip, TooltipFlag flag) {
         super.appendHoverText(stack, level, tooltip, flag);
+        tooltip.add(Component.literal("原理不明但是似乎管用的猫咪语翻译器"));
+        tooltip.add(Component.literal("对胡萝卜岛的那只名为桃井的猫有效"));
         if (current != null) {
-            tooltip.add(Component.literal("大臣现在想喝："));
-            tooltip.add(Component.translatable(current.replace(':', '.')));
+            tooltip.add(Component.literal("桃井现在想喝：").append(Component.translatable(current.replace(':', '.')).withStyle(ChatFormatting.RED).withStyle(ChatFormatting.BOLD)));
         }
     }
 
@@ -55,7 +64,7 @@ public class MeowTranslator extends Item {
     @NotNull
     public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand hand) {
         ItemStack itemStack = player.getItemInHand(hand);
-        if (!level.isClientSide) {
+        if (true) {
             long time = level.getGameTime();
             if (lastRespondTime + 10 < time) {
                 if (isInRange(player)) {
@@ -68,16 +77,40 @@ public class MeowTranslator extends Item {
         return InteractionResultHolder.pass(itemStack);
     }
     private void talk(Level level, Player player) {
-        if (removeCocktail(player)) {
-            switchCurrent(level);
-            player.sendSystemMessage(Component.literal("true"));
+        level.playSound(player, player.blockPosition(), SoundEvents.CAT_AMBIENT, SoundSource.MASTER);
+        if (current != null){
+            if (removeCocktail(player)) {
+                randomStage = level.getRandom().nextInt(4);
+                switchCurrent(level);
+                switch (randomStage) {
+                    case 0, 1 -> sendMessage(catLine("嗯嗯！就是这个味道！好好收下我的奖励吧！"));
+                    case 2, 3 -> sendMessage(catLine("啊~果然是美味……这个送给你……但是还不够！"));
+                }
+                level.playSound(player, player.blockPosition(), SoundEvents.EXPERIENCE_ORB_PICKUP, SoundSource.MASTER);
+                player.getInventory().add(new ItemStack(ModItems.CANNED_CAT_FOOD.get()));
+            }
+            switch (randomStage) {
+                case 0 -> sendMessage(threePartsComponent("现在我想要一杯", "，快给本喵拿来！"));
+                case 1 -> sendMessage(threePartsComponent("嗯……", "的味道怎么样？摇一杯我尝尝！"));
+                case 2 -> sendMessage(threePartsComponent("我想喝", "了！快点行动起来吧~"));
+                case 3 -> sendMessage(threePartsComponent("我换口味了！我决定要喝", "，给我给我给我！"));
+            }
         } else {
-            player.sendSystemMessage(Component.literal("false"));
+            dialogStage++;
+            switch (dialogStage) {
+                case 1 -> sendMessage(catLine("哇啊！你也能听懂我说话！"));
+                case 2 -> sendMessage(catLine("嗯……你只要给我拿杯鸡尾酒来，我就给你我的宝物哦。"));
+                case 3 -> {
+                    dialogStage = 0;
+                    current = list.get(level.getRandom().nextInt(list.size()));
+                    sendMessage(threePartsComponent("给我带来一杯", "吧！不会亏待你的！"));
+                }
+            }
         }
     }
     private void switchCurrent(Level level) {
         List<String> temp = new ArrayList<>(List.copyOf(list));
-        temp.remove(current);
+        if (current != null) temp.remove(current);
         current = temp.get(level.getRandom().nextInt(temp.size()));
     }
     private boolean removeCocktail(Player player) {
@@ -102,5 +135,18 @@ public class MeowTranslator extends Item {
     private boolean isInRange(Player player) {
         Vec3 playerPos = player.getEyePosition();
         return playerPos.distanceTo(MissionPos) < 8;
+    }
+    private MutableComponent catLine(String string) {
+        return MutableComponent.create(new LiteralContents(""))
+                .append(Component.literal("桃井：").withStyle(Style.EMPTY.withColor(TextColor.fromLegacyFormat(ChatFormatting.GOLD))))
+                .append(MutableComponent.create(new LiteralContents(string)).withStyle(Style.EMPTY));
+    }
+    private Component threePartsComponent(String front, String back) {
+        return catLine(front)
+                .append(Component.translatable(current.replace(':', '.')).withStyle(ChatFormatting.RED).withStyle(ChatFormatting.BOLD))
+                .append(Component.literal(back)).withStyle(Style.EMPTY);
+    }
+    private void sendMessage(Component component) {
+        Minecraft.getInstance().gui.getChat().addMessage(component);
     }
 }

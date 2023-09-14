@@ -226,5 +226,7 @@
     "advancement.kitchenkarrot.eat_ultra_cereal.title": "来自深渊",
     "advancement.kitchenkarrot.eat_ultra_cereal.desc": "用一颗下界之星享受有史以来最棒的早餐",
     "advancement.kitchenkarrot.get_canned_hoglin_confit.title": "谁会想到！",
-    "advancement.kitchenkarrot.get_canned_hoglin_confit.desc": "用你手头的金锭换点猪灵佳肴"
+    "advancement.kitchenkarrot.get_canned_hoglin_confit.desc": "用你手头的金锭换点猪灵佳肴",
+
+    "entity.kitchenkarrot.can": "空罐头"
 }
