@@ -3,6 +3,7 @@ package io.github.tt432.kitchenkarrot.item;
 import io.github.tt432.kitchenkarrot.config.ModCommonConfigs;
 import io.github.tt432.kitchenkarrot.entity.CanEntity;
 import io.github.tt432.kitchenkarrot.registries.ModEntities;
+import io.github.tt432.kitchenkarrot.registries.ModItems;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
@@ -15,7 +16,9 @@ public class CannedFoodItem extends ModFood {
         super(pProperties);
     }
     public static CannedFoodItem drinkItem(int nutrition, float saturation, EffectEntry... entries) {
-        return ((CannedFoodItem) ModFood.drinkItem(nutrition, saturation, entries));
+        CannedFoodItem item = (CannedFoodItem) new CannedFoodItem(FoodUtil.effectFood(ModItems.defaultProperties(), nutrition, saturation, true, entries)).setDrinkAnim();
+        item.effectEntries = entries;
+        return item;
     }
     @Override
     @NotNull
