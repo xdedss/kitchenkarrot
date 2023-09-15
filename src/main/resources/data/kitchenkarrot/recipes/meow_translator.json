@@ -1,0 +1,25 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    " t ",
+    "0*0",
+    " x "
+  ],
+  "key": {
+    "t": {
+      "item": "nch:ultralloy_coil"
+    },
+    "0": {
+      "item": "nch:redstone_battery"
+    },
+    "*": {
+      "item": "nch:cpu"
+    },
+    "x": {
+      "item": "locusazzurro_icaruswings:synapse_repair_kit"
+    }
+  },
+  "result": {
+    "item": "kitchenkarrot:meow_translator"
+  }
+}
