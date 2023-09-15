@@ -54,7 +54,7 @@ public class MeowTranslator extends Item {
     public void appendHoverText(ItemStack stack, @Nullable Level level, List<Component> tooltip, TooltipFlag flag) {
         super.appendHoverText(stack, level, tooltip, flag);
         tooltip.add(Component.literal("原理不明但是似乎管用的猫咪语翻译器"));
-        tooltip.add(Component.literal("对胡萝卜岛的那只名为桃井的猫有效"));
+        tooltip.add(Component.literal("对胡萝卜岛喵喵泉的那只名为桃井的猫有效"));
         if (current != null) {
             tooltip.add(Component.literal("桃井现在想喝：").append(Component.translatable(current.replace(':', '.')).withStyle(ChatFormatting.RED).withStyle(ChatFormatting.BOLD)));
         }
