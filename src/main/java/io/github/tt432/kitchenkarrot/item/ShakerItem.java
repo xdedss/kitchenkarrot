@@ -52,9 +52,9 @@ public class ShakerItem extends Item {
 
                 return InteractionResultHolder.sidedSuccess(stack, pLevel.isClientSide);
             } else if (!getFinish(stack)) {
-                if (pLevel.isClientSide) {
+                SoundUtil.shakerSound(pPlayer, pLevel);
+                if (!pLevel.isClientSide) {
                     pPlayer.startUsingItem(pUsedHand);
-                    SoundUtil.shakerSound(pPlayer, pLevel);
                 }
 
                 return InteractionResultHolder.success(stack);

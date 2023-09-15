@@ -154,7 +154,7 @@ public class PlateBlock extends FacingEntityBlock<PlateBlockEntity> {
 
         recipe.ifPresent(r -> {
             if (giveRecipeResult(level, r, handler)) {
-                level.playSound(player, player.getOnPos(), ModSoundEvents.CHOP.get(), player.getSoundSource(), 0.5F, 1F);
+                level.playSound(player, player.getOnPos(), ModSoundEvents.CHOP.get(), player.getSoundSource(), 0.5F, level.random.nextFloat() * 0.4F + 0.8F);
                 result.set(true);
             }
         });

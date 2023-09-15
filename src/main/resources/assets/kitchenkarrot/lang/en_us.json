@@ -181,7 +181,8 @@
 
     "kitchenkarrot.cocktail.chop":"Knife chops",
     "kitchenkarrot.cocktail.shaker_close":"Shaker closed",
-    "kitchenkarrot.cocktail.shaker_cocktail":"Cocktail completed",
+    "kitchenkarrot.cocktail.shaker_cocktail":"Cocktail served",
+    "kitchenkarrot.cocktail.complete":"Cocktail completed",
     "kitchenkarrot.cocktail.shaker_open":"Shaker opened",
     "kitchenkarrot.cocktail.shaker":"Shaking",
 
