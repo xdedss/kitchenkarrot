@@ -27,6 +27,7 @@ import java.util.List;
 
 public class MeowTranslator extends Item {
     private static final Vec3 MissionPos = new Vec3(-431f, 93f, 124f);
+    private static final Vec3 Midori = new Vec3(-406f, 94f, 37f);
     private long lastRespondTime;
     private final List<String> list = List.of(
             "kitchenkarrot:cocktails/sweet_berry_martini",
@@ -66,10 +67,16 @@ public class MeowTranslator extends Item {
         if (true) {
             long time = level.getGameTime();
             if (lastRespondTime + 10 < time) {
-                if (isInRange(player)) {
+                if (isInRange(player, MissionPos)) {
                     talk(level, player);
                     if (!level.isClientSide) lastRespondTime = time;
                     return InteractionResultHolder.success(itemStack);
+                }
+                if (isInRange(player, Midori) && level.isClientSide) {
+                    level.playSound(player, player.blockPosition(), SoundEvents.CAT_AMBIENT, SoundSource.MASTER);
+                    sendMessage(MutableComponent.create(new LiteralContents(""))
+                            .append(Component.literal("绿：").withStyle(Style.EMPTY.withColor(TextColor.fromLegacyFormat(ChatFormatting.GREEN))))
+                            .append(MutableComponent.create(new LiteralContents("喵！~")).withStyle(Style.EMPTY)));
                 }
             }
         }
@@ -132,9 +139,9 @@ public class MeowTranslator extends Item {
         return cocktail.equals(current);
     }
 
-    private boolean isInRange(Player player) {
+    private boolean isInRange(Player player, Vec3 pos) {
         Vec3 playerPos = player.getEyePosition();
-        return playerPos.distanceTo(MissionPos) < 8;
+        return playerPos.distanceTo(pos) < 8;
     }
     private MutableComponent catLine(String string) {
         return MutableComponent.create(new LiteralContents(""))
