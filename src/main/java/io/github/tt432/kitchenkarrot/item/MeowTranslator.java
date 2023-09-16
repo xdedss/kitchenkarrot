@@ -19,7 +19,6 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
-import org.checkerframework.checker.units.qual.C;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -69,7 +68,7 @@ public class MeowTranslator extends Item {
             if (lastRespondTime + 10 < time) {
                 if (isInRange(player)) {
                     talk(level, player);
-                    lastRespondTime = time;
+                    if (!level.isClientSide) lastRespondTime = time;
                     return InteractionResultHolder.success(itemStack);
                 }
             }
@@ -78,6 +77,7 @@ public class MeowTranslator extends Item {
     }
     private void talk(Level level, Player player) {
         level.playSound(player, player.blockPosition(), SoundEvents.CAT_AMBIENT, SoundSource.MASTER);
+        if (level.isClientSide) return;
         if (current != null){
             if (removeCocktail(player)) {
                 randomStage = level.getRandom().nextInt(4);
@@ -86,7 +86,7 @@ public class MeowTranslator extends Item {
                     case 0, 1 -> sendMessage(catLine("嗯嗯！就是这个味道！好好收下我的奖励吧！"));
                     case 2, 3 -> sendMessage(catLine("啊~果然是美味……这个送给你……但是还不够！"));
                 }
-                level.playSound(player, player.blockPosition(), SoundEvents.EXPERIENCE_ORB_PICKUP, SoundSource.MASTER);
+                Minecraft.getInstance().level.playSound(player, player.blockPosition(), SoundEvents.EXPERIENCE_ORB_PICKUP, SoundSource.MASTER);
                 player.getInventory().add(new ItemStack(ModItems.CANNED_CAT_FOOD.get()));
             }
             switch (randomStage) {

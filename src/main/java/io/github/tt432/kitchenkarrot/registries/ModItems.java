@@ -119,7 +119,7 @@ public class ModItems {
         @Override
         public void onUseTick(Level level, LivingEntity entity, ItemStack p_41430_, int p_41431_) {
             super.onUseTick(level, entity, p_41430_, p_41431_);
-            level.playSound(((Player) entity), entity.getOnPos(), SoundEvents.CAT_PURR, SoundSource.PLAYERS);
+            level.playSound(((Player) entity), entity.getOnPos(), SoundEvents.CAT_STRAY_AMBIENT, SoundSource.PLAYERS);
         }
     });
 
