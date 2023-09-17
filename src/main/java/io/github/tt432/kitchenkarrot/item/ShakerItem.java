@@ -6,7 +6,6 @@ import io.github.tt432.kitchenkarrot.registries.ModSoundEvents;
 import io.github.tt432.kitchenkarrot.util.SoundUtil;
 import net.minecraft.client.Minecraft;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
@@ -52,8 +51,8 @@ public class ShakerItem extends Item {
 
                 return InteractionResultHolder.sidedSuccess(stack, pLevel.isClientSide);
             } else if (!getFinish(stack)) {
-                if (!pLevel.isClientSide) {
-                    pPlayer.startUsingItem(pUsedHand);
+                pPlayer.startUsingItem(pUsedHand);
+                if (pLevel.isClientSide) {
                     SoundUtil.shakerSound(pPlayer, pLevel);
                 }
                 return InteractionResultHolder.success(stack);
@@ -130,6 +129,7 @@ public class ShakerItem extends Item {
         stack.getCapability(ForgeCapabilities.ITEM_HANDLER)
                 .ifPresent(h -> result.put("items", ((ItemStackHandler) h).serializeNBT()));
         result.putBoolean("finish", getFinish(stack));
+        result.putInt("time", getRecipeTime(stack));
         return result;
     }
 
@@ -141,6 +141,7 @@ public class ShakerItem extends Item {
             stack.getCapability(ForgeCapabilities.ITEM_HANDLER)
                     .ifPresent(h -> ((ItemStackHandler) h).deserializeNBT(nbt.getCompound("items")));
             setFinish(stack, nbt.getBoolean("finish"));
+            setRecipeTime(stack, nbt.getInt("time"));
         }
     }
 }
