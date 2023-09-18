@@ -77,6 +77,7 @@ public class MeowTranslator extends Item {
                     sendMessage(MutableComponent.create(new LiteralContents(""))
                             .append(Component.literal("绿：").withStyle(Style.EMPTY.withColor(TextColor.fromLegacyFormat(ChatFormatting.GREEN))))
                             .append(MutableComponent.create(new LiteralContents("喵！~")).withStyle(Style.EMPTY)));
+                    return InteractionResultHolder.success(itemStack);
                 }
             }
         }
@@ -84,7 +85,6 @@ public class MeowTranslator extends Item {
     }
     private void talk(Level level, Player player) {
         level.playSound(player, player.blockPosition(), SoundEvents.CAT_AMBIENT, SoundSource.MASTER);
-        if (level.isClientSide) return;
         if (current != null){
             if (removeCocktail(player)) {
                 randomStage = level.getRandom().nextInt(4);
