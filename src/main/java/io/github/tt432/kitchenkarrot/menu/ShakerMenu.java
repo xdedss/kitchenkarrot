@@ -39,6 +39,17 @@ public class ShakerMenu extends KKMenu {
         finishRecipe(inventory.player);
     }
 
+    /**
+     * 用于双端同步的临时代码
+     */
+    private void sync() {
+        itemStack.getCapability(ForgeCapabilities.ITEM_HANDLER).ifPresent(this::slotChanged);
+    }
+
+    /**
+     * 完成配方时触发
+     * @param player
+     */
     private void finishRecipe(Player player) {
         if (ShakerItem.getFinish(itemStack)) {
             itemStack.getCapability(ForgeCapabilities.ITEM_HANDLER).ifPresent(handler -> {
@@ -55,7 +66,6 @@ public class ShakerMenu extends KKMenu {
 
                 if (recipe.isPresent()) {
                     recipeResult = recipe.get().getResultItem(RegistryAccess.EMPTY);
-//                    recipeResult = recipe.get().getResultItem();
                 }
 
                 if (list.stream().anyMatch(ItemStack::isEmpty)) {
@@ -120,6 +130,7 @@ public class ShakerMenu extends KKMenu {
         return super.quickMoveStack(player, index);
     }
 
+    //初始化
     @Override
     protected Slot addSlot(IItemHandler handler, int index, int x, int y) {
         return addSlot(new SlotItemHandler(handler, index, x, y) {
@@ -140,6 +151,7 @@ public class ShakerMenu extends KKMenu {
         }
     }
 
+    //初始化
     @Override
     protected Slot addResultSlot(IItemHandler handler, int index, int x, int y) {
         return addSlot(new KKResultSlot(handler, index, x, y) {
@@ -174,6 +186,7 @@ public class ShakerMenu extends KKMenu {
     @Override
     public void removed(Player pPlayer) {
         super.removed(pPlayer);
+        sync();
 
         if (pPlayer.level().isClientSide) {
             pPlayer.playSound(ModSoundEvents.SHAKER_CLOSE.get(), 0.5F,
