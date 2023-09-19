@@ -84,33 +84,36 @@ public class MeowTranslator extends Item {
         return InteractionResultHolder.pass(itemStack);
     }
     private void talk(Level level, Player player) {
-        level.playSound(player, player.blockPosition(), SoundEvents.CAT_AMBIENT, SoundSource.MASTER);
-        if (current != null){
-            if (removeCocktail(player)) {
-                randomStage = level.getRandom().nextInt(4);
-                switchCurrent(level);
-                switch (randomStage) {
-                    case 0, 1 -> sendMessage(catLine("嗯嗯！就是这个味道！好好收下我的奖励吧！"));
-                    case 2, 3 -> sendMessage(catLine("啊~果然是美味……这个送给你……但是还不够！"));
-                }
-                Minecraft.getInstance().level.playSound(player, player.blockPosition(), SoundEvents.EXPERIENCE_ORB_PICKUP, SoundSource.MASTER);
-                player.getInventory().add(new ItemStack(ModItems.CANNED_CAT_FOOD.get()));
-            }
-            switch (randomStage) {
-                case 0 -> sendMessage(threePartsComponent("现在我想要一杯", "，快给本喵拿来！"));
-                case 1 -> sendMessage(threePartsComponent("嗯……", "的味道怎么样？摇一杯我尝尝！"));
-                case 2 -> sendMessage(threePartsComponent("我想喝", "了！快点行动起来吧~"));
-                case 3 -> sendMessage(threePartsComponent("我换口味了！我决定要喝", "，给我给我给我！"));
-            }
+        if (level.isClientSide) {
+            level.playSound(player, player.blockPosition(), SoundEvents.CAT_AMBIENT, SoundSource.MASTER);
         } else {
-            dialogStage++;
-            switch (dialogStage) {
-                case 1 -> sendMessage(catLine("哇啊！你也能听懂我说话！"));
-                case 2 -> sendMessage(catLine("嗯……你只要给我拿杯鸡尾酒来，我就给你我的宝物哦。"));
-                case 3 -> {
-                    dialogStage = 0;
-                    current = list.get(level.getRandom().nextInt(list.size()));
-                    sendMessage(threePartsComponent("给我带来一杯", "吧！不会亏待你的！"));
+            if (current != null) {
+                if (removeCocktail(player)) {
+                    randomStage = level.getRandom().nextInt(4);
+                    switchCurrent(level);
+                    switch (randomStage) {
+                        case 0, 1 -> sendMessage(catLine("嗯嗯！就是这个味道！好好收下我的奖励吧！"));
+                        case 2, 3 -> sendMessage(catLine("啊~果然是美味……这个送给你……但是还不够！"));
+                    }
+                    Minecraft.getInstance().level.playSound(player, player.blockPosition(), SoundEvents.EXPERIENCE_ORB_PICKUP, SoundSource.MASTER);
+                    player.getInventory().add(new ItemStack(ModItems.CANNED_CAT_FOOD.get()));
+                }
+                switch (randomStage) {
+                    case 0 -> sendMessage(threePartsComponent("现在我想要一杯", "，快给本喵拿来！"));
+                    case 1 -> sendMessage(threePartsComponent("嗯……", "的味道怎么样？摇一杯我尝尝！"));
+                    case 2 -> sendMessage(threePartsComponent("我想喝", "了！快点行动起来吧~"));
+                    case 3 -> sendMessage(threePartsComponent("我换口味了！我决定要喝", "，给我给我给我！"));
+                }
+            } else {
+                dialogStage++;
+                switch (dialogStage) {
+                    case 1 -> sendMessage(catLine("哇啊！你也能听懂我说话！"));
+                    case 2 -> sendMessage(catLine("嗯……你只要给我拿杯鸡尾酒来，我就给你我的宝物哦。"));
+                    case 3 -> {
+                        dialogStage = 0;
+                        current = list.get(level.getRandom().nextInt(list.size()));
+                        sendMessage(threePartsComponent("给我带来一杯", "吧！不会亏待你的！"));
+                    }
                 }
             }
         }
