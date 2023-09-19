@@ -8,6 +8,7 @@ import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.network.chat.Style;
 import net.minecraft.network.chat.TextColor;
 import net.minecraft.network.chat.contents.LiteralContents;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
@@ -83,37 +84,40 @@ public class MeowTranslator extends Item {
         }
         return InteractionResultHolder.pass(itemStack);
     }
+    private void reward(Level level, Player player) {
+        //ServerLevel
+
+    }
     private void talk(Level level, Player player) {
-        if (level.isClientSide) {
-            level.playSound(player, player.blockPosition(), SoundEvents.CAT_AMBIENT, SoundSource.MASTER);
-        } else {
-            if (current != null) {
-                if (removeCocktail(player)) {
-                    randomStage = level.getRandom().nextInt(4);
-                    switchCurrent(level);
-                    switch (randomStage) {
-                        case 0, 1 -> sendMessage(catLine("嗯嗯！就是这个味道！好好收下我的奖励吧！"));
-                        case 2, 3 -> sendMessage(catLine("啊~果然是美味……这个送给你……但是还不够！"));
-                    }
-                    Minecraft.getInstance().level.playSound(player, player.blockPosition(), SoundEvents.EXPERIENCE_ORB_PICKUP, SoundSource.MASTER);
-                    player.getInventory().add(new ItemStack(ModItems.CANNED_CAT_FOOD.get()));
-                }
+        level.playSound(player, player.blockPosition(), SoundEvents.CAT_AMBIENT, SoundSource.MASTER);
+        if (level.isClientSide) return;
+        if (current != null) {
+            if (removeCocktail(player)) {
+                randomStage = level.getRandom().nextInt(4);
+                switchCurrent(level);
+                sendMessage(player, Component.literal("*收到了妙鲜包猫罐头x1"));
                 switch (randomStage) {
-                    case 0 -> sendMessage(threePartsComponent("现在我想要一杯", "，快给本喵拿来！"));
-                    case 1 -> sendMessage(threePartsComponent("嗯……", "的味道怎么样？摇一杯我尝尝！"));
-                    case 2 -> sendMessage(threePartsComponent("我想喝", "了！快点行动起来吧~"));
-                    case 3 -> sendMessage(threePartsComponent("我换口味了！我决定要喝", "，给我给我给我！"));
+                    case 0, 1 -> sendMessage(player,catLine("嗯嗯！就是这个味道！好好收下我的奖励吧！"));
+                    case 2, 3 -> sendMessage(player,catLine("啊~果然是美味……这个送给你……但是还不够！"));
                 }
-            } else {
-                dialogStage++;
-                switch (dialogStage) {
-                    case 1 -> sendMessage(catLine("哇啊！你也能听懂我说话！"));
-                    case 2 -> sendMessage(catLine("嗯……你只要给我拿杯鸡尾酒来，我就给你我的宝物哦。"));
-                    case 3 -> {
-                        dialogStage = 0;
-                        current = list.get(level.getRandom().nextInt(list.size()));
-                        sendMessage(threePartsComponent("给我带来一杯", "吧！不会亏待你的！"));
-                    }
+                player.playNotifySound(SoundEvents.EXPERIENCE_ORB_PICKUP, SoundSource.PLAYERS, 1f, 1f);
+                player.getInventory().add(new ItemStack(ModItems.CANNED_CAT_FOOD.get()));
+            }
+            switch (randomStage) {
+                case 0 -> sendMessage(player,threePartsComponent("现在我想要一杯", "，快给本喵拿来！"));
+                case 1 -> sendMessage(player,threePartsComponent("嗯……", "的味道怎么样？摇一杯我尝尝！"));
+                case 2 -> sendMessage(player,threePartsComponent("我想喝", "了！快点行动起来吧~"));
+                case 3 -> sendMessage(player,threePartsComponent("我换口味了！我决定要喝", "，给我给我给我！"));
+            }
+        } else {
+            dialogStage++;
+            switch (dialogStage) {
+                case 1 -> sendMessage(player,catLine("哇啊！你也能听懂我说话！"));
+                case 2 -> sendMessage(player,catLine("嗯……你只要给我拿杯鸡尾酒来，我就给你我的宝物哦。"));
+                case 3 -> {
+                    dialogStage = 0;
+                    current = list.get(level.getRandom().nextInt(list.size()));
+                    sendMessage(player,threePartsComponent("摇出一杯", "再找我吧！不会亏待你的！"));
                 }
             }
         }
@@ -155,6 +159,9 @@ public class MeowTranslator extends Item {
         return catLine(front)
                 .append(Component.translatable(current.replace(':', '.')).withStyle(ChatFormatting.RED).withStyle(ChatFormatting.BOLD))
                 .append(Component.literal(back)).withStyle(Style.EMPTY);
+    }
+    private void sendMessage(Player player, Component component) {
+        player.sendSystemMessage(component);
     }
     private void sendMessage(Component component) {
         Minecraft.getInstance().gui.getChat().addMessage(component);
