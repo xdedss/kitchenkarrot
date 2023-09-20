@@ -91,9 +91,9 @@ public class ModItems {
     public static final RegistryObject<Item> VERDANT_NAMA_CHOCO = ITEMS.register("leafy_fresh_chocolate", () -> new ModFood(2, 4.8F, 16).setDuration(ModFood.Duration.VeryFast));
     public static final RegistryObject<Item> BACON_WRAPPED_POTATO = ITEMS.register("bacon_wrapped_potato", () -> new ModFood(5, 3.6F, 16).setDuration(ModFood.Duration.Fast));
 
-    public static final RegistryObject<Item> LIGHT_SODA = ITEMS.register("light_soda", () -> CannedFoodItem.drinkItem(1, 0).setDuration(ModFood.Duration.Fast));
-    public static final RegistryObject<Item> KELP_SODA = ITEMS.register("kelp_soda", () -> CannedFoodItem.drinkItem(1, 0F, EffectEntry.of(MobEffects.WATER_BREATHING, 180, 1)).setDuration(ModFood.Duration.Fast));
-    public static final RegistryObject<Item> TWISTING_SODA = ITEMS.register("twisting_soda", () -> CannedFoodItem.drinkItem(1, 0F, EffectEntry.of(MobEffects.ABSORPTION, 60, 1)).setDuration(ModFood.Duration.Fast));
+    public static final RegistryObject<Item> LIGHT_SODA = ITEMS.register("light_soda", () -> ModFood.drinkItem(1, 0).setDuration(ModFood.Duration.Fast));
+    public static final RegistryObject<Item> KELP_SODA = ITEMS.register("kelp_soda", () -> ModFood.drinkItem(1, 0F, EffectEntry.of(MobEffects.WATER_BREATHING, 180, 1)).setDuration(ModFood.Duration.Fast));
+    public static final RegistryObject<Item> TWISTING_SODA = ITEMS.register("twisting_soda", () -> ModFood.drinkItem(1, 0F, EffectEntry.of(MobEffects.ABSORPTION, 60, 1)).setDuration(ModFood.Duration.Fast));
     public static final RegistryObject<Item> DANDELION_COKE = ITEMS.register("dandelion_coke", () -> CannedFoodItem.drinkItem(1, 0F, EffectEntry.of(MobEffects.MOVEMENT_SPEED, 180, 2, 1), EffectEntry.of(MobEffects.DIG_SPEED, 180, 1)).setDuration(ModFood.Duration.Fast));
     public static final RegistryObject<Item> CORAL_COKE = ITEMS.register("coral_coke", () -> CannedFoodItem.drinkItem(1, 0F, EffectEntry.of(MobEffects.MOVEMENT_SPEED, 180, 1), EffectEntry.of(MobEffects.DIG_SPEED, 180, 2, 1)).setDuration(ModFood.Duration.Fast));
     public static final RegistryObject<Item> DRAGON_BREATH_COKE = ITEMS.register("dragon_breath_coke", () -> CannedFoodItem.drinkItem(1, 3F, EffectEntry.of(MobEffects.MOVEMENT_SPEED, 180, 2, 1), EffectEntry.of(MobEffects.DIG_SPEED, 180, 2, 1)).setDuration(ModFood.Duration.Fast));
