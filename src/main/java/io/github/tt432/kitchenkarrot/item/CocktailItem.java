@@ -1,6 +1,7 @@
 package io.github.tt432.kitchenkarrot.item;
 
 import io.github.tt432.kitchenkarrot.Kitchenkarrot;
+import io.github.tt432.kitchenkarrot.config.ModCommonConfigs;
 import io.github.tt432.kitchenkarrot.recipes.object.EffectStack;
 import io.github.tt432.kitchenkarrot.recipes.recipe.CocktailRecipe;
 import io.github.tt432.kitchenkarrot.registries.RecipeTypes;
@@ -10,7 +11,6 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectInstance;
-import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.food.FoodProperties;
 import net.minecraft.world.item.Item;
@@ -24,9 +24,7 @@ import net.minecraftforge.registries.ForgeRegistries;
 
 import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
-import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
+import java.util.*;
 
 /**
  * @author DustW
@@ -57,25 +55,31 @@ public class CocktailItem extends Item {
                     if (!player.getAbilities().instabuild) {
                         stack.shrink(1);
                     }
-
                     for (EffectStack effectStack : recipe.content.getEffect()) {
                         player.addEffect(effectStack.get());
                     }
                 } else if (cocktail.equals(UNKNOWN_COCKTAIL)) {
-                    List<MobEffect> array = ForgeRegistries.MOB_EFFECTS.getValues().stream()
-                            .filter(eff -> "minecraft".equals(Objects.requireNonNull(eff.getDescriptionId())) &&
-//                                    .filter(eff -> "minecraft".equals(Objects.requireNonNull(eff.getRegistryName()).getNamespace())) &&
-                                    eff != MobEffects.HEAL && eff != MobEffects.HARM &&
-                                    eff != MobEffects.BAD_OMEN && eff != MobEffects.HERO_OF_THE_VILLAGE).toList();
-                    player.addEffect(new MobEffectInstance(array.get(pLevel.random.nextInt(array.size())), 20 * 5, 0));
+                    player.addEffect(new MobEffectInstance(getUnknownCocktailEffect(pLevel), 100, 0));
                     if (!player.getAbilities().instabuild) {
                         stack.shrink(1);
                     }
                 }
             }
         }
-
         return stack;
+    }
+    private MobEffect getUnknownCocktailEffect(Level level) {
+        List<String> list = ModCommonConfigs.UNKNOWN_COCKTAIL_EFFECTS_BLACKLIST.get();
+        List<MobEffect> effects = new ArrayList<>();
+        for (String s : list) try {
+            effects.add(ForgeRegistries.MOB_EFFECTS.getValue(new ResourceLocation(s)));
+        } catch (Exception ignored) {}
+        if (!ModCommonConfigs.WHITELIST_MODE.get()) {
+            List<MobEffect> values = new ArrayList<>(ForgeRegistries.MOB_EFFECTS.getValues().stream().toList());
+            values.removeAll(effects);
+            return values.get(level.getRandom().nextInt(values.size()));
+        }
+        return effects.get(level.getRandom().nextInt(effects.size()));
     }
 
     @Override
@@ -102,8 +106,11 @@ public class CocktailItem extends Item {
             CocktailRecipe recipe = get(level, Objects.requireNonNull(getCocktail(stack)));
             if (recipe != null) {
                 tooltip.add(Component.translatable("item.cocktail.author", recipe.author));
-                List<MobEffectInstance> list = get(level, name).getContent().getEffect().stream().map(EffectStack::get).toList();
-                PotionUtils.addPotionTooltip(list, tooltip, 1.0F);
+                CocktailRecipe cocktailRecipe = get(level, name);
+                if (cocktailRecipe != null) {
+                    List<MobEffectInstance> list = cocktailRecipe.getContent().getEffect().stream().map(EffectStack::get).toList();
+                    PotionUtils.addPotionTooltip(list, tooltip, 1.0F);
+                }
             }
         }
 
