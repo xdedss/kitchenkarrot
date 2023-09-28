@@ -2,6 +2,9 @@ package io.github.tt432.kitchenkarrot.config;
 
 import net.minecraftforge.common.ForgeConfigSpec;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class ModCommonConfigs {
     public static final ForgeConfigSpec.Builder BUILDER = new ForgeConfigSpec.Builder();
     public static ForgeConfigSpec COMMON;
@@ -11,7 +14,15 @@ public class ModCommonConfigs {
     public static ForgeConfigSpec.ConfigValue<Boolean> BUTCHER_SELL_SALT;
     public static ForgeConfigSpec.ConfigValue<Boolean> BUTCHER_SELL_OIL;
     public static ForgeConfigSpec.ConfigValue<Boolean> FARMER_BUY_GEM_CARROT;
+    public static ForgeConfigSpec.ConfigValue<List<String>> UNKNOWN_COCKTAIL_EFFECTS_BLACKLIST;
+    public static ForgeConfigSpec.ConfigValue<Boolean> WHITELIST_MODE;
 
+    static final List<String> effects = new ArrayList<>(List.of(
+            "minecraft:instant_health",
+            "minecraft:instant_damage",
+            "minecraft:bad_omen",
+            "minecraft:hero_of_the_village"
+    ));
 
     static {
         BUILDER.comment("Common Configs for KitchenKarrot");
@@ -23,12 +34,19 @@ public class ModCommonConfigs {
                 .define("Can Entity Lifetime",10);
         BUILDER.pop();
         BUILDER.push("Villager Trade Settings");
-        BUTCHER_SELL_SALT = BUILDER.comment("Will butcher villager sell salt at level 1")
+        BUTCHER_SELL_SALT = BUILDER.comment("Will butcher villager sell salt at level 1.")
                 .define("Butcher Sell Salt", Boolean.TRUE);
-        BUTCHER_SELL_OIL = BUILDER.comment("Will butcher villager sell oil at level 1")
+        BUTCHER_SELL_OIL = BUILDER.comment("Will butcher villager sell oil at level 1.")
                 .define("Butcher Sell Oil", Boolean.TRUE);
-        FARMER_BUY_GEM_CARROT = BUILDER.comment("Will farmer villager buy gem carrot at level 3")
+        FARMER_BUY_GEM_CARROT = BUILDER.comment("Will farmer villager buy gem carrot at level 3.")
                 .define("Farmer Buy Gem Carrot", Boolean.TRUE);
+        BUILDER.pop();
+        BUILDER.push("Cocktail Settings");
+        UNKNOWN_COCKTAIL_EFFECTS_BLACKLIST = BUILDER.comment("Unknown cocktail gives a random effect in the game except following.")
+                .define("Unknown Cocktail Effects Blacklist", effects);
+        WHITELIST_MODE = BUILDER.comment("Turn the blacklist above into a whitelist.Only the given effects will be applied.","False by default.")
+                .define("Whitelist Mode", Boolean.FALSE);
+        BUILDER.pop();
         COMMON = BUILDER.build();
     }
 }

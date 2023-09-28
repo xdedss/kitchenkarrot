@@ -39,6 +39,17 @@ public class ShakerMenu extends KKMenu {
         finishRecipe(inventory.player);
     }
 
+    /**
+     * 用于双端同步的临时代码
+     */
+    private void sync() {
+        itemStack.getCapability(ForgeCapabilities.ITEM_HANDLER).ifPresent(this::slotChanged);
+    }
+
+    /**
+     * 完成配方时触发
+     * @param player
+     */
     private void finishRecipe(Player player) {
         if (ShakerItem.getFinish(itemStack)) {
             itemStack.getCapability(ForgeCapabilities.ITEM_HANDLER).ifPresent(handler -> {
@@ -55,7 +66,6 @@ public class ShakerMenu extends KKMenu {
 
                 if (recipe.isPresent()) {
                     recipeResult = recipe.get().getResultItem(RegistryAccess.EMPTY);
-//                    recipeResult = recipe.get().getResultItem();
                 }
 
                 if (list.stream().anyMatch(ItemStack::isEmpty)) {
@@ -120,6 +130,7 @@ public class ShakerMenu extends KKMenu {
         return super.quickMoveStack(player, index);
     }
 
+    //初始化
     @Override
     protected Slot addSlot(IItemHandler handler, int index, int x, int y) {
         return addSlot(new SlotItemHandler(handler, index, x, y) {
@@ -140,6 +151,7 @@ public class ShakerMenu extends KKMenu {
         }
     }
 
+    //初始化
     @Override
     protected Slot addResultSlot(IItemHandler handler, int index, int x, int y) {
         return addSlot(new KKResultSlot(handler, index, x, y) {
@@ -153,31 +165,41 @@ public class ShakerMenu extends KKMenu {
 
     void addSlots() {
         itemStack.getCapability(ForgeCapabilities.ITEM_HANDLER).ifPresent(h -> {
-            addSlot(h, 0, 110 + 1, 25 + 1);
-            addSlot(h, 1, 128 + 1, 25 + 1);
-            addSlot(h, 2, 146 + 1, 25 + 1);
-            addSlot(h, 3, 118 + 1, 43 + 1);
-            addSlot(h, 4, 136 + 1, 43 + 1);
+            addSlot(h, 0, 62, 22);
+            addSlot(h, 1, 80, 22);
+            addSlot(h, 2, 98, 22);
+            addSlot(h, 3, 71, 40);
+            addSlot(h, 4, 89, 40);
 
-            addSlot(h, 5, 12 + 1, 13 + 1);
-            addSlot(h, 6, 30 + 1, 13 + 1);
-            addSlot(h, 7, 12 + 1, 31 + 1);
-            addSlot(h, 8, 30 + 1, 31 + 1);
+            addSlot(h, 5, 8, 15);
+            addSlot(h, 6, 26, 15);
+            addSlot(h, 7, 8, 33);
+            addSlot(h, 8, 26, 33);
 
-            addSlot(h, 9, 12 + 1, 49 + 1);
-            addSlot(h, 10, 30 + 1, 49 + 1);
+            addSlot(h, 9, 8, 51);
+            addSlot(h, 10, 26, 51);
 
-            addResultSlot(h, 11, 71 + 1, 33 + 1);
+            addResultSlot(h, 11, 144, 22);
         });
     }
 
     @Override
     public void removed(Player pPlayer) {
         super.removed(pPlayer);
+        sync();
 
         if (pPlayer.level().isClientSide) {
             pPlayer.playSound(ModSoundEvents.SHAKER_CLOSE.get(), 0.5F,
                     pPlayer.getRandom().nextFloat() * 0.1F + 0.9F);
         }
+    }
+
+    @Override
+    protected void layoutPlayerInventorySlots(int leftCol, int topRow) {
+        // Player inventory
+        addSlotBox(invHandler, 9, 8, 80, 9, 18, 3, 18);
+
+        // Hotbar
+        addSlotRange(invHandler, 0, 8, 138, 9, 18);
     }
 }

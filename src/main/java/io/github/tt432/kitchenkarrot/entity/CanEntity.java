@@ -58,11 +58,8 @@ public class CanEntity extends Mob {
 
     @Override
     public InteractionResult mobInteract(Player pPlayer, InteractionHand pHand) {
-        if (pPlayer.getItemInHand(pHand) == ItemStack.EMPTY) {
-            returnItem(level(), pPlayer);
-            return InteractionResult.SUCCESS;
-        }
-        return InteractionResult.PASS;
+        returnItem(level(), pPlayer);
+        return InteractionResult.SUCCESS;
     }
 
     @Override

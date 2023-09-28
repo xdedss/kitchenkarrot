@@ -182,6 +182,7 @@
     "kitchenkarrot.cocktail.chop": "餐刀：切碎",
     "kitchenkarrot.cocktail.shaker_close": "摇酒壶：关闭",
     "kitchenkarrot.cocktail.shaker_cocktail": "摇酒壶：倒出鸡尾酒",
+    "kitchenkarrot.cocktail.complete": "摇酒壶：鸡尾酒完成",
     "kitchenkarrot.cocktail.shaker_open": "摇酒壶：开启",
     "kitchenkarrot.cocktail.shaker": "摇酒壶：摇酒",
 
@@ -226,5 +227,7 @@
     "advancement.kitchenkarrot.eat_ultra_cereal.title": "来自深渊",
     "advancement.kitchenkarrot.eat_ultra_cereal.desc": "用一颗下界之星享受有史以来最棒的早餐",
     "advancement.kitchenkarrot.get_canned_hoglin_confit.title": "谁会想到！",
-    "advancement.kitchenkarrot.get_canned_hoglin_confit.desc": "用你手头的金锭换点猪灵佳肴"
+    "advancement.kitchenkarrot.get_canned_hoglin_confit.desc": "用你手头的金锭换点猪灵佳肴",
+
+    "entity.kitchenkarrot.can": "空罐头"
 }

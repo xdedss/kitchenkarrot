@@ -20,10 +20,10 @@ import java.util.List;
 import static io.github.tt432.kitchenkarrot.block.PlateHolderMap.plateHolder;
 
 public class ModFood extends Item {
-    private UseAnim foodType = UseAnim.EAT;
-    private Duration duration = Duration.Normal;
-    private EffectEntry[] effectEntries;
-    private Item returnItem;
+    protected UseAnim foodType = UseAnim.EAT;
+    protected Duration duration = Duration.Normal;
+    protected EffectEntry[] effectEntries;
+    protected Item returnItem;
 
 
     public ModFood(Properties pProperties) {
