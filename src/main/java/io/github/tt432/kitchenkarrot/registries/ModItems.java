@@ -158,7 +158,6 @@ public class ModItems {
     public static final RegistryObject<Item> SHINY_PIZZA = ITEMS.register("shiny_pizza", () -> new Item(defaultProperties()));
     public static final RegistryObject<Item> RAW_SWEET_LOAF = ITEMS.register("raw_sweet_loaf", () -> new Item(defaultProperties()));
     public static final RegistryObject<Item> PLATE_PIECES = ITEMS.register("plate_pieces", () -> new Item(defaultProperties()));
-    public static final RegistryObject<Item> MEOW_TRANSLATOR = ITEMS.register("meow_translator", () -> new MeowTranslator(defaultProperties()));
 
     public static Item.Properties defaultProperties() {
         return new Item.Properties();

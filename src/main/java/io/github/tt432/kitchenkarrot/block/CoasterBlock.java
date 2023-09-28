@@ -7,6 +7,7 @@ import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
@@ -17,6 +18,7 @@ import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import net.minecraftforge.common.capabilities.ForgeCapabilities;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.concurrent.atomic.AtomicBoolean;
 
@@ -59,12 +61,12 @@ public class CoasterBlock extends FacingEntityBlock<CoasterBlockEntity> {
 
         pLevel.getBlockEntity(pPos).getCapability(ForgeCapabilities.ITEM_HANDLER).ifPresent(handler -> {
             if (handler.getStackInSlot(0).isEmpty() && !pPlayer.getItemInHand(pHand).isEmpty()) {
-                handler.insertItem(0, pPlayer.getItemInHand(pHand), false);
-                pPlayer.setItemInHand(pHand, ItemStack.EMPTY);
+                handler.insertItem(0, pPlayer.getItemInHand(pHand).split(1), false);
+                //pPlayer.setItemInHand(pHand, ItemStack.EMPTY);
                 success.set(true);
             }
             else if (!handler.getStackInSlot(0).isEmpty()) {
-                var item = handler.extractItem(0, 64, false);
+                var item = handler.extractItem(0, 1, false);
 
                 if (!pPlayer.addItem(item)) {
                     pPlayer.drop(item, true);
@@ -79,5 +81,10 @@ public class CoasterBlock extends FacingEntityBlock<CoasterBlockEntity> {
         }
 
         return InteractionResult.PASS;
+    }
+    @Nullable
+    @Override
+    public BlockState getStateForPlacement(BlockPlaceContext pContext) {
+        return this.defaultBlockState().setValue(FACING, pContext.getHorizontalDirection().getOpposite());
     }
 }
