@@ -36,6 +36,8 @@ public class CocktailModelRegistry {
 
     @SuppressWarnings("unused")
     public static void register(ModelEvent.RegisterAdditional e) {
+        CocktailList.INSTANCE.cocktails.clear();
+
         ResourceManager manager = Minecraft.getInstance().getResourceManager();
         for (String namespace : manager.getNamespaces()) {
             try {
