@@ -7,6 +7,7 @@ import net.minecraft.client.renderer.block.model.BakedQuad;
 import net.minecraft.client.renderer.block.model.ItemOverrides;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.client.resources.model.BakedModel;
+import net.minecraft.client.resources.model.ModelManager;
 import net.minecraft.core.Direction;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.RandomSource;
@@ -64,12 +65,12 @@ public class CocktailBakedModel implements BakedModel {
             public BakedModel resolve(@NotNull BakedModel p_173465_, @NotNull ItemStack p_173466_, @Nullable ClientLevel p_173467_, @Nullable LivingEntity p_173468_, int p_173469_) {
                 ResourceLocation cocktail = CocktailItem.getCocktail(p_173466_);
                 BakedModel model;
-                if (cocktail == null) {
-                    model = Minecraft.getInstance().getModelManager().getMissingModel();
+                ModelManager modelManager = Minecraft.getInstance().getModelManager();
+                if (cocktail != null && modelManager.getMissingModel() != modelManager.getModel(to(cocktail))) {
+                    model = modelManager.getModel(to(cocktail));
                 } else {
-                    model = Minecraft.getInstance().getModelManager().getModel(to(cocktail));
+                    model = modelManager.getModel(CocktailItem.UNKNOWN_COCKTAIL);
                 }
-
                 return model;
             }
         };
