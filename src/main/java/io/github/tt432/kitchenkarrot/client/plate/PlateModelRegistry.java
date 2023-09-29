@@ -1,6 +1,7 @@
 package io.github.tt432.kitchenkarrot.client.plate;
 
 import io.github.tt432.kitchenkarrot.Kitchenkarrot;
+import io.github.tt432.kitchenkarrot.block.PlateHolderMap;
 import io.github.tt432.kitchenkarrot.util.json.JsonUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.block.model.BlockModel;
@@ -10,14 +11,13 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.resources.Resource;
 import net.minecraft.server.packs.resources.ResourceManager;
 import net.minecraftforge.client.event.ModelEvent;
+import net.minecraftforge.registries.ForgeRegistries;
 import org.apache.commons.io.IOUtils;
 
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 
 /**
  * @author DustW
@@ -27,13 +27,6 @@ public class PlateModelRegistry {
     public static final Map<ResourceLocation, ResourceLocation> MODEL_MAP = new HashMap<>();
 
     public static ResourceLocation DEFAULT_NAME = new ResourceLocation(Kitchenkarrot.MOD_ID, "plate");
-    public static BakedModel DEFAULT_MODEL;
-
-    /*public static BakedModel get(ResourceLocation resourceLocation) {
-        return MODEL_MAP.getOrDefault(resourceLocation,
-                DEFAULT_MODEL != null ? DEFAULT_MODEL : (DEFAULT_MODEL = MODEL_MAP.get(DEFAULT_NAME))
-        );
-    }*/
 
     static ResourceLocation from(ModelResourceLocation modelResourceLocation) {
         return new ResourceLocation(modelResourceLocation.getNamespace(), modelResourceLocation.getPath().split("plates/")[1]);
@@ -45,29 +38,22 @@ public class PlateModelRegistry {
 
 
     public static void register(ModelEvent.RegisterAdditional e) {
-        ResourceManager manager = Minecraft.getInstance().getResourceManager();
-        for (String namespace : manager.getNamespaces()) {
-            try {
-                ResourceLocation resourceName = new ResourceLocation(namespace, "plate/list.json");
-                if (manager.getResource(resourceName).isPresent()) {
-                    Optional<Resource> resources = manager.getResource(resourceName);
-                    InputStreamReader reader = new InputStreamReader(resources.get().open());
-                    PlateList list = JsonUtils.INSTANCE.noExpose.fromJson(reader, PlateList.class);
-                    PlateList.INSTANCE.plates.addAll(list.plates);
+        PlateList.INSTANCE.plates.clear();
 
-                }
-            } catch (IOException exception) {
-                exception.printStackTrace();
+        Set<String> plates = new HashSet<>();
+        PlateHolderMap.plateHolder.forEach((key, value) -> {
+            for (int i = 1; i <= value; i++) {
+                plates.add(ForgeRegistries.ITEMS.getKey(key) + "_" + i);
             }
-        }
+        });
+
+        PlateList.INSTANCE.plates.addAll(plates);
+
         e.register(to(DEFAULT_NAME));
-//        ForgeModelBakery.addSpecialModel(to(DEFAULT_NAME));
+
         for (var info : PlateList.INSTANCE.plates) {
             e.register(to(new ResourceLocation(info)));
-//            ForgeModelBakery.addSpecialModel(to(new ResourceLocation(info)));
         }
-
-        //bakeModel();
 
     }
 
@@ -89,14 +75,5 @@ public class PlateModelRegistry {
 
         return null;
     }
-
-    /*public static void bakeModel(*//*ModelBakeEvent evt*//*) {
-        MODEL_MAP.clear();
-        MODEL_MAP.put(DEFAULT_NAME, DEFAULT_NAME);
-        for (String info : PlateList.INSTANCE.plates) {
-            ModelResourceLocation modelName = to(new ResourceLocation(info));
-            MODEL_MAP.put(from(modelName), modelName);
-        }
-    }*/
 
 }

@@ -55,8 +55,6 @@ public class CocktailModelRegistry {
 
         for (var info : CocktailList.INSTANCE.cocktails) {
             e.register(to(new ResourceLocation(info)));
-//            ModelEvent.
-//            ModelBakery.(to(new ResourceLocation(info)));
         }
     }
 
