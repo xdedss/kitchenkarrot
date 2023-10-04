@@ -134,6 +134,7 @@
     "info.kitchenkarrot.text2":"§7Right click with empty hand to take out the food on plate.",
     "info.kitchenkarrot.text3":"§7Right click and press shift to porting the dished food",
     "info.kitchenkarrot.can_be_dished":"§7Can be put on the plate",
+    "info.kitchenkarrot.popacorn":"%s Bites Remains",
 
     "kitchenkarrot.unknown":"Unknown Cocktail",
     "kitchenkarrot.unknown.tooltip":"Creative work.Uncertain effect.",

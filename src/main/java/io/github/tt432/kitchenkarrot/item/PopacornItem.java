@@ -1,11 +1,16 @@
 package io.github.tt432.kitchenkarrot.item;
 
 import io.github.tt432.kitchenkarrot.registries.ModItems;
+import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+
+import java.util.List;
 
 public class PopacornItem extends ModFood {
     public PopacornItem() {
@@ -24,6 +29,10 @@ public class PopacornItem extends ModFood {
         return itemStack;
     }
 
+    @Override
+    public void appendHoverText(ItemStack pStack, @Nullable Level pLevel, List<Component> tooltip, TooltipFlag pIsAdvanced) {
+        tooltip.add(Component.translatable("info.kitchenkarrot.popacorn", 8 - pStack.getDamageValue()));
+    }
 
     @Override
     public int getUseDuration(ItemStack pStack) {
