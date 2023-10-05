@@ -53,7 +53,7 @@ public class BrewingBarrelRecipeCategory extends BaseRecipeCategory<BrewingBarre
     public List<Component> getTooltipStrings(BrewingBarrelRecipe recipe, IRecipeSlotsView recipeSlotsView, double mouseX, double mouseY) {
         if (mouseX >= 20 && mouseX <= 38) {
             if (mouseY >= 16 && mouseY <= 34) return List.of(Component.translatable("info.kitchenkarrot.water", BrewingBarrelBlockEntity.FLUID_CONSUMPTION));
-            if (mouseY >= 36 && mouseY <= 54) return List.of(Component.translatable("info.kitchenkarrot.time", recipe.getCraftingTime()));
+            if (mouseY >= 36 && mouseY <= 54) return List.of(Component.translatable("info.kitchenkarrot.time", recipe.getCraftingTime() / 20));
         }
     return Collections.emptyList();
     }

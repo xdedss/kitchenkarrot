@@ -45,7 +45,7 @@ public class BaseRecipeCategory<T extends Recipe<?>> implements IRecipeCategory<
 
     @Override
     public void setRecipe(IRecipeLayoutBuilder builder, T recipe, IFocusGroup focuses) {
-        //TODO 新内容
+        //TODO New Content
     }
 
     @Override

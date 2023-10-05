@@ -59,10 +59,10 @@ public class ModTabs {
             event.accept(ModItems.GEM_CARROT);
             event.accept(ModItems.CARROT_SPICES);
             event.accept(ModItems.ICE_CUBES);
-            event.accept(ModItems.WATER);
-            event.accept(ModItems.MILK);
             event.accept(ModItems.ACORN);
             event.accept(ModItems.EMPTY_CAN);
+            event.accept(ModItems.WATER);
+            event.accept(ModItems.MILK);
 
             event.accept(ModItems.BIRCH_SAP);
             event.accept(ModItems.KELP_WITH_SUNFLOWER_SEED);
