@@ -1,10 +1,9 @@
 {
     "type": "kitchenkarrot:plate",
-    "item": {
-      "item": "kitchenkarrot:shiny_pizza",
-      "maxCount": 1
+    "input": {
+      "item": "kitchenkarrot:shiny_pizza"
     },
-    "cut": {
-      "out": "kitchenkarrot:shiny_pizza_slice"
+    "result": {
+      "item": "kitchenkarrot:shiny_pizza_slice"
     }
   }

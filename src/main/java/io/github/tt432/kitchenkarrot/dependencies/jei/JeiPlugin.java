@@ -1,13 +1,11 @@
 package io.github.tt432.kitchenkarrot.dependencies.jei;
 
 import io.github.tt432.kitchenkarrot.Kitchenkarrot;
-import io.github.tt432.kitchenkarrot.dependencies.jei.category.AirCompressorRecipeCategory;
-import io.github.tt432.kitchenkarrot.dependencies.jei.category.BrewingBarrelRecipeCategory;
-import io.github.tt432.kitchenkarrot.dependencies.jei.category.CocktailRecipeCategory;
-import io.github.tt432.kitchenkarrot.dependencies.jei.category.CocktailSubtypeInterpreter;
+import io.github.tt432.kitchenkarrot.dependencies.jei.category.*;
 import io.github.tt432.kitchenkarrot.gui.AirCompressorGui;
 import io.github.tt432.kitchenkarrot.gui.BrewingBarrelGui;
 import io.github.tt432.kitchenkarrot.item.ModBlockItems;
+import io.github.tt432.kitchenkarrot.recipes.recipe.PlateRecipe;
 import io.github.tt432.kitchenkarrot.registries.ModItems;
 import io.github.tt432.kitchenkarrot.menu.AirCompressorMenu;
 import io.github.tt432.kitchenkarrot.menu.BrewingBarrelMenu;
@@ -45,6 +43,10 @@ public class JeiPlugin implements IModPlugin {
             new RecipeType<>(new ResourceLocation(Kitchenkarrot.MOD_ID, "brewing_barrel"),
                     BrewingBarrelRecipe.class);
 
+    public static final RecipeType<PlateRecipe> PLATE =
+            new RecipeType<>(new ResourceLocation(Kitchenkarrot.MOD_ID, "plate"),
+                    PlateRecipe.class);
+
     protected <C extends Container, T extends Recipe<C>> List<T> getRecipe(net.minecraft.world.item.crafting.RecipeType<T> recipeType) {
         return Minecraft.getInstance().level.getRecipeManager().getAllRecipesFor(recipeType);
     }
@@ -54,6 +56,7 @@ public class JeiPlugin implements IModPlugin {
         registry.addRecipeCategories(new AirCompressorRecipeCategory(registry.getJeiHelpers().getGuiHelper()));
         registry.addRecipeCategories(new CocktailRecipeCategory(registry.getJeiHelpers().getGuiHelper()));
         registry.addRecipeCategories(new BrewingBarrelRecipeCategory(registry.getJeiHelpers().getGuiHelper()));
+        registry.addRecipeCategories(new PlateRecipeCategory(registry.getJeiHelpers().getGuiHelper()));
     }
 
     @Override
@@ -61,6 +64,7 @@ public class JeiPlugin implements IModPlugin {
         registration.addRecipes(AIR_COMPRESSOR, getRecipe(RecipeTypes.AIR_COMPRESSOR.get()));
         registration.addRecipes(COCKTAIL, getRecipe(RecipeTypes.COCKTAIL.get()));
         registration.addRecipes(BREWING_BARREL, getRecipe(RecipeTypes.BREWING_BARREL.get()));
+        registration.addRecipes(PLATE, getRecipe(RecipeTypes.PLATE.get()));
     }
 
     @Override
@@ -68,6 +72,7 @@ public class JeiPlugin implements IModPlugin {
         registration.addRecipeCatalyst(new ItemStack(ModBlockItems.AIR_COMPRESSOR.get()), AIR_COMPRESSOR);
         registration.addRecipeCatalyst(new ItemStack(ModItems.SHAKER.get()), COCKTAIL);
         registration.addRecipeCatalyst(new ItemStack(ModBlockItems.BREWING_BARREL.get()), BREWING_BARREL);
+        registration.addRecipeCatalyst(new ItemStack(ModItems.KNIFE.get()), PLATE);
     }
 
     @Override

@@ -1,10 +1,9 @@
 {
     "type": "kitchenkarrot:plate",
-    "item": {
-      "item": "kitchenkarrot:sweet_loaf",
-      "maxCount": 1
+    "input": {
+      "item": "kitchenkarrot:sweet_loaf"
     },
-    "cut": {
-      "out": "kitchenkarrot:sweet_loaf_slice"
+    "result": {
+      "item": "kitchenkarrot:sweet_loaf_slice"
     }
   }

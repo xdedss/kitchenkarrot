@@ -1,11 +1,9 @@
 {
     "type": "kitchenkarrot:plate",
-    "item": {
-      "item": "kitchenkarrot:chorus_mousse",
-      "maxCount": 1
+    "input": {
+      "item": "kitchenkarrot:chorus_mousse"
     },
-    "cut": {
-      "out": "kitchenkarrot:small_chorus_mousse"
+    "result": {
+      "item": "kitchenkarrot:small_chorus_mousse"
     }
   }
-

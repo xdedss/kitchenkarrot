@@ -1,10 +1,9 @@
 {
     "type": "kitchenkarrot:plate",
-    "item": {
-      "item": "kitchenkarrot:sirloin_steak",
-      "maxCount": 1
+    "input": {
+      "item": "kitchenkarrot:sirloin_steak"
     },
-    "cut": {
-      "out": "kitchenkarrot:beef_grains"
+    "result": {
+      "item": "kitchenkarrot:beef_grains"
     }
   }

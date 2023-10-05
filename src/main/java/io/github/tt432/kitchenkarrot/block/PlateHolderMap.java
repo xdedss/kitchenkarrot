@@ -3,6 +3,7 @@ package io.github.tt432.kitchenkarrot.block;
 import com.google.common.collect.ImmutableMap;
 import io.github.tt432.kitchenkarrot.registries.ModItems;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.Items;
 
 import java.util.Map;
 
@@ -32,4 +33,8 @@ public class PlateHolderMap {
             .put(ModItems.BEEF_IN_DRIPLEAF.get(), 1)
             .put(ModItems.SMALL_BEEF_IN_DRIPLEAF.get(), 4)
             .build();
+
+    public static boolean canPutOnPlate(Item item) {
+        return plateHolder.containsKey(item);
+    }
 }

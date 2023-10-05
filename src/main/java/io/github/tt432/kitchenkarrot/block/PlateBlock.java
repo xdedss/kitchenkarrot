@@ -136,7 +136,7 @@ public class PlateBlock extends FacingEntityBlock<PlateBlockEntity> {
         AtomicBoolean result = new AtomicBoolean(false);
             if (canHoldItem(handler, heldItem)) {
                 result.set(addToPlate(handler, heldItem, player));
-            } else if (heldItem.isEmpty() || heldItem.is(ModItemTags.KNIFE_ITEM)) {
+            } else if (!dishItem.isEmpty() && heldItem.isEmpty() || heldItem.is(ModItemTags.INTERACT_WITH_PLATE)) {
                 result.set(removeFromPlate(level, player, handler, dishItem, heldItem));
             }
         return result.get();
@@ -183,13 +183,13 @@ public class PlateBlock extends FacingEntityBlock<PlateBlockEntity> {
 
     private boolean giveRecipeResult(Level level, PlateRecipe recipe, IItemHandler handler) {
         Optional<PlateRecipe> outputRecipe = level.getRecipeManager().getAllRecipesFor(RecipeTypes.PLATE.get())
-                .stream().filter(or -> or.matches(Collections.singletonList(recipe.getResultItem(RegistryAccess.EMPTY)))).findFirst();
+                .stream().filter(or -> or.matches(Collections.singletonList(handler.getStackInSlot(0)))).findFirst();
 
         AtomicBoolean result = new AtomicBoolean(false);
 
         outputRecipe.ifPresent(or -> {
             handler.extractItem(0, 64, false);
-            handler.insertItem(0, or.getMaxStack(), false);
+            handler.insertItem(0, or.getResultStack(), false);
             result.set(true);
         });
 

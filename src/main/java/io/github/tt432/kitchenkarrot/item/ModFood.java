@@ -19,7 +19,7 @@ import java.util.List;
 
 import static io.github.tt432.kitchenkarrot.block.PlateHolderMap.plateHolder;
 
-public class ModFood extends Item {
+public class ModFood extends ModItem {
     protected UseAnim foodType = UseAnim.EAT;
     protected Duration duration = Duration.Normal;
     protected EffectEntry[] effectEntries;
@@ -50,18 +50,11 @@ public class ModFood extends Item {
         item.effectEntries = effectEntries;
         return item;
     }
-    private boolean canPutOnPlate(){
-        return plateHolder.containsKey(this);
-    }
-
 
     @Override
     @ParametersAreNonnullByDefault
     public void appendHoverText(ItemStack pStack, @Nullable Level pLevel, List<Component> tooltip, TooltipFlag pIsAdvanced) {
         super.appendHoverText(pStack, pLevel, tooltip, pIsAdvanced);
-        if (this.canPutOnPlate()) {
-            tooltip.add(Component.translatable("info.kitchenkarrot.can_be_dished"));
-        }
         if (this.effectEntries != null && this.effectEntries.length > 0) {
             PotionUtils.addPotionTooltip(Arrays.stream(effectEntries).map(e -> e.effect.get()).toList(), tooltip, 1.0F);
         }

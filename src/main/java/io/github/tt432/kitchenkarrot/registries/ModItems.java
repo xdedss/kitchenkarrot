@@ -153,9 +153,9 @@ public class ModItems {
     public static final RegistryObject<Item> ICE_CUBES = ITEMS.register("ice_cubes", () -> new Item(defaultProperties()));
     public static final RegistryObject<Item> CARROT_SPICES = ITEMS.register("carrot_spices", () -> new Item(defaultProperties()));
     public static final RegistryObject<Item> ACORN = ITEMS.register("acorn", () -> new Item(FoodUtil.food(defaultProperties(), 2, 1F)));
-    public static final RegistryObject<Item> DUNGEON_PIZZA = ITEMS.register("dungeon_pizza", () -> new Item(defaultProperties()));
-    public static final RegistryObject<Item> FEAST_PIZZA = ITEMS.register("feast_pizza", () -> new Item(defaultProperties()));
-    public static final RegistryObject<Item> SHINY_PIZZA = ITEMS.register("shiny_pizza", () -> new Item(defaultProperties()));
+    public static final RegistryObject<Item> DUNGEON_PIZZA = ITEMS.register("dungeon_pizza", () -> new ModItem(defaultProperties()));
+    public static final RegistryObject<Item> FEAST_PIZZA = ITEMS.register("feast_pizza", () -> new ModItem(defaultProperties()));
+    public static final RegistryObject<Item> SHINY_PIZZA = ITEMS.register("shiny_pizza", () -> new ModItem(defaultProperties()));
     public static final RegistryObject<Item> RAW_SWEET_LOAF = ITEMS.register("raw_sweet_loaf", () -> new Item(defaultProperties()));
     public static final RegistryObject<Item> PLATE_PIECES = ITEMS.register("plate_pieces", () -> new Item(defaultProperties()));
 

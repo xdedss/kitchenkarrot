@@ -1,5 +1,6 @@
 package io.github.tt432.kitchenkarrot.tag;
 
+import net.minecraft.core.Holder;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.tags.TagKey;
@@ -17,4 +18,6 @@ public class ModItemTags {
 
     public static final TagKey<Item> BASE =
             ItemTags.create(new ResourceLocation("kitchenkarrot:base"));
+    public static final TagKey<Item> INTERACT_WITH_PLATE =
+            ItemTags.create(new ResourceLocation("kitchenkarrot:interact_with_plate"));
 }

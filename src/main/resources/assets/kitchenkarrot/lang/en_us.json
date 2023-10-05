@@ -135,6 +135,8 @@
     "info.kitchenkarrot.text3":"§7Right click and press shift to porting the dished food",
     "info.kitchenkarrot.can_be_dished":"§7Can be put on the plate",
     "info.kitchenkarrot.popacorn":"%s Bites Remains",
+    "info.kitchenkarrot.water":"Water Consumption: %smB",
+    "info.kitchenkarrot.time":"Brewing Duration: %ss",
 
     "kitchenkarrot.unknown":"Unknown Cocktail",
     "kitchenkarrot.unknown.tooltip":"Creative work.Uncertain effect.",
@@ -196,6 +198,7 @@
     "kitchenkarrot:brewing_barrel":"Brewing",
     "kitchenkarrot:air_compressor":"Air Compressing",
     "kitchenkarrot:cocktail":"Shaking",
+    "kitchenkarrot:plate":"Cutting",
 
     "advancement.kitchenkarrot.root.title":"Kitchen Karrot",
     "advancement.kitchenkarrot.root.desc":"The beginning of your gourmet journey",

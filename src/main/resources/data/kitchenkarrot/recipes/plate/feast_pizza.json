@@ -1,10 +1,9 @@
 {
     "type": "kitchenkarrot:plate",
-    "item": {
-      "item": "kitchenkarrot:feast_pizza",
-      "maxCount": 1
+    "input": {
+      "item": "kitchenkarrot:feast_pizza"
     },
-    "cut": {
-      "out": "kitchenkarrot:feast_pizza_slice"
+    "result": {
+      "item": "kitchenkarrot:feast_pizza_slice"
     }
   }
