@@ -40,14 +40,14 @@ public class ShakerMenu extends KKMenu {
     }
 
     /**
-     * 用于双端同步的临时代码
+     * temporary, to sync two sides
      */
     private void sync() {
         itemStack.getCapability(ForgeCapabilities.ITEM_HANDLER).ifPresent(this::slotChanged);
     }
 
     /**
-     * 完成配方时触发
+     * trigger when finish
      * @param player
      */
     private void finishRecipe(Player player) {
@@ -130,7 +130,7 @@ public class ShakerMenu extends KKMenu {
         return super.quickMoveStack(player, index);
     }
 
-    //初始化
+    // init
     @Override
     protected Slot addSlot(IItemHandler handler, int index, int x, int y) {
         return addSlot(new SlotItemHandler(handler, index, x, y) {
@@ -151,7 +151,7 @@ public class ShakerMenu extends KKMenu {
         }
     }
 
-    //初始化
+    // init
     @Override
     protected Slot addResultSlot(IItemHandler handler, int index, int x, int y) {
         return addSlot(new KKResultSlot(handler, index, x, y) {

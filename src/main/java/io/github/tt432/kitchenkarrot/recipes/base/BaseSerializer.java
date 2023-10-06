@@ -11,7 +11,7 @@ import org.jetbrains.annotations.Nullable;
  * @author DustW
  **/
 public class BaseSerializer<RECIPE extends BaseRecipe<RECIPE>>
-        //TODO 需要继承的类已删除，不确定是否会有bug。
+        //TODO super class deleted, possibly cause unknown issue.
 //        extends ForgeRegistryEntry<RecipeSerializer<?>>
         implements RecipeSerializer<RECIPE> {
 
