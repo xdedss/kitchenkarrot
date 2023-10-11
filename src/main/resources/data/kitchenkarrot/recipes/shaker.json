@@ -1,12 +1,15 @@
 {
-  "type": "minecraft:smithing",
-  "base": {
-    "item": "minecraft:bucket"
-  },
+  "type": "minecraft:smithing_transform",
   "addition": {
     "item": "minecraft:iron_nugget"
   },
+  "base": {
+    "item": "minecraft:bucket"
+  },
   "result": {
     "item": "kitchenkarrot:shaker"
+  },
+  "template": {
+    "item": "minecraft:iron_nugget"
   }
 }
