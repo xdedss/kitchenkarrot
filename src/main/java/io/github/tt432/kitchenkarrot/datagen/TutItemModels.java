@@ -1,8 +1,6 @@
 package io.github.tt432.kitchenkarrot.datagen;
 
-import io.github.tt432.kitchenkarrot.block.PlateBlock;
-import io.github.tt432.kitchenkarrot.item.ModBlockItems;
-import io.github.tt432.kitchenkarrot.item.ModItems;
+import io.github.tt432.kitchenkarrot.registries.ModItems;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.BlockItem;

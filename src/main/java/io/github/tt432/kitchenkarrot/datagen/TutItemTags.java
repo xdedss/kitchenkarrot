@@ -1,6 +1,6 @@
 package io.github.tt432.kitchenkarrot.datagen;
 
-import io.github.tt432.kitchenkarrot.item.ModItems;
+import io.github.tt432.kitchenkarrot.registries.ModItems;
 import io.github.tt432.kitchenkarrot.tag.ModItemTags;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.tags.BlockTagsProvider;

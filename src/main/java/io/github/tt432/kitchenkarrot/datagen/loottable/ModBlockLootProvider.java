@@ -1,18 +1,10 @@
 package io.github.tt432.kitchenkarrot.datagen.loottable;
 
-import io.github.tt432.kitchenkarrot.block.ModBlocks;
-import io.github.tt432.kitchenkarrot.item.ModBlockItems;
-import net.minecraft.advancements.critereon.StatePropertiesPredicate;
 import net.minecraft.data.loot.BlockLoot;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.block.CropBlock;
 import net.minecraft.world.level.storage.loot.LootTable;
-import net.minecraft.world.level.storage.loot.predicates.LootItemBlockStatePropertyCondition;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.Collection;
-import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 

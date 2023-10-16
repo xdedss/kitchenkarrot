@@ -1,13 +1,10 @@
 package io.github.tt432.kitchenkarrot.block;
 
 import io.github.tt432.kitchenkarrot.blockentity.BrewingBarrelBlockEntity;
-import io.github.tt432.kitchenkarrot.blockentity.ModBlockEntities;
-import io.github.tt432.kitchenkarrot.item.ModItems;
+import io.github.tt432.kitchenkarrot.registries.ModBlockEntities;
+import io.github.tt432.kitchenkarrot.registries.ModItems;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.Vec3i;
-import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
-import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
@@ -18,8 +15,6 @@ import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.entity.BarrelBlockEntity;
-import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
@@ -41,7 +36,7 @@ public class BrewingBarrelBlock extends FacingGuiEntityBlock<BrewingBarrelBlockE
 
     public static final VoxelShape SHAPE_Z = Block.box(1, 1, 0, 15, 15, 16);
     public static final VoxelShape SHAPE_X = Block.box(0, 1, 1, 16, 15, 15);
-    protected BrewingBarrelBlock(Properties p_49224_) {
+    public BrewingBarrelBlock(Properties p_49224_) {
         super(p_49224_);
         this.registerDefaultState(defaultBlockState().setValue(OPEN, false));
     }

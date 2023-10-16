@@ -1,7 +1,6 @@
 package io.github.tt432.kitchenkarrot.item;
 
-import io.github.tt432.kitchenkarrot.block.ModBlocks;
-import io.github.tt432.kitchenkarrot.item.food.FoodUtil;
+import io.github.tt432.kitchenkarrot.registries.ModBlocks;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraftforge.registries.DeferredRegister;
@@ -9,7 +8,7 @@ import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 
 import static io.github.tt432.kitchenkarrot.Kitchenkarrot.MOD_ID;
-import static io.github.tt432.kitchenkarrot.item.ModItems.defaultProperties;
+import static io.github.tt432.kitchenkarrot.registries.ModItems.defaultProperties;
 
 public class ModBlockItems {
     public static final DeferredRegister<Item> BLOCK_ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, MOD_ID);

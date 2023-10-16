@@ -1,17 +1,24 @@
 package io.github.tt432.kitchenkarrot.dependencies.jei.category;
 
 import io.github.tt432.kitchenkarrot.Kitchenkarrot;
+import io.github.tt432.kitchenkarrot.blockentity.BrewingBarrelBlockEntity;
 import io.github.tt432.kitchenkarrot.dependencies.jei.JeiPlugin;
 import io.github.tt432.kitchenkarrot.item.ModBlockItems;
-import io.github.tt432.kitchenkarrot.item.ModItems;
 import io.github.tt432.kitchenkarrot.recipes.recipe.BrewingBarrelRecipe;
 import mezz.jei.api.constants.VanillaTypes;
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder;
+import mezz.jei.api.gui.ingredient.IRecipeSlotsView;
 import mezz.jei.api.helpers.IGuiHelper;
 import mezz.jei.api.recipe.IFocusGroup;
 import mezz.jei.api.recipe.RecipeIngredientRole;
+import net.minecraft.core.RegistryAccess;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
+
+import java.util.Collections;
+import java.util.List;
 
 /**
  * @author DustW
@@ -38,5 +45,14 @@ public class BrewingBarrelRecipeCategory extends BaseRecipeCategory<BrewingBarre
         builder.addSlot(RecipeIngredientRole.INPUT, 82, 37).addIngredients(ingredients.get(5));
 
         builder.addSlot(RecipeIngredientRole.OUTPUT, 109, 27).addItemStack(recipe.getResultItem());
+    }
+
+    @Override
+    public List<Component> getTooltipStrings(BrewingBarrelRecipe recipe, IRecipeSlotsView recipeSlotsView, double mouseX, double mouseY) {
+        if (mouseX >= 20 && mouseX <= 38) {
+            if (mouseY >= 16 && mouseY <= 34) return List.of(new TranslatableComponent("info.kitchenkarrot.water", BrewingBarrelBlockEntity.FLUID_CONSUMPTION));
+            if (mouseY >= 36 && mouseY <= 54) return List.of(new TranslatableComponent("info.kitchenkarrot.time", recipe.getCraftingTime() / 20));
+        }
+        return Collections.emptyList();
     }
 }

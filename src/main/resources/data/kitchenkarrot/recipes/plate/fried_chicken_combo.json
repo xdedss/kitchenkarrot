@@ -1,7 +1,0 @@
-{
-  "type": "kitchenkarrot:plate",
-  "item": {
-    "item": "kitchenkarrot:fried_chicken_combo",
-    "maxCount": 1
-  }
-}

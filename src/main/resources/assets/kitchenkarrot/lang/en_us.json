@@ -53,7 +53,7 @@
     "item.kitchenkarrot.seed_pie":"Seed Pie",
     "item.kitchenkarrot.kelp_with_sunflower_seed":"Kelp With Sunflower Seed",
     "item.kitchenkarrot.rice_cake":"Rice Cake",
-    "item.kitchenkarrot.leafy_fresh_chocolate":"Verdant Nama Chocolate",
+    "item.kitchenkarrot.leafy_fresh_chocolate":"Verdant Nama Choco",
     "item.kitchenkarrot.cupcake":"Cupcake",
     "item.kitchenkarrot.canned_beef_potato":"Canned Beef Potato",
     "item.kitchenkarrot.canned_pork_beetroot":"Canned Pork Beetroot",
@@ -62,6 +62,7 @@
     "item.kitchenkarrot.canned_sweet_berry_milk":"Canned Sweet Berry Milk",
     "item.kitchenkarrot.canned_pure_milk":"Canned Pure Milk",
     "item.kitchenkarrot.canned_hoglin_confit":"Canned Hoglin Confit",
+    "item.kitchenkarrot.canned_cat_food":"Canned Cat Food",
     "item.kitchenkarrot.grilled_fish_and_cactus":"Grilled Fish and Cactus",
     "item.kitchenkarrot.grilled_wheatmeal":"Grilled Wheatmeal",
     "item.kitchenkarrot.pillager_pie":"Pillager Pie",
@@ -133,6 +134,9 @@
     "info.kitchenkarrot.text2":"§7Right click with empty hand to take out the food on plate.",
     "info.kitchenkarrot.text3":"§7Right click and press shift to porting the dished food",
     "info.kitchenkarrot.can_be_dished":"§7Can be put on the plate",
+    "info.kitchenkarrot.popacorn":"%s Bites Remains",
+    "info.kitchenkarrot.water":"Water Consumption: %smB",
+    "info.kitchenkarrot.time":"Brewing Duration: %ss",
 
     "kitchenkarrot.unknown":"Unknown Cocktail",
     "kitchenkarrot.unknown.tooltip":"Creative work.Uncertain effect.",
@@ -180,7 +184,8 @@
 
     "kitchenkarrot.cocktail.chop":"Knife chops",
     "kitchenkarrot.cocktail.shaker_close":"Shaker closed",
-    "kitchenkarrot.cocktail.shaker_cocktail":"Cocktail completed",
+    "kitchenkarrot.cocktail.shaker_cocktail":"Cocktail served",
+    "kitchenkarrot.cocktail.complete":"Cocktail completed",
     "kitchenkarrot.cocktail.shaker_open":"Shaker opened",
     "kitchenkarrot.cocktail.shaker":"Shaking",
 
@@ -193,6 +198,7 @@
     "kitchenkarrot:brewing_barrel":"Brewing",
     "kitchenkarrot:air_compressor":"Air Compressing",
     "kitchenkarrot:cocktail":"Shaking",
+    "kitchenkarrot:plate":"Cutting",
 
     "advancement.kitchenkarrot.root.title":"Kitchen Karrot",
     "advancement.kitchenkarrot.root.desc":"The beginning of your gourmet journey",
@@ -225,5 +231,12 @@
     "advancement.kitchenkarrot.eat_ultra_cereal.title":"Made in Abyss",
     "advancement.kitchenkarrot.eat_ultra_cereal.desc":"Enjoy your best breakfast ever with a nether star.",
     "advancement.kitchenkarrot.get_canned_hoglin_confit.title":"Who Would Have Known!",
-    "advancement.kitchenkarrot.get_canned_hoglin_confit.desc":"Exchange some of your gold ingots for piglin treats."
+    "advancement.kitchenkarrot.get_canned_hoglin_confit.desc":"Exchange some of your gold ingots for piglin treats.",
+
+    "entity.kitchenkarrot.can": "Empty Can",
+    "potion.potency.6": "VI",
+    "potion.potency.7": "VII",
+    "potion.potency.8": "VIII",
+    "potion.potency.9": "IX",
+    "potion.potency.10": "X"
 }

@@ -1,6 +1,6 @@
 package io.github.tt432.kitchenkarrot.item;
 
-import io.github.tt432.kitchenkarrot.block.ModBlocks;
+import io.github.tt432.kitchenkarrot.registries.ModBlocks;
 import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
@@ -33,7 +33,7 @@ import java.util.List;
 import java.util.Objects;
 
 @ParametersAreNonnullByDefault
-public class EmptyPlateItem extends IndexItem {
+public class EmptyPlateItem extends ModItem {
 
     public EmptyPlateItem(Properties properties) {
         super(properties);

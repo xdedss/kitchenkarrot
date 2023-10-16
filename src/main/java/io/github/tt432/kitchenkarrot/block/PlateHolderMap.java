@@ -1,8 +1,9 @@
 package io.github.tt432.kitchenkarrot.block;
 
 import com.google.common.collect.ImmutableMap;
-import io.github.tt432.kitchenkarrot.item.ModItems;
+import io.github.tt432.kitchenkarrot.registries.ModItems;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.Items;
 
 import java.util.Map;
 
@@ -27,9 +28,13 @@ public class PlateHolderMap {
             .put(ModItems.FRIED_PUMPKIN_CAKE.get(), 5)
             .put(ModItems.SEED_PIE.get(), 5)
             .put(ModItems.RICE_CAKE.get(), 10)
-            .put(ModItems.LEAFY_FRESH_CHOCOLATE.get(), 10)
+            .put(ModItems.VERDANT_NAMA_CHOCO.get(), 10)
             .put(ModItems.FRIED_CHICKEN_COMBO.get(), 1)
             .put(ModItems.BEEF_IN_DRIPLEAF.get(), 1)
             .put(ModItems.SMALL_BEEF_IN_DRIPLEAF.get(), 4)
             .build();
+
+    public static boolean canPutOnPlate(Item item) {
+        return plateHolder.containsKey(item);
+    }
 }

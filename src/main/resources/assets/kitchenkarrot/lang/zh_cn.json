@@ -62,6 +62,7 @@
     "item.kitchenkarrot.canned_sweet_berry_milk": "甜浆果早餐奶罐头",
     "item.kitchenkarrot.canned_pure_milk": "纯牛奶罐头",
     "item.kitchenkarrot.canned_hoglin_confit": "油封疣猪肉罐头",
+    "item.kitchenkarrot.canned_cat_food": "妙鲜包猫罐头",
     "item.kitchenkarrot.grilled_fish_and_cactus": "仙人掌烤鱼",
     "item.kitchenkarrot.grilled_wheatmeal": "烤麦片",
     "item.kitchenkarrot.pillager_pie": "掠夺者派",
@@ -133,6 +134,9 @@
     "info.kitchenkarrot.text2": "§7空手右键拿起拿出盘子中的食物",
     "info.kitchenkarrot.text3": "§7SHIFT+右键端起盘子",
     "info.kitchenkarrot.can_be_dished": "§7可以装在盘子上",
+    "info.kitchenkarrot.popacorn": "剩余%s口",
+    "info.kitchenkarrot.water": "消耗水：%smB",
+    "info.kitchenkarrot.time": "酿造时长：%s秒",
 
     "kitchenkarrot.unknown": "不知名鸡尾酒",
     "kitchenkarrot.unknown.tooltip": "§7新奇的研发。效果不明",
@@ -181,6 +185,7 @@
     "kitchenkarrot.cocktail.chop": "餐刀：切碎",
     "kitchenkarrot.cocktail.shaker_close": "摇酒壶：关闭",
     "kitchenkarrot.cocktail.shaker_cocktail": "摇酒壶：倒出鸡尾酒",
+    "kitchenkarrot.cocktail.complete": "摇酒壶：鸡尾酒完成",
     "kitchenkarrot.cocktail.shaker_open": "摇酒壶：开启",
     "kitchenkarrot.cocktail.shaker": "摇酒壶：摇酒",
 
@@ -193,6 +198,7 @@
     "kitchenkarrot:brewing_barrel": "酿造桶",
     "kitchenkarrot:air_compressor": "空气压缩",
     "kitchenkarrot:cocktail": "摇酒",
+    "kitchenkarrot:plate": "切剁",
 
     "advancement.kitchenkarrot.root.title": "胡萝卜厨房",
     "advancement.kitchenkarrot.root.desc": "你的美食之旅的起点",
@@ -225,5 +231,12 @@
     "advancement.kitchenkarrot.eat_ultra_cereal.title": "来自深渊",
     "advancement.kitchenkarrot.eat_ultra_cereal.desc": "用一颗下界之星享受有史以来最棒的早餐",
     "advancement.kitchenkarrot.get_canned_hoglin_confit.title": "谁会想到！",
-    "advancement.kitchenkarrot.get_canned_hoglin_confit.desc": "用你手头的金锭换点猪灵佳肴"
+    "advancement.kitchenkarrot.get_canned_hoglin_confit.desc": "用你手头的金锭换点猪灵佳肴",
+
+    "entity.kitchenkarrot.can": "空罐头",
+    "potion.potency.6": "VI",
+    "potion.potency.7": "VII",
+    "potion.potency.8": "VIII",
+    "potion.potency.9": "IX",
+    "potion.potency.10": "X"
 }

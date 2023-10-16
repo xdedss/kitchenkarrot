@@ -1,15 +1,10 @@
 package io.github.tt432.kitchenkarrot.block;
 
 import io.github.tt432.kitchenkarrot.blockentity.AirCompressorBlockEntity;
-import io.github.tt432.kitchenkarrot.blockentity.ModBlockEntities;
+import io.github.tt432.kitchenkarrot.registries.ModBlockEntities;
 import net.minecraft.core.BlockPos;
-import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.BlockGetter;
-import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.entity.AbstractFurnaceBlockEntity;
-import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
@@ -20,7 +15,7 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 public class AirCompressorBlock extends FacingGuiEntityBlock<AirCompressorBlockEntity>{
     public static final VoxelShape SHAPE = Block.box(2, 0, 2, 16 - 2, 15, 16 - 2);
 
-    protected AirCompressorBlock() {
+    public AirCompressorBlock() {
         super(BlockBehaviour.Properties.of(Material.STONE)
                 .strength(2.0f, 2.0f)
                 .noOcclusion());

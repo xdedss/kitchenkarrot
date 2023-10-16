@@ -2,6 +2,7 @@ package io.github.tt432.kitchenkarrot.blockentity;
 
 import io.github.tt432.kitchenkarrot.blockentity.sync.ItemStackHandlerSyncData;
 import io.github.tt432.kitchenkarrot.blockentity.sync.SyncDataManager;
+import io.github.tt432.kitchenkarrot.registries.ModBlockEntities;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.item.ItemStack;

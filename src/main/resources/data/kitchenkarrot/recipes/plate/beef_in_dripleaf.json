@@ -1,10 +1,9 @@
 {
     "type": "kitchenkarrot:plate",
-    "item": {
-      "item": "kitchenkarrot:beef_in_dripleaf",
-      "maxCount": 1
+    "input": {
+      "item": "kitchenkarrot:beef_in_dripleaf"
     },
-    "cut": {
-      "out": "kitchenkarrot:small_beef_in_dripleaf"
+    "result": {
+      "item": "kitchenkarrot:small_beef_in_dripleaf"
     }
   }

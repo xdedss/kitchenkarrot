@@ -1,8 +1,8 @@
 {
 	"credit": "Made with Blockbench",
 	"textures": {
-		"0": "kitchenkarrot:models/plates/fried_pumpkin_cake",
-		"particle": "kitchenkarrot:models/plates/fried_pumpkin_cake"
+		"0": "kitchenkarrot:block/plates/fried_pumpkin_cake",
+		"particle": "kitchenkarrot:block/plates/fried_pumpkin_cake"
 	},
 	"elements": [
 		{

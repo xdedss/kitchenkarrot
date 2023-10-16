@@ -3,10 +3,10 @@ package io.github.tt432.kitchenkarrot.menu;
 import io.github.tt432.kitchenkarrot.item.CocktailItem;
 import io.github.tt432.kitchenkarrot.item.ShakerItem;
 import io.github.tt432.kitchenkarrot.menu.base.KKMenu;
-import io.github.tt432.kitchenkarrot.menu.reg.ModMenuTypes;
+import io.github.tt432.kitchenkarrot.registries.ModMenuTypes;
 import io.github.tt432.kitchenkarrot.menu.slot.KKResultSlot;
-import io.github.tt432.kitchenkarrot.recipes.register.RecipeManager;
-import io.github.tt432.kitchenkarrot.sound.ModSoundEvents;
+import io.github.tt432.kitchenkarrot.recipes.RecipeManager;
+import io.github.tt432.kitchenkarrot.registries.ModSoundEvents;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.ClickType;
@@ -152,21 +152,21 @@ public class ShakerMenu extends KKMenu {
 
     void addSlots() {
         itemStack.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).ifPresent(h -> {
-            addSlot(h, 0, 110 + 1, 25 + 1);
-            addSlot(h, 1, 128 + 1, 25 + 1);
-            addSlot(h, 2, 146 + 1, 25 + 1);
-            addSlot(h, 3, 118 + 1, 43 + 1);
-            addSlot(h, 4, 136 + 1, 43 + 1);
+            addSlot(h, 0, 62, 22);
+            addSlot(h, 1, 80, 22);
+            addSlot(h, 2, 98, 22);
+            addSlot(h, 3, 71, 40);
+            addSlot(h, 4, 89, 40);
 
-            addSlot(h, 5, 12 + 1, 13 + 1);
-            addSlot(h, 6, 30 + 1, 13 + 1);
-            addSlot(h, 7, 12 + 1, 31 + 1);
-            addSlot(h, 8, 30 + 1, 31 + 1);
+            addSlot(h, 5, 8, 15);
+            addSlot(h, 6, 26, 15);
+            addSlot(h, 7, 8, 33);
+            addSlot(h, 8, 26, 33);
 
-            addSlot(h, 9, 12 + 1, 49 + 1);
-            addSlot(h, 10, 30 + 1, 49 + 1);
+            addSlot(h, 9, 8, 51);
+            addSlot(h, 10, 26, 51);
 
-            addResultSlot(h, 11, 71 + 1, 33 + 1);
+            addResultSlot(h, 11, 144, 22);
         });
     }
 

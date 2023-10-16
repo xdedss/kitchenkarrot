@@ -17,4 +17,6 @@ public class ModItemTags {
 
     public static final TagKey<Item> BASE =
             ItemTags.create(new ResourceLocation("kitchenkarrot:base"));
+    public static final TagKey<Item> INTERACT_WITH_PLATE =
+            ItemTags.create(new ResourceLocation("kitchenkarrot:interact_with_plate"));
 }

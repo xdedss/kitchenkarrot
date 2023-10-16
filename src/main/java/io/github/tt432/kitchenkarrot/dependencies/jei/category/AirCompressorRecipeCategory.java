@@ -6,12 +6,15 @@ import io.github.tt432.kitchenkarrot.dependencies.jei.JeiPlugin;
 import io.github.tt432.kitchenkarrot.item.ModBlockItems;
 import io.github.tt432.kitchenkarrot.recipes.recipe.AirCompressorRecipe;
 import mezz.jei.api.constants.VanillaTypes;
+import mezz.jei.api.gui.ITickTimer;
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder;
+import mezz.jei.api.gui.drawable.IDrawable;
 import mezz.jei.api.gui.drawable.IDrawableAnimated;
 import mezz.jei.api.gui.ingredient.IRecipeSlotsView;
 import mezz.jei.api.helpers.IGuiHelper;
 import mezz.jei.api.recipe.IFocusGroup;
 import mezz.jei.api.recipe.RecipeIngredientRole;
+import net.minecraft.core.RegistryAccess;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
@@ -24,6 +27,8 @@ import java.util.Objects;
  **/
 public class AirCompressorRecipeCategory extends BaseRecipeCategory<AirCompressorRecipe> {
     protected final IDrawableAnimated arrow;
+    protected final IDrawable power;
+    protected final ITickTimer timer;
     protected static final ResourceLocation BACKGROUND =
             new ResourceLocation(Kitchenkarrot.MOD_ID, "textures/gui/jei.png");
 
@@ -31,7 +36,9 @@ public class AirCompressorRecipeCategory extends BaseRecipeCategory<AirCompresso
         super(JeiPlugin.AIR_COMPRESSOR,
                 helper.createDrawableIngredient(VanillaTypes.ITEM_STACK, new ItemStack(ModBlockItems.AIR_COMPRESSOR.get())),
                 helper.createDrawable(BACKGROUND, 0, 141, 104, 78));
-        arrow = helper.drawableBuilder(BACKGROUND, 176 ,0, 20, 19).buildAnimated(40, IDrawableAnimated.StartDirection.BOTTOM, false);
+        arrow = helper.drawableBuilder(BACKGROUND, 176, 0, 20, 19).buildAnimated(40, IDrawableAnimated.StartDirection.BOTTOM, false);
+        power = helper.drawableBuilder(BACKGROUND, 176, 32, 8, 5).build();
+        timer = helper.createTickTimer(180, 194, false);
     }
 
     @Override
@@ -52,6 +59,9 @@ public class AirCompressorRecipeCategory extends BaseRecipeCategory<AirCompresso
 
     @Override
     public void draw(AirCompressorRecipe recipe, IRecipeSlotsView recipeSlotsView, PoseStack stack, double mouseX, double mouseY) {
-        arrow.draw(stack, 70, 53);
+        arrow.draw(stack, 70, 52);
+        for (int i = 0; i < timer.getValue() / 15; i++) {
+            power.draw(stack, 14, 64 - i * 5);
+        }
     }
 }

@@ -1,8 +1,8 @@
 {
 	"credit": "Made with Blockbench",
 	"textures": {
-		"0": "kitchenkarrot:models/acorn_oil",
-		"particle": "kitchenkarrot:models/acorn_oil"
+		"0": "kitchenkarrot:block/acorn_oil",
+		"particle": "kitchenkarrot:block/acorn_oil"
 	},
 	"elements": [
 		{

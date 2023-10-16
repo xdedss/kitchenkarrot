@@ -1,6 +1,7 @@
 package io.github.tt432.kitchenkarrot.client.plate;
 
 import io.github.tt432.kitchenkarrot.Kitchenkarrot;
+import io.github.tt432.kitchenkarrot.block.PlateHolderMap;
 import io.github.tt432.kitchenkarrot.util.json.JsonUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.block.model.BlockModel;
@@ -12,14 +13,13 @@ import net.minecraft.server.packs.resources.ResourceManager;
 import net.minecraftforge.client.event.ModelBakeEvent;
 import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.client.model.ForgeModelBakery;
+import net.minecraftforge.registries.ForgeRegistries;
 import org.apache.commons.io.IOUtils;
 
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * @author DustW
@@ -47,22 +47,16 @@ public class PlateModelRegistry {
 
 
     public static void register(ModelRegistryEvent e) {
-        ResourceManager manager = Minecraft.getInstance().getResourceManager();
-        for (String namespace : manager.getNamespaces()) {
-            try {
-                ResourceLocation resourceName = new ResourceLocation(namespace, "plate/list.json");
-                if (manager.hasResource(resourceName)) {
-                    List<Resource> resources = manager.getResources(resourceName);
-                    for (Resource resource : resources) {
-                        InputStreamReader reader = new InputStreamReader(resource.getInputStream());
-                        PlateList list = JsonUtils.INSTANCE.noExpose.fromJson(reader, PlateList.class);
-                        PlateList.INSTANCE.plates.addAll(list.plates);
-                    }
-                }
-            } catch (IOException exception) {
-                exception.printStackTrace();
+        PlateList.INSTANCE.plates.clear();
+
+        Set<String> plates = new HashSet<>();
+        PlateHolderMap.plateHolder.forEach((key, value) -> {
+            for (int i = 1; i <= value; i++) {
+                plates.add(new ResourceLocation(Kitchenkarrot.MOD_ID, Objects.requireNonNull(ForgeRegistries.ITEMS.getKey(key)).getPath()) + "_" + i);
             }
-        }
+        });
+
+        PlateList.INSTANCE.plates.addAll(plates);
 
         ForgeModelBakery.addSpecialModel(to(DEFAULT_NAME));
         for (var info : PlateList.INSTANCE.plates) {

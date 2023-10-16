@@ -1,7 +1,7 @@
 package io.github.tt432.kitchenkarrot.entity;
 
 import io.github.tt432.kitchenkarrot.config.ModCommonConfigs;
-import io.github.tt432.kitchenkarrot.item.ModItems;
+import io.github.tt432.kitchenkarrot.registries.ModItems;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.protocol.Packet;

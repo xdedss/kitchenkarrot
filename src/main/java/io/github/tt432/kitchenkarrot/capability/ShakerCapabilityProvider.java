@@ -1,6 +1,6 @@
 package io.github.tt432.kitchenkarrot.capability;
 
-import io.github.tt432.kitchenkarrot.item.ModItems;
+import io.github.tt432.kitchenkarrot.registries.ModItems;
 import io.github.tt432.kitchenkarrot.item.ShakerItem;
 import io.github.tt432.kitchenkarrot.tag.ModItemTags;
 import net.minecraft.core.Direction;
