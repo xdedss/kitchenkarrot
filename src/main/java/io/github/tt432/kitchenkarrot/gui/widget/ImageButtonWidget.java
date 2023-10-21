@@ -5,7 +5,6 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TextComponent;
 import net.minecraft.resources.ResourceLocation;
 
 import java.util.function.Consumer;
@@ -39,9 +38,11 @@ public class ImageButtonWidget extends TooltipWidget {
                              int pWidth, int pHeight,
                              Consumer<ImageButtonWidget> onClick,
                              ResourceLocation texture, int texX, int texY) {
-        this(screen, pX, pY, pWidth, pHeight, () -> new TextComponent(""),
+        this(screen, pX, pY, pWidth, pHeight, () -> Component.literal(""),
+//                        this(screen, pX, pY, pWidth, pHeight, () -> new TextComponent(""),
                 false, onClick, texture, texX, texY);
     }
+
 
     @Override
     public void render(PoseStack pPoseStack, int pMouseX, int pMouseY, float pPartialTick) {

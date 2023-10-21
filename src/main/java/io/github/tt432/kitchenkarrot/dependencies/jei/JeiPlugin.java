@@ -10,13 +10,12 @@ import io.github.tt432.kitchenkarrot.registries.ModItems;
 import io.github.tt432.kitchenkarrot.menu.AirCompressorMenu;
 import io.github.tt432.kitchenkarrot.menu.BrewingBarrelMenu;
 import io.github.tt432.kitchenkarrot.menu.ShakerMenu;
+import io.github.tt432.kitchenkarrot.registries.ModMenuTypes;
 import io.github.tt432.kitchenkarrot.recipes.recipe.AirCompressorRecipe;
 import io.github.tt432.kitchenkarrot.recipes.recipe.BrewingBarrelRecipe;
 import io.github.tt432.kitchenkarrot.recipes.recipe.CocktailRecipe;
 import io.github.tt432.kitchenkarrot.registries.RecipeTypes;
 import mezz.jei.api.IModPlugin;
-import mezz.jei.api.constants.VanillaTypes;
-import mezz.jei.api.ingredients.IIngredientTypeWithSubtypes;
 import mezz.jei.api.recipe.RecipeType;
 import mezz.jei.api.registration.*;
 import net.minecraft.client.Minecraft;
@@ -84,18 +83,19 @@ public class JeiPlugin implements IModPlugin {
 
     @Override
     public void registerRecipeTransferHandlers(IRecipeTransferRegistration registration) {
-        registration.addRecipeTransferHandler(AirCompressorMenu.class, AIR_COMPRESSOR,
+        registration.addRecipeTransferHandler(AirCompressorMenu.class, ModMenuTypes.AIR_COMPRESSOR.get(), AIR_COMPRESSOR,
                 36, 5, 0, 36);
-        registration.addRecipeTransferHandler(ShakerMenu.class, COCKTAIL,
+        registration.addRecipeTransferHandler(ShakerMenu.class, ModMenuTypes.SHAKER.get(), COCKTAIL,
                 36, 5, 0, 36);
-        registration.addRecipeTransferHandler(BrewingBarrelMenu.class, BREWING_BARREL,
+        registration.addRecipeTransferHandler(BrewingBarrelMenu.class, ModMenuTypes.BREWING_BARREL.get(), BREWING_BARREL,
                 36, 6, 0, 36);
     }
 
     @Override
     public void registerItemSubtypes(ISubtypeRegistration registration) {
-        registration.registerSubtypeInterpreter(VanillaTypes.ITEM_STACK, ModItems.COCKTAIL.get(), CocktailSubtypeInterpreter.INSTANCE);
+        registration.registerSubtypeInterpreter(ModItems.COCKTAIL.get(), CocktailSubtypeInterpreter.INSTANCE);
     }
+
     public static final ResourceLocation UID = new ResourceLocation(Kitchenkarrot.MOD_ID, "jei_plugin");
 
     @Override

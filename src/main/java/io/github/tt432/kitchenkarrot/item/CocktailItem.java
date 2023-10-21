@@ -9,25 +9,21 @@ import io.github.tt432.kitchenkarrot.registries.RecipeTypes;
 import io.github.tt432.kitchenkarrot.registries.ModItems;
 import net.minecraft.core.NonNullList;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectInstance;
-import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.food.FoodProperties;
 import net.minecraft.world.item.*;
+import net.minecraft.world.item.alchemy.PotionUtils;
 import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.registries.ForgeRegistries;
 
 import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
+import java.util.*;
 
 /**
  * @author DustW
@@ -42,12 +38,12 @@ public class CocktailItem extends Item {
     }
 
     @Override
-    public void fillItemCategory(CreativeModeTab p_41391_, NonNullList<ItemStack> itemStackNonNullList) {
-        if (p_41391_ == ModItems.COCKTAIL_TAB) {
+    public void fillItemCategory(CreativeModeTab creativeModeTab, NonNullList<ItemStack> list) {
+        if (creativeModeTab == ModItems.COCKTAIL_TAB) {
             for (String cocktail : CocktailList.INSTANCE.cocktails) {
                 ItemStack stack = new ItemStack(this);
                 setCocktail(stack, new ResourceLocation(cocktail));
-                itemStackNonNullList.add(stack);
+                list.add(stack);
             }
         }
     }
@@ -116,12 +112,17 @@ public class CocktailItem extends Item {
     public void appendHoverText(ItemStack stack, @Nullable Level level, List<Component> tooltip, TooltipFlag flag) {
         ResourceLocation name = getCocktail(stack);
         if (name != null && level != null) {
-            tooltip.add(new TranslatableComponent(name.toString().replace(":", ".") + ".tooltip"));
+            tooltip.add(Component.translatable(name.toString().replace(":", ".") + ".tooltip"));
             CocktailRecipe recipe = get(level, Objects.requireNonNull(getCocktail(stack)));
             if (recipe != null) {
-                tooltip.add(new TranslatableComponent("item.cocktail.author", recipe.author));
+                tooltip.add(Component.translatable("item.cocktail.author", recipe.author));
+                CocktailRecipe cocktailRecipe = get(level, name);
+                if (cocktailRecipe != null) {
+                    PotionUtils.addPotionTooltip(stack, tooltip, 1.0F);
+                }
             }
         }
+
     }
 
     @Nullable
@@ -147,5 +148,7 @@ public class CocktailItem extends Item {
 
         return null;
     }
+
+
 
 }

@@ -6,18 +6,19 @@ import io.github.tt432.kitchenkarrot.recipes.recipe.BrewingBarrelRecipe;
 import io.github.tt432.kitchenkarrot.recipes.recipe.CocktailRecipe;
 import io.github.tt432.kitchenkarrot.recipes.recipe.PlateRecipe;
 import io.github.tt432.kitchenkarrot.recipes.RecipeManager;
-import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.registries.DeferredRegister;
+import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 
 /**
  * @author DustW
  **/
 public class RecipeTypes {
-    private static final DeferredRegister<RecipeType<?>> TYPES = DeferredRegister.create(Registry.RECIPE_TYPE.key(), RecipeManager.MOD_ID);
+    private static final DeferredRegister<RecipeType<?>> TYPES = DeferredRegister.create(ForgeRegistries.RECIPE_TYPES, RecipeManager.MOD_ID);
+//    private static final DeferredRegister<RecipeType<?>> TYPES = DeferredRegister.create(Registry.RECIPE_TYPE.key(), RecipeManager.MOD_ID);
 
     public static final RegistryObject<RecipeType<CocktailRecipe>> COCKTAIL = register("cocktail");
     public static final RegistryObject<RecipeType<AirCompressorRecipe>> AIR_COMPRESSOR = register("air_compressing");

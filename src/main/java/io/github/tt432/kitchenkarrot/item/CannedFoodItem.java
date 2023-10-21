@@ -12,22 +12,14 @@ import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.NotNull;
 
 public class CannedFoodItem extends ModFood {
-
     public CannedFoodItem(Properties pProperties) {
         super(pProperties);
     }
-
     public static CannedFoodItem drinkItem(int nutrition, float saturation, EffectEntry... entries) {
         CannedFoodItem item = (CannedFoodItem) new CannedFoodItem(FoodUtil.effectFood(ModItems.defaultProperties(), nutrition, saturation, true, entries)).setDrinkAnim();
         item.effectEntries = entries;
         return item;
     }
-    
-    @Override
-    public int getUseDuration(@NotNull ItemStack pStack) {
-        return 1;
-    }
-
     @Override
     @NotNull
     public ItemStack finishUsingItem(@NotNull ItemStack itemStack, @NotNull Level level, LivingEntity livingEntity) {
@@ -44,11 +36,5 @@ public class CannedFoodItem extends ModFood {
             level.addFreshEntity(canEntity);
         }
         return super.finishUsingItem(itemStack, level, livingEntity);
-    }
-
-    @Override
-    public CannedFoodItem setIndex(int index) {
-        super.setIndex(index);
-        return this;
     }
 }

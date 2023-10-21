@@ -1,5 +1,6 @@
 package io.github.tt432.kitchenkarrot.tag;
 
+import net.minecraft.core.Holder;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.tags.TagKey;

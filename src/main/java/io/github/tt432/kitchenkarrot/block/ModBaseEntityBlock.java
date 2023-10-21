@@ -41,7 +41,7 @@ public abstract class ModBaseEntityBlock<T extends BaseBlockEntity> extends Base
     }
 
     @Override
-    public List<ItemStack> getDrops(BlockState pState, LootContext.Builder pBuilder) {
+    public List<ItemStack> getDrops(BlockState p_287732_, LootContext.Builder p_287596_) {
         return Collections.singletonList(new ItemStack(this));
     }
 

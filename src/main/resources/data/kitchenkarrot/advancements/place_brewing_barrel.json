@@ -19,7 +19,12 @@
     "brewing_barrel": {
       "trigger": "minecraft:placed_block",
       "conditions": {
-        "block": "kitchenkarrot:brewing_barrel"
+        "location": [
+          {
+            "block": "kitchenkarrot:brewing_barrel",
+            "condition": "minecraft:block_state_property"
+          }
+        ]
       }
     }
   },

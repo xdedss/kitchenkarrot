@@ -2,7 +2,6 @@ package io.github.tt432.kitchenkarrot.item;
 
 import io.github.tt432.kitchenkarrot.registries.ModItems;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -13,7 +12,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
-public class PopacornItem extends ModItem {
+public class PopacornItem extends ModFood {
     public PopacornItem() {
         super(FoodUtil.food(ModItems.defaultProperties(), 2, 3.2F).stacksTo(1).defaultDurability(8));
     }
@@ -32,7 +31,7 @@ public class PopacornItem extends ModItem {
 
     @Override
     public void appendHoverText(ItemStack pStack, @Nullable Level pLevel, List<Component> tooltip, TooltipFlag pIsAdvanced) {
-        tooltip.add(new TranslatableComponent("info.kitchenkarrot.popacorn", 8 - pStack.getDamageValue()));
+        tooltip.add(Component.translatable("info.kitchenkarrot.popacorn", 8 - pStack.getDamageValue()));
     }
 
     @Override

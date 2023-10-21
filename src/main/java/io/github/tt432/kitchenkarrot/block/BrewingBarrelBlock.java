@@ -23,9 +23,9 @@ import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
+import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.IFluidTank;
-import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 import org.jetbrains.annotations.Nullable;
 
@@ -55,7 +55,7 @@ public class BrewingBarrelBlock extends FacingGuiEntityBlock<BrewingBarrelBlockE
     public InteractionResult use(BlockState pState, Level pLevel, BlockPos pPos, Player pPlayer, InteractionHand pHand, BlockHitResult pHit) {
         AtomicBoolean changed = new AtomicBoolean(false);
 
-        pLevel.getBlockEntity(pPos).getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY).ifPresent(handler -> {
+        pLevel.getBlockEntity(pPos).getCapability(ForgeCapabilities.FLUID_HANDLER).ifPresent(handler -> {
             if (handler instanceof IFluidTank tank) {
                 ItemStack item = pPlayer.getItemInHand(pHand);
                 ItemStack remain = ItemStack.EMPTY;

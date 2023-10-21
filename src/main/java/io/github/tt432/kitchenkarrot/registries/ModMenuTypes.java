@@ -18,14 +18,13 @@ import net.minecraftforge.registries.RegistryObject;
  **/
 public class ModMenuTypes {
     public static final DeferredRegister<MenuType<?>> MENUS =
-            DeferredRegister.create(ForgeRegistries.CONTAINERS, Kitchenkarrot.MOD_ID);
+            DeferredRegister.create(ForgeRegistries.MENU_TYPES, Kitchenkarrot.MOD_ID);
 
     public static final RegistryObject<MenuType<AirCompressorMenu>> AIR_COMPRESSOR =
             MENUS.register("air_compressor", () -> from(AirCompressorMenu::new));
 
     public static final RegistryObject<MenuType<BrewingBarrelMenu>> BREWING_BARREL =
             MENUS.register("brewing_barrel", () -> from(BrewingBarrelMenu::new));
-
     public static final RegistryObject<MenuType<ShakerMenu>> SHAKER =
             MENUS.register("shaker", () -> new MenuType<>(ShakerMenu::new));
 

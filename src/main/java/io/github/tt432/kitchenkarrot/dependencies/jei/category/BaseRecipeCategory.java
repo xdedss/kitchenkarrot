@@ -1,11 +1,11 @@
 package io.github.tt432.kitchenkarrot.dependencies.jei.category;
 
+import mezz.jei.api.gui.builder.IRecipeLayoutBuilder;
 import mezz.jei.api.gui.drawable.IDrawable;
+import mezz.jei.api.recipe.IFocusGroup;
 import mezz.jei.api.recipe.RecipeType;
 import mezz.jei.api.recipe.category.IRecipeCategory;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.crafting.Recipe;
 
 /**
@@ -30,7 +30,7 @@ public class BaseRecipeCategory<T extends Recipe<?>> implements IRecipeCategory<
 
     @Override
     public Component getTitle() {
-        return new TranslatableComponent(translateKey == null ? translateKey = defaultTranslateKey() : translateKey);
+        return Component.translatable(translateKey == null ? translateKey = defaultTranslateKey() : translateKey);
     }
 
     @Override
@@ -44,17 +44,22 @@ public class BaseRecipeCategory<T extends Recipe<?>> implements IRecipeCategory<
     }
 
     @Override
+    public void setRecipe(IRecipeLayoutBuilder builder, T recipe, IFocusGroup focuses) {
+        //TODO New Content
+    }
+
+    @Override
     public RecipeType<T> getRecipeType() {
         return type;
     }
 
-    @Override
-    public ResourceLocation getUid() {
-        return type.getUid();
-    }
-
-    @Override
-    public Class<? extends T> getRecipeClass() {
-        return type.getRecipeClass();
-    }
+//    @Override
+//    public ResourceLocation getUid() {
+//        return type.getUid();
+//    }
+//
+//    @Override
+//    public Class<? extends T> getRecipeClass() {
+//        return type.getRecipeClass();
+//    }
 }

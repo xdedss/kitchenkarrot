@@ -4,7 +4,6 @@ import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TextComponent;
 import net.minecraft.resources.ResourceLocation;
 
 import java.util.function.Supplier;
@@ -39,13 +38,13 @@ public class ProgressWidget extends TooltipWidget {
     }
 
     public ProgressWidget(AbstractContainerScreen<?> screen,
-                               ResourceLocation texture,
-                               int x, int y,
-                               int texX, int texY,
-                               int width, int height,
-                               boolean vertical,
-                               Component message, boolean needTooltip,
-                               Supplier<Integer> maxGetter, Supplier<Integer> currentGetter) {
+                          ResourceLocation texture,
+                          int x, int y,
+                          int texX, int texY,
+                          int width, int height,
+                          boolean vertical,
+                          Component message, boolean needTooltip,
+                          Supplier<Integer> maxGetter, Supplier<Integer> currentGetter) {
         this(screen, texture, x, y, texX, texY, width, height, vertical,
                 () -> message, needTooltip, maxGetter, currentGetter);
     }
@@ -58,8 +57,9 @@ public class ProgressWidget extends TooltipWidget {
                           boolean vertical,
                           Supplier<Integer> maxGetter, Supplier<Integer> currentGetter) {
         this(screen, texture, x, y, texX, texY, width, height, vertical,
-                new TextComponent(""), false, maxGetter, currentGetter);
+                Component.empty(), false, maxGetter, currentGetter);
     }
+
 
     @Override
     public void render(PoseStack poseStack, int pMouseX, int pMouseY, float pPartialTick) {

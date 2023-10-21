@@ -64,13 +64,13 @@
         ]
       }
     },
-    "canned_rabbit_pumpkin": {
+    "canned_mutton_pumpkin": {
       "trigger": "minecraft:inventory_changed",
       "conditions": {
         "items": [
           {
             "items": [
-              "kitchenkarrot:canned_rabbit_pumpkin"
+              "kitchenkarrot:canned_mutton_pumpkin"
             ]
           }
         ]
@@ -91,7 +91,7 @@
   },
   "requirements": [
     [
-      "canned_beef_potato","canned_pork_beetroot","canned_candied_apple","canned_hoglin_confit","canned_rabbit_pumpkin","canned_sweet_berry_milk"
+      "canned_beef_potato","canned_pork_beetroot","canned_candied_apple","canned_hoglin_confit","canned_mutton_pumpkin","canned_sweet_berry_milk"
     ]
   ]
 }

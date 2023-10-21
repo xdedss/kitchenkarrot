@@ -2,7 +2,6 @@ package io.github.tt432.kitchenkarrot.item;
 
 
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
@@ -39,7 +38,7 @@ public class ModItem extends Item {
     public void appendHoverText(ItemStack pStack, Level pLevel, List<Component> tooltip, TooltipFlag pIsAdvanced) {
         super.appendHoverText(pStack, pLevel, tooltip, pIsAdvanced);
         if (this.canPutOnPlate()){
-            tooltip.add(new TranslatableComponent("info.kitchenkarrot.can_be_dished"));
+            tooltip.add(Component.translatable("info.kitchenkarrot.can_be_dished"));
         }
     }
 }

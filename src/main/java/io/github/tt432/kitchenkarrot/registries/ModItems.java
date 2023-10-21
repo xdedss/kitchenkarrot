@@ -6,6 +6,7 @@ import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Rarity;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
@@ -82,7 +83,7 @@ public class ModItems {
     public static final RegistryObject<Item> RUM = ITEMS.register("rum", () -> ModFood.drinkItem(1, 0F, EffectEntry.of(MobEffects.DOLPHINS_GRACE, 300, 1)).setIndex(117));
     public static final RegistryObject<Item> VODKA = ITEMS.register("vodka", () -> ModFood.drinkItem(1, 0F, EffectEntry.of(MobEffects.DAMAGE_BOOST, 300, 1)).setIndex(118));
 
-public static final RegistryObject<Item> KELP_WITH_SUNFLOWER_SEED = ITEMS.register("kelp_with_sunflower_seed", () -> new ModFood(2, 2f).setDuration(ModFood.Duration.SunflowerKelp).setIndex(21));
+    public static final RegistryObject<Item> KELP_WITH_SUNFLOWER_SEED = ITEMS.register("kelp_with_sunflower_seed", () -> new ModFood(2, 2f).setDuration(ModFood.Duration.SunflowerKelp).setIndex(21));
     public static final RegistryObject<Item> FRIED_PUMPKIN_CAKE = ITEMS.register("fried_pumpkin_cake", () -> new ModFood(4, 3.2F, 16).setDuration(ModFood.Duration.Fast).setIndex(22));
     public static final RegistryObject<Item> SEED_PIE = ITEMS.register("seed_pie", () -> new ModFood(4, 2.4F, 16).setDuration(ModFood.Duration.Fast).setIndex(23));
     public static final RegistryObject<Item> RICE_CAKE = ITEMS.register("rice_cake", () -> new ModFood(4, 4, 16).setDuration(ModFood.Duration.VeryFast).setIndex(85));
@@ -118,10 +119,9 @@ public static final RegistryObject<Item> KELP_WITH_SUNFLOWER_SEED = ITEMS.regist
 
     public static final RegistryObject<Item> SWEET_BERRY_MILK = ITEMS.register("sweet_berry_milk", () -> new ModFood(4, 4.8F, EffectEntry.of(MobEffects.INVISIBILITY, 60, 1)).setIndex(42));
 
-    public static final RegistryObject<Item> ULTRA_SUPER_DELICIOUS_CEREAL_PORRIDGE = ITEMS.register("ultra_super_delicious_cereal_porridge", () -> new UltraCerealItem(20, 100F).setIndex(57));
+    public static final RegistryObject<Item> ULTRA_SUPER_DELICIOUS_CEREAL_PORRIDGE = ITEMS.register("ultra_super_delicious_cereal_porridge", () -> new ModFood(FoodUtil.food(defaultProperties(), 20, 100F).rarity(Rarity.UNCOMMON).stacksTo(16)).setIndex(57));
 
-    public static final RegistryObject<Item> CURRY_UDON = ITEMS.register("curry_udon", () -> new CurryUdonItem(18, 16F, EffectEntry.of(MobEffects.REGENERATION, 60, 0, 1)).setIndex(84));
-
+    public static final RegistryObject<Item> CURRY_UDON = ITEMS.register("curry_udon", () -> new ModFood(FoodUtil.effectFood(defaultProperties(), 18, 16F, false, EffectEntry.of(MobEffects.REGENERATION, 60, 0, 1)).stacksTo(1).rarity(Rarity.RARE)).setEffectEntries(new EffectEntry[]{EffectEntry.of(MobEffects.REGENERATION, 60, 0, 1)}).setIndex(84));
     public static final RegistryObject<Item> POPACORN = ITEMS.register("popacorn", () -> new PopacornItem().setIndex(83));
 
     public static final RegistryObject<Item> EMPTY_PLATE = ITEMS.register("plate_item", () -> new EmptyPlateItem(defaultProperties()).setIndex(1));

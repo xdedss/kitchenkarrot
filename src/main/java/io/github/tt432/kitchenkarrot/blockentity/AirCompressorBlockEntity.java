@@ -13,6 +13,7 @@ import io.github.tt432.kitchenkarrot.tag.ModItemTags;
 import io.github.tt432.kitchenkarrot.util.ItemHandlerUtils;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.RegistryAccess;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
@@ -22,8 +23,8 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.common.capabilities.Capability;
+import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -36,11 +37,15 @@ import java.util.List;
  **/
 public class AirCompressorBlockEntity extends MenuBlockEntity {
     static final int MAX_ENERGY = 120;
-    /** 原料 / 容器输入 */
+    /**
+     * 原料 / 容器输入
+     */
     ItemStackHandler input1 = new KKItemStackHandler(this, 5) {
         @Override
         public void setStackInSlot(int slot, @Nonnull ItemStack stack) {
-            if (!isItemValid(slot, stack)) {return;}
+            if (!isItemValid(slot, stack)) {
+                return;
+            }
             super.setStackInSlot(slot, stack);
         }
 
@@ -49,11 +54,15 @@ public class AirCompressorBlockEntity extends MenuBlockEntity {
             return slot != 4 || stack.is(ModItemTags.CONTAINER_ITEM);
         }
     };
-    /** 燃料输入 */
+    /**
+     * 燃料输入
+     */
     ItemStackHandler input2 = new KKItemStackHandler(this, 1) {
         @Override
         public void setStackInSlot(int slot, @Nonnull ItemStack stack) {
-            if (!isItemValid(slot, stack)) {return;}
+            if (!isItemValid(slot, stack)) {
+                return;
+            }
             super.setStackInSlot(slot, stack);
         }
 
@@ -62,7 +71,9 @@ public class AirCompressorBlockEntity extends MenuBlockEntity {
             return stack.is(Items.REDSTONE);
         }
     };
-    /** 成品输出 */
+    /**
+     * 成品输出
+     */
     ItemStackHandler output = new KKItemStackHandler(this, 1);
 
     public AirCompressorBlockEntity(BlockPos pWorldPosition, BlockState pBlockState) {
@@ -128,7 +139,7 @@ public class AirCompressorBlockEntity extends MenuBlockEntity {
 
     private boolean isSlotAvailable(AirCompressorRecipe recipe) {
         ItemStack resultStack = output.getStackInSlot(0);
-        return resultStack.isEmpty() || (resultStack.sameItem(recipe.getResultItem())
+        return resultStack.isEmpty() || (resultStack.is(recipe.getResultItem().getItem())
                 && resultStack.getCount() < resultStack.getMaxStackSize());
     }
 
@@ -138,6 +149,7 @@ public class AirCompressorBlockEntity extends MenuBlockEntity {
         }
         energy.reduce(10, 0);
         output.insertItem(0, getRecipe().getResultItem(), false);
+//        output.insertItem(0, getRecipe().getResultItem(), false);
         stop();
     }
 
@@ -178,9 +190,13 @@ public class AirCompressorBlockEntity extends MenuBlockEntity {
     }
 
     protected boolean canCharge() {
-        return input2.getStackInSlot(0).is(Items.REDSTONE) && getEnergy() < 10 ;
+        return input2.getStackInSlot(0).is(Items.REDSTONE) && getEnergy() < 10;
     }
-    public int getEnergy() { return energy.get(); }
+
+    public int getEnergy() {
+        return energy.get();
+    }
+
     public int getAtomicEnergy() {
         return getEnergy() / 10;
     }
@@ -201,7 +217,7 @@ public class AirCompressorBlockEntity extends MenuBlockEntity {
     @NotNull
     @Override
     public <T> LazyOptional<T> getCapability(@NotNull Capability<T> cap, @Nullable Direction side) {
-        return side == null ? LazyOptional.empty() : CapabilityItemHandler.ITEM_HANDLER_CAPABILITY
+        return side == null ? LazyOptional.empty() : ForgeCapabilities.ITEM_HANDLER
                 .orEmpty(cap, LazyOptional.of(() -> switch (side) {
                     case DOWN -> output;
                     case UP -> input1;

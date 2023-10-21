@@ -7,12 +7,12 @@ import io.github.tt432.kitchenkarrot.registries.ModMenuTypes;
 import io.github.tt432.kitchenkarrot.menu.slot.KKResultSlot;
 import io.github.tt432.kitchenkarrot.recipes.RecipeManager;
 import io.github.tt432.kitchenkarrot.registries.ModSoundEvents;
+import net.minecraft.core.RegistryAccess;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.inventory.ClickType;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
-import net.minecraftforge.items.CapabilityItemHandler;
+import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.SlotItemHandler;
 
@@ -39,16 +39,27 @@ public class ShakerMenu extends KKMenu {
         finishRecipe(inventory.player);
     }
 
+    /**
+     * temporary, to sync two sides
+     */
+    private void sync() {
+        itemStack.getCapability(ForgeCapabilities.ITEM_HANDLER).ifPresent(this::slotChanged);
+    }
+
+    /**
+     * trigger when finish
+     * @param player
+     */
     private void finishRecipe(Player player) {
         if (ShakerItem.getFinish(itemStack)) {
-            itemStack.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).ifPresent(handler -> {
-                if (player.level.isClientSide) {
+            itemStack.getCapability(ForgeCapabilities.ITEM_HANDLER).ifPresent(handler -> {
+                if (player.getLevel().isClientSide) {
                     return;
                 }
 
                 var list = getInputs(handler);
 
-                var recipe = RecipeManager.getCocktailRecipes(inventory.player.level).stream()
+                var recipe = RecipeManager.getCocktailRecipes(inventory.player.getLevel()).stream()
                     .filter(r -> r.matches(list)).findFirst();
 
                 var recipeResult = CocktailItem.unknownCocktail();
@@ -96,7 +107,7 @@ public class ShakerMenu extends KKMenu {
 
         var list = getInputs(handler);
 
-        var recipe = RecipeManager.getCocktailRecipes(inventory.player.level)
+        var recipe = RecipeManager.getCocktailRecipes(inventory.player.getLevel())
                 .stream().filter(r -> r.matches(list)).findFirst();
         if (recipe.isPresent()) {
             ShakerItem.setRecipeTime(itemStack, recipe.get().getContent().getCraftingTime());
@@ -119,6 +130,7 @@ public class ShakerMenu extends KKMenu {
         return super.quickMoveStack(player, index);
     }
 
+    // init
     @Override
     protected Slot addSlot(IItemHandler handler, int index, int x, int y) {
         return addSlot(new SlotItemHandler(handler, index, x, y) {
@@ -133,12 +145,13 @@ public class ShakerMenu extends KKMenu {
     protected void sound() {
         var player = inventory.player;
 
-        if (player.level.isClientSide) {
+        if (player.getLevel().isClientSide) {
             player.playSound(ModSoundEvents.SHAKER_COCKTAIL.get(), 0.5F,
                     player.getRandom().nextFloat() * 0.1F + 0.9F);
         }
     }
 
+    // init
     @Override
     protected Slot addResultSlot(IItemHandler handler, int index, int x, int y) {
         return addSlot(new KKResultSlot(handler, index, x, y) {
@@ -151,7 +164,7 @@ public class ShakerMenu extends KKMenu {
     }
 
     void addSlots() {
-        itemStack.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).ifPresent(h -> {
+        itemStack.getCapability(ForgeCapabilities.ITEM_HANDLER).ifPresent(h -> {
             addSlot(h, 0, 62, 22);
             addSlot(h, 1, 80, 22);
             addSlot(h, 2, 98, 22);
@@ -173,21 +186,20 @@ public class ShakerMenu extends KKMenu {
     @Override
     public void removed(Player pPlayer) {
         super.removed(pPlayer);
+        sync();
 
-        if (pPlayer.level.isClientSide) {
+        if (pPlayer.getLevel().isClientSide) {
             pPlayer.playSound(ModSoundEvents.SHAKER_CLOSE.get(), 0.5F,
                     pPlayer.getRandom().nextFloat() * 0.1F + 0.9F);
         }
     }
 
     @Override
-    public void clicked(int slot, int button, ClickType type, Player player) {
-        try{
-            Slot slotInstance = slots.get(slot);
-            if (slotInstance.getItem().getItem() instanceof ShakerItem){
-                return;
-            }
-        }catch (Exception ignored){}
-        super.clicked(slot, button, type, player);
+    protected void layoutPlayerInventorySlots(int leftCol, int topRow) {
+        // Player inventory
+        addSlotBox(invHandler, 9, 8, 80, 9, 18, 3, 18);
+
+        // Hotbar
+        addSlotRange(invHandler, 0, 8, 138, 9, 18);
     }
 }

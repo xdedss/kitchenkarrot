@@ -58,10 +58,10 @@ public class AirCompressorRecipeCategory extends BaseRecipeCategory<AirCompresso
     }
 
     @Override
-    public void draw(AirCompressorRecipe recipe, IRecipeSlotsView recipeSlotsView, PoseStack stack, double mouseX, double mouseY) {
-        arrow.draw(stack, 70, 52);
+    public void draw(AirCompressorRecipe recipe, IRecipeSlotsView recipeSlotsView, PoseStack guiGraphics, double mouseX, double mouseY) {
+        arrow.draw(guiGraphics, 70, 52);
         for (int i = 0; i < timer.getValue() / 15; i++) {
-            power.draw(stack, 14, 64 - i * 5);
+            power.draw(guiGraphics, 14, 64 - i * 5);
         }
     }
 }

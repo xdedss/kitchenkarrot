@@ -29,7 +29,7 @@ public abstract class GuiEntityBlock<T extends BaseBlockEntity> extends ModBaseE
             var be = pLevel.getBlockEntity(pPos);
 
             if (be instanceof MenuBlockEntity kk) {
-                NetworkHooks.openGui((ServerPlayer) pPlayer, kk, be.getBlockPos());
+                NetworkHooks.openScreen((ServerPlayer) pPlayer, kk, be.getBlockPos());
                 kk.forceOnce();
             }
             return InteractionResult.CONSUME;

@@ -30,7 +30,7 @@ public abstract class BaseBlockEntity extends BlockEntity {
     }
 
     /**
-     * 如果你有一些需要自动同步的内容，请放到这里面
+     * place sync data here
      */
     protected void syncDataInit(SyncDataManager manager) {
 
@@ -61,7 +61,8 @@ public abstract class BaseBlockEntity extends BlockEntity {
         super.saveAdditional(pTag);
         syncDataManager.save(pTag, false, true);
     }
-        boolean forceOnce;
+
+    boolean forceOnce;
 
     public void forceOnce() {
         forceOnce = true;
@@ -71,7 +72,7 @@ public abstract class BaseBlockEntity extends BlockEntity {
     public CompoundTag getUpdateTag() {
         CompoundTag result = new CompoundTag();
         result.putBoolean(SYNC_KEY, true);
-        //每tick都进行一次同步 by:skyinr
+        //sync every tick by:skyinr
         syncDataManager.save(result, true, true);
 
         return result;

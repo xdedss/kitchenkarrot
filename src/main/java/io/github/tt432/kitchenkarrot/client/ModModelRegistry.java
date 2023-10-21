@@ -14,8 +14,7 @@ import net.minecraft.client.resources.model.BakedModel;
 import net.minecraft.client.resources.model.ModelResourceLocation;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.client.event.ModelBakeEvent;
-import net.minecraftforge.client.event.ModelRegistryEvent;
+import net.minecraftforge.client.event.ModelEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
@@ -35,22 +34,22 @@ public class ModModelRegistry {
     }
 
     @SubscribeEvent
-    public static void registerModelUnBake(ModelRegistryEvent e) {
+    public static void registerModelUnBake(ModelEvent.RegisterAdditional e) {
         CocktailModelRegistry.register(e);
         PlateModelRegistry.register(e);
     }
 
     @SubscribeEvent
-    public static void onModelBake(ModelBakeEvent evt) {
+    public static void onModelBake(ModelEvent.BakingCompleted evt) {
         //CocktailModelRegistry.bakeModel(evt);
         //PlateModelRegistry.bakeModel(evt);
-        evt.getModelRegistry().put(new ModelResourceLocation(
+        evt.getModels().put(new ModelResourceLocation(
                 Kitchenkarrot.MOD_ID,
                 "cocktail",
                 "inventory"
         ), new CocktailBakedModel());
 
-        evt.getModelRegistry().put(new ModelResourceLocation(
+        evt.getModels().put(new ModelResourceLocation(
                 Kitchenkarrot.MOD_ID,
                 "plate",
                 "inventory"

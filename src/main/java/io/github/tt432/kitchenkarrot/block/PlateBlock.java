@@ -1,15 +1,15 @@
 package io.github.tt432.kitchenkarrot.block;
 
-import io.github.tt432.kitchenkarrot.blockentity.PlateBlockEntity;
-import io.github.tt432.kitchenkarrot.recipes.recipe.PlateRecipe;
 import io.github.tt432.kitchenkarrot.registries.ModBlockEntities;
+import io.github.tt432.kitchenkarrot.blockentity.PlateBlockEntity;
 import io.github.tt432.kitchenkarrot.registries.ModItems;
-import io.github.tt432.kitchenkarrot.registries.ModSoundEvents;
+import io.github.tt432.kitchenkarrot.recipes.recipe.PlateRecipe;
 import io.github.tt432.kitchenkarrot.registries.RecipeTypes;
+import io.github.tt432.kitchenkarrot.registries.ModSoundEvents;
 import io.github.tt432.kitchenkarrot.tag.ModItemTags;
 import net.minecraft.core.BlockPos;
+import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.Style;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
@@ -32,8 +32,9 @@ import net.minecraft.world.level.block.state.properties.IntegerProperty;
 import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import net.minecraftforge.items.CapabilityItemHandler;
+import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.registries.ForgeRegistries;
 import org.jetbrains.annotations.NotNull;
@@ -56,8 +57,8 @@ import static io.github.tt432.kitchenkarrot.block.PlateHolderMap.plateHolder;
 public class PlateBlock extends ModBaseEntityBlock<PlateBlockEntity> {
 
     public static final VoxelShape SHAPE = Block.box(2, 0, 2, 14, 3, 14);
-    public static final IntegerProperty DEGREE = IntegerProperty.create("degree", 0, 360);
     public static final BooleanProperty CREATIVE = BooleanProperty.create("creative");
+    public static final IntegerProperty DEGREE = IntegerProperty.create("degree", 0, 360);
 
     public PlateBlock(Properties properties) {
         super(properties);
@@ -91,7 +92,7 @@ public class PlateBlock extends ModBaseEntityBlock<PlateBlockEntity> {
 
         if (!state.getValue(CREATIVE) || player.isCreative()) {
             if (blockEntity != null) {
-                blockEntity.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).ifPresent(handler -> {
+                blockEntity.getCapability(ForgeCapabilities.ITEM_HANDLER).ifPresent(handler -> {
                     ItemStack heldItem = player.getItemInHand(hand);
                     ItemStack dishItem = handler.getStackInSlot(0);
                     if (player.isShiftKeyDown()) {
@@ -101,7 +102,7 @@ public class PlateBlock extends ModBaseEntityBlock<PlateBlockEntity> {
                             setPlate(stack, dishItem);
                             if (stack.getOrCreateTag().contains("plate_type") && !dishItem.is(Items.AIR)) {
                                 String inputName = dishItem.getDisplayName().getString().replace("[", "").replace("]", "");
-                                stack.setHoverName((new TranslatableComponent("info.kitchenkarrot.dished", inputName)).setStyle(Style.EMPTY.withItalic(false)));
+                                stack.setHoverName((Component.translatable("info.kitchenkarrot.dished", inputName)).setStyle(Style.EMPTY.withItalic(false)));
                             }
                             player.setItemInHand(hand, stack);
                             level.setBlock(pos, Blocks.AIR.defaultBlockState(), Block.UPDATE_ALL_IMMEDIATE);
@@ -131,11 +132,11 @@ public class PlateBlock extends ModBaseEntityBlock<PlateBlockEntity> {
 
     private boolean interactWithDish(ItemStack dishItem, ItemStack heldItem,Level level, Player player, IItemHandler handler){
         AtomicBoolean result = new AtomicBoolean(false);
-        if (canHoldItem(handler, heldItem)) {
-            result.set(addToPlate(handler, heldItem, player));
-        } else if (!dishItem.isEmpty() && heldItem.isEmpty() || heldItem.is(ModItemTags.INTERACT_WITH_PLATE)) {
-            result.set(removeFromPlate(level, player, handler, dishItem, heldItem));
-        }
+            if (canHoldItem(handler, heldItem)) {
+                result.set(addToPlate(handler, heldItem, player));
+            } else if (!dishItem.isEmpty() && heldItem.isEmpty() || heldItem.is(ModItemTags.INTERACT_WITH_PLATE)) {
+                result.set(removeFromPlate(level, player, handler, dishItem, heldItem));
+            }
         return result.get();
     }
 

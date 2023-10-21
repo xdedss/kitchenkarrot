@@ -37,5 +37,6 @@ public class CocktailRecipeCategory extends BaseRecipeCategory<CocktailRecipe> {
         builder.addSlot(RecipeIngredientRole.INPUT, 78, 39).addIngredients(ingredients.get(4));
 
         builder.addSlot(RecipeIngredientRole.OUTPUT, 15, 19).addItemStack(recipe.getResultItem());
+//        builder.addSlot(RecipeIngredientRole.OUTPUT, 15, 32).addItemStack(recipe.getResultItem());
     }
 }

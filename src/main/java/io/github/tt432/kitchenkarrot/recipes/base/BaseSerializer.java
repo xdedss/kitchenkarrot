@@ -5,14 +5,14 @@ import io.github.tt432.kitchenkarrot.util.json.JsonUtils;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.crafting.RecipeSerializer;
-import net.minecraftforge.registries.ForgeRegistryEntry;
 import org.jetbrains.annotations.Nullable;
 
 /**
  * @author DustW
  **/
 public class BaseSerializer<RECIPE extends BaseRecipe<RECIPE>>
-        extends ForgeRegistryEntry<RecipeSerializer<?>>
+        //TODO super class deleted, possibly cause unknown issue.
+//        extends ForgeRegistryEntry<RecipeSerializer<?>>
         implements RecipeSerializer<RECIPE> {
 
     Class<RECIPE> recipeClass;

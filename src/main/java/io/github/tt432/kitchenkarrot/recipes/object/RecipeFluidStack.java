@@ -20,6 +20,7 @@ public class RecipeFluidStack {
     }
 
     public RecipeFluidStack(FluidStack fluidStack) {
-        this(fluidStack.getFluid().getRegistryName().toString(), fluidStack.getAmount());
+        this(fluidStack.getFluid().getFluidType().getDescriptionId(), fluidStack.getAmount());
+//        this(fluidStack.getFluid().getRegistryName().toString(), fluidStack.getAmount());
     }
 }
