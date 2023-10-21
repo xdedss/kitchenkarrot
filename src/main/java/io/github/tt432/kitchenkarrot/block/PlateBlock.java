@@ -8,7 +8,6 @@ import io.github.tt432.kitchenkarrot.registries.RecipeTypes;
 import io.github.tt432.kitchenkarrot.registries.ModSoundEvents;
 import io.github.tt432.kitchenkarrot.tag.ModItemTags;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.RegistryAccess;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.Style;
 import net.minecraft.sounds.SoundEvents;
@@ -18,6 +17,7 @@ import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
@@ -28,6 +28,7 @@ import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
+import net.minecraft.world.level.block.state.properties.IntegerProperty;
 import net.minecraft.world.level.storage.loot.LootParams;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
@@ -37,6 +38,7 @@ import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.registries.ForgeRegistries;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.Collections;
@@ -52,19 +54,16 @@ import static io.github.tt432.kitchenkarrot.block.PlateHolderMap.plateHolder;
 
 @SuppressWarnings("deprecation")
 @ParametersAreNonnullByDefault
-public class PlateBlock extends FacingEntityBlock<PlateBlockEntity> {
-    static {
-        var part1 = Block.box(1, 1, 1, 16 - 1, 2, 16 - 1);
-        var part2 = Block.box(3, 0, 3, 16 - 3, 1, 16 - 3);
-        SHAPE = Shapes.or(part1, part2);
-    }
+public class PlateBlock extends ModBaseEntityBlock<PlateBlockEntity> {
 
-    public static final VoxelShape SHAPE;
+    public static final VoxelShape SHAPE = Block.box(2, 0, 2, 14, 3, 14);
     public static final BooleanProperty CREATIVE = BooleanProperty.create("creative");
+    public static final IntegerProperty DEGREE = IntegerProperty.create("degree", 0, 360);
 
     public PlateBlock(Properties properties) {
         super(properties);
         this.registerDefaultState(defaultBlockState().setValue(CREATIVE, false));
+        this.registerDefaultState(defaultBlockState().setValue(DEGREE, 0));
     }
 
     @Override
@@ -153,7 +152,7 @@ public class PlateBlock extends FacingEntityBlock<PlateBlockEntity> {
         AtomicBoolean result = new AtomicBoolean(false);
 
         recipe.ifPresent(r -> {
-            if (giveRecipeResult(level, r, handler)) {
+            if (giveRecipeResult(r, handler)) {
                 level.playSound(player, player.getOnPos(), ModSoundEvents.CHOP.get(), player.getSoundSource(), 0.5F, level.random.nextFloat() * 0.4F + 0.8F);
                 result.set(true);
             }
@@ -181,17 +180,11 @@ public class PlateBlock extends FacingEntityBlock<PlateBlockEntity> {
         return result.get();
     }
 
-    private boolean giveRecipeResult(Level level, PlateRecipe recipe, IItemHandler handler) {
-        Optional<PlateRecipe> outputRecipe = level.getRecipeManager().getAllRecipesFor(RecipeTypes.PLATE.get())
-                .stream().filter(or -> or.matches(Collections.singletonList(handler.getStackInSlot(0)))).findFirst();
-
+    private boolean giveRecipeResult(PlateRecipe recipe, IItemHandler handler) {
         AtomicBoolean result = new AtomicBoolean(false);
-
-        outputRecipe.ifPresent(or -> {
-            handler.extractItem(0, 64, false);
-            handler.insertItem(0, or.getResultStack(), false);
-            result.set(true);
-        });
+        handler.extractItem(0, 64, false);
+        handler.insertItem(0, recipe.getResultStack(), false);
+        result.set(true);
 
         return result.get();
     }
@@ -219,5 +212,19 @@ public class PlateBlock extends FacingEntityBlock<PlateBlockEntity> {
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
         super.createBlockStateDefinition(builder);
         builder.add(CREATIVE);
+        builder.add(DEGREE);
+    }
+
+    @Nullable
+    @Override
+    public BlockState getStateForPlacement(BlockPlaceContext context) {
+        int rotation = (int) context.getRotation();
+        if (context.getLevel().isClientSide) {
+            while (rotation >= 180 || rotation < -180) {
+                if (rotation >= 180) rotation -= 360;
+                if (rotation < -180) rotation += 360;
+            }
+        }
+        return this.defaultBlockState().setValue(DEGREE, (rotation) + 180);
     }
 }
