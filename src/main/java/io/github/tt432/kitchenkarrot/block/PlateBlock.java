@@ -100,7 +100,6 @@ public class PlateBlock extends ModBaseEntityBlock<PlateBlockEntity> {
                             ItemStack stack = new ItemStack(this);
                             blockEntity.saveToItem(stack);
                             setPlate(stack, dishItem);
-                            //如果盘子中装有食物，则端起来时会显示"盘装的XXX"
                             if (stack.getOrCreateTag().contains("plate_type") && !dishItem.is(Items.AIR)) {
                                 String inputName = dishItem.getDisplayName().getString().replace("[", "").replace("]", "");
                                 stack.setHoverName((Component.translatable("info.kitchenkarrot.dished", inputName)).setStyle(Style.EMPTY.withItalic(false)));
