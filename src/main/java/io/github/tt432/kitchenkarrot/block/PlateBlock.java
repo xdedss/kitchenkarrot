@@ -17,6 +17,7 @@ import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
@@ -27,15 +28,16 @@ import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
+import net.minecraft.world.level.block.state.properties.IntegerProperty;
 import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
-import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.registries.ForgeRegistries;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.Collections;
@@ -51,19 +53,16 @@ import static io.github.tt432.kitchenkarrot.block.PlateHolderMap.plateHolder;
 
 @SuppressWarnings("deprecation")
 @ParametersAreNonnullByDefault
-public class PlateBlock extends FacingEntityBlock<PlateBlockEntity> {
-    static {
-        var part1 = Block.box(1, 1, 1, 16 - 1, 2, 16 - 1);
-        var part2 = Block.box(3, 0, 3, 16 - 3, 1, 16 - 3);
-        SHAPE = Shapes.or(part1, part2);
-    }
+public class PlateBlock extends ModBaseEntityBlock<PlateBlockEntity> {
 
-    public static final VoxelShape SHAPE;
+    public static final VoxelShape SHAPE = Block.box(2, 0, 2, 14, 3, 14);
+    public static final IntegerProperty DEGREE = IntegerProperty.create("degree", 0, 360);
     public static final BooleanProperty CREATIVE = BooleanProperty.create("creative");
 
     public PlateBlock(Properties properties) {
         super(properties);
         this.registerDefaultState(defaultBlockState().setValue(CREATIVE, false));
+        this.registerDefaultState(defaultBlockState().setValue(DEGREE, 0));
     }
 
     @Override
@@ -100,7 +99,6 @@ public class PlateBlock extends FacingEntityBlock<PlateBlockEntity> {
                             ItemStack stack = new ItemStack(this);
                             blockEntity.saveToItem(stack);
                             setPlate(stack, dishItem);
-                            //如果盘子中装有食物，则端起来时会显示"盘装的XXX"
                             if (stack.getOrCreateTag().contains("plate_type") && !dishItem.is(Items.AIR)) {
                                 String inputName = dishItem.getDisplayName().getString().replace("[", "").replace("]", "");
                                 stack.setHoverName((new TranslatableComponent("info.kitchenkarrot.dished", inputName)).setStyle(Style.EMPTY.withItalic(false)));
@@ -212,5 +210,19 @@ public class PlateBlock extends FacingEntityBlock<PlateBlockEntity> {
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
         super.createBlockStateDefinition(builder);
         builder.add(CREATIVE);
+        builder.add(DEGREE);
+    }
+
+    @Nullable
+    @Override
+    public BlockState getStateForPlacement(BlockPlaceContext context) {
+        int rotation = (int) context.getRotation();
+        if (context.getLevel().isClientSide) {
+            while (rotation >= 180 || rotation < -180) {
+                if (rotation >= 180) rotation -= 360;
+                if (rotation < -180) rotation += 360;
+            }
+        }
+        return this.defaultBlockState().setValue(DEGREE, (rotation) + 180);
     }
 }
