@@ -1,5 +1,5 @@
 {
-  "type": "minecraft:smithing_transform",
+  "type": "minecraft:smithing",
   "addition": {
     "item": "minecraft:iron_nugget"
   },
@@ -8,8 +8,5 @@
   },
   "result": {
     "item": "kitchenkarrot:shaker"
-  },
-  "template": {
-    "item": "minecraft:iron_nugget"
   }
 }

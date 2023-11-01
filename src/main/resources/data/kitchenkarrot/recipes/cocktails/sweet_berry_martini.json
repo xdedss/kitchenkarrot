@@ -23,7 +23,6 @@
         "hunger":7,
         "saturation":0.3,
         "effect":[
-            {"id":"minecraft:water_breathing","lvl":0,"duration":1}
         ]
     }
 

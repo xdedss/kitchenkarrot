@@ -19,12 +19,13 @@
     "carrot": {
       "trigger": "minecraft:placed_block",
       "conditions": {
-        "location": [
-          {
-            "block": "minecraft:carrots",
-            "condition": "minecraft:block_state_property"
+        "location": {
+          "block": {
+            "blocks": [
+              "minecraft:carrots"
+            ]
           }
-        ]
+        }
       }
     }
   },

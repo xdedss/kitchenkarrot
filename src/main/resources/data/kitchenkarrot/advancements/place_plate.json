@@ -19,12 +19,13 @@
     "plate": {
       "trigger": "minecraft:placed_block",
       "conditions": {
-        "location": [
-          {
-            "block": "kitchenkarrot:plate",
-            "condition": "minecraft:block_state_property"
+        "location": {
+          "block": {
+            "blocks": [
+              "kitchenkarrot:plate"
+            ]
           }
-        ]
+        }
       }
     }
   },
