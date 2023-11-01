@@ -50,17 +50,17 @@ public class ModTabs {
             event.accept(ModBlocks.AIR_COMPRESSOR);
             event.accept(ModBlocks.BREWING_BARREL);
             event.accept(ModBlocks.COASTER);
+            event.accept(ModItems.GEM_CARROT);
+            event.accept(ModItems.CARROT_SPICES);
+            event.accept(ModItems.ICE_CUBES);
+            event.accept(ModItems.ACORN);
+            event.accept(ModItems.EMPTY_CAN);
             event.accept(ModBlocks.SEA_SALT);
             event.accept(ModBlocks.ROCK_SALT);
             event.accept(ModBlocks.FINE_SALT);
             event.accept(ModBlocks.ACORN_OIL);
             event.accept(ModBlocks.SUNFLOWER_OIL);
             event.accept(ModBlocks.CHORUS_OIL);
-            event.accept(ModItems.GEM_CARROT);
-            event.accept(ModItems.CARROT_SPICES);
-            event.accept(ModItems.ICE_CUBES);
-            event.accept(ModItems.ACORN);
-            event.accept(ModItems.EMPTY_CAN);
             event.accept(ModItems.WATER);
             event.accept(ModItems.MILK);
 
