@@ -20,6 +20,8 @@ import mezz.jei.api.ingredients.IIngredientTypeWithSubtypes;
 import mezz.jei.api.recipe.RecipeType;
 import mezz.jei.api.registration.*;
 import net.minecraft.client.Minecraft;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.Container;
 import net.minecraft.world.item.ItemStack;
@@ -66,6 +68,9 @@ public class JeiPlugin implements IModPlugin {
         registration.addRecipes(COCKTAIL, getRecipe(RecipeTypes.COCKTAIL.get()));
         registration.addRecipes(BREWING_BARREL, getRecipe(RecipeTypes.BREWING_BARREL.get()));
         registration.addRecipes(PLATE, getRecipe(RecipeTypes.PLATE.get()));
+        registration.addIngredientInfo(new ItemStack(ModItems.GEM_CARROT.get()), VanillaTypes.ITEM_STACK, new TranslatableComponent("info.kitchenkarrot.gem_carrot"));
+        registration.addIngredientInfo(new ItemStack(ModBlockItems.FINE_SALT.get()), VanillaTypes.ITEM_STACK, new TranslatableComponent("info.kitchenkarrot.fine_salt"));
+        registration.addIngredientInfo(new ItemStack(ModItems.PILLAGER_PIE.get()), VanillaTypes.ITEM_STACK, new TranslatableComponent("info.kitchenkarrot.pillager_pie"));
     }
 
     @Override
