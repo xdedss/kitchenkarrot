@@ -11,6 +11,9 @@
       "item": "minecraft:beetroot"
     },
     {
+      "item": "minecraft:beetroot"
+    },
+    {
       "item": "kitchenkarrot:acorn"
     },
     {
@@ -18,6 +21,7 @@
     }
   ],
   "result": {
-    "item": "kitchenkarrot:beetroot_crepe"
+    "item": "kitchenkarrot:beetroot_crepe",
+    "count": 2
   }
 }

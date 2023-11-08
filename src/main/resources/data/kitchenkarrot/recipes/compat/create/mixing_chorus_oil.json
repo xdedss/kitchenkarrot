@@ -13,8 +13,12 @@
         "type": "create:mixing",
         "ingredients": [
           {
-            "item": "minecraft:chorus_fruit",
-            "count": 2
+            "item": "minecraft:chorus_fruit"
+          },
+          {
+            "fluid": "minecraft:water",
+            "nbt": {},
+            "amount": 125
           }
         ],
         "results": [
