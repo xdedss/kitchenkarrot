@@ -1,0 +1,26 @@
+{
+  "conditions": [
+    {
+      "type": "forge:mod_loaded",
+      "modid": "create"
+    }
+  ],
+  "type": "create:milling",
+  "ingredients": [
+    {
+      "item": "minecraft:oak_sapling"
+    }
+  ],
+  "results": [
+    {
+      "item": "kitchenkarrot:acorn",
+      "count": 1
+    },
+    {
+      "item": "kitchenkarrot:acorn",
+      "count": 1,
+      "chance": 0.5
+    }
+  ],
+  "processingTime": 50
+}

@@ -22,11 +22,6 @@ public class CannedFoodItem extends ModFood {
         item.effectEntries = entries;
         return item;
     }
-    
-    @Override
-    public int getUseDuration(@NotNull ItemStack pStack) {
-        return 1;
-    }
 
     @Override
     @NotNull

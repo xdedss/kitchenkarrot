@@ -13,17 +13,18 @@
         "type": "create:mixing",
         "ingredients": [
           {
-            "item": "kitchenkarrot:acorn"
+            "item": "kitchenkarrot:sea_salt"
           },
           {
             "fluid": "minecraft:water",
             "nbt": {},
-            "amount": 125
+            "amount": 500
           }
         ],
         "results": [
           {
-            "item": "kitchenkarrot:acorn_oil"
+            "item": "kitchenkarrot:sea_salt",
+            "count": 2
           }
         ],
         "heatRequirement": "heated"
