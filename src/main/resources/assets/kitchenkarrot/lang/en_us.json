@@ -203,6 +203,8 @@
     "kitchenkarrot:cocktail":"Shaking",
     "kitchenkarrot:plate":"Cutting",
 
+    "resource.kitchenkarrot.legacy_art": "Kitchen Karrot Legacy Art",
+
     "advancement.kitchenkarrot.root.title":"Kitchen Karrot",
     "advancement.kitchenkarrot.root.desc":"The beginning of your gourmet journey",
     "advancement.kitchenkarrot.plant_carrot.title":"Where It All Begins...",
