@@ -13,7 +13,7 @@
         "type": "create:mixing",
         "ingredients": [
           {
-            "item": "kitchenkarrot:acorn"
+            "tag": "forge:nuts/acorn"
           },
           {
             "fluid": "minecraft:water",

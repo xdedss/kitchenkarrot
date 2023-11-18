@@ -1,5 +1,5 @@
 {
-  "parent": "kitchenkarrot:use_knife",
+  "parent": "kitchenkarrot:place_plate",
   "display": {
     "icon": {
       "item": "kitchenkarrot:ultra_super_delicious_cereal_porridge"

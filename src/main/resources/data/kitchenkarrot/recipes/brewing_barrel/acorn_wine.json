@@ -3,10 +3,10 @@
     "content":{
         "recipe":[
             {
-                "item" : "kitchenkarrot:acorn"
+                "tag" : "forge:nuts/acorn"
             },
             {
-                "item" : "kitchenkarrot:acorn"
+                "tag" : "forge:nuts/acorn"
             },
             {
                 "item" : "kitchenkarrot:carrot_spices"

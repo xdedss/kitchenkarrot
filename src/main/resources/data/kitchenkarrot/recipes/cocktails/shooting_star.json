@@ -10,10 +10,10 @@
                 "item": "kitchenkarrot:vodka_base"
             },
             {
-                "item" : "kitchenkarrot:ice_cubes"
+                "tag" : "forge:ice_cubes"
             },
             {
-                "item" : "kitchenkarrot:ice_cubes"
+                "tag" : "forge:ice_cubes"
             },
             {
                 "item" : "minecraft:glow_ink_sac"

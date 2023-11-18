@@ -13,7 +13,7 @@
                 "item" : "kitchenkarrot:mead_base"
             },
             {
-                "item" : "kitchenkarrot:ice_cubes"
+                "tag" : "forge:ice_cubes"
             },
             {
                 "item" : "minecraft:sugar"

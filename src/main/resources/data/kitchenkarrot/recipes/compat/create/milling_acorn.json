@@ -13,11 +13,11 @@
   ],
   "results": [
     {
-      "item": "kitchenkarrot:acorn",
+      "tag": "forge:nuts/acorn",
       "count": 1
     },
     {
-      "item": "kitchenkarrot:acorn",
+      "tag": "forge:nuts/acorn",
       "count": 1,
       "chance": 0.5
     }

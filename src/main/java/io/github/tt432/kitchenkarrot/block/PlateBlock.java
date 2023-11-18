@@ -1,11 +1,11 @@
 package io.github.tt432.kitchenkarrot.block;
 
-import io.github.tt432.kitchenkarrot.registries.ModBlockEntities;
 import io.github.tt432.kitchenkarrot.blockentity.PlateBlockEntity;
-import io.github.tt432.kitchenkarrot.registries.ModItems;
 import io.github.tt432.kitchenkarrot.recipes.recipe.PlateRecipe;
-import io.github.tt432.kitchenkarrot.registries.RecipeTypes;
+import io.github.tt432.kitchenkarrot.registries.ModBlockEntities;
+import io.github.tt432.kitchenkarrot.registries.ModItems;
 import io.github.tt432.kitchenkarrot.registries.ModSoundEvents;
+import io.github.tt432.kitchenkarrot.registries.RecipeTypes;
 import io.github.tt432.kitchenkarrot.tag.ModItemTags;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
@@ -32,7 +32,6 @@ import net.minecraft.world.level.block.state.properties.IntegerProperty;
 import net.minecraft.world.level.storage.loot.LootParams;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
-import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.items.IItemHandler;
@@ -109,9 +108,9 @@ public class PlateBlock extends ModBaseEntityBlock<PlateBlockEntity> {
                         }
                     } else {
                         if (hand == InteractionHand.MAIN_HAND) {
-                            success.set(interactWithDish(dishItem, heldItem, level, player, handler));
+                            success.set(interactWithDish(dishItem, heldItem, level, player, handler, pos));
                         } else if (!heldItem.isEmpty() && !success.get()) {
-                            success.set(interactWithDish(dishItem, heldItem, level, player, handler));
+                            success.set(interactWithDish(dishItem, heldItem, level, player, handler, pos));
                         }
                     }
                 });
@@ -130,12 +129,14 @@ public class PlateBlock extends ModBaseEntityBlock<PlateBlockEntity> {
                 (dishItem.isEmpty() || (dishItem.is(heldItem.getItem()) && dishItem.getCount() < plateHolder.get(dishItem.getItem())));
     }
 
-    private boolean interactWithDish(ItemStack dishItem, ItemStack heldItem,Level level, Player player, IItemHandler handler){
+    private boolean interactWithDish(ItemStack dishItem, ItemStack heldItem, Level level, Player player, IItemHandler handler, BlockPos pos){
         AtomicBoolean result = new AtomicBoolean(false);
             if (canHoldItem(handler, heldItem)) {
                 result.set(addToPlate(handler, heldItem, player));
+                level.playSound(player, pos, SoundEvents.ITEM_FRAME_ADD_ITEM, SoundSource.BLOCKS);
             } else if (!dishItem.isEmpty() && heldItem.isEmpty() || heldItem.is(ModItemTags.INTERACT_WITH_PLATE)) {
                 result.set(removeFromPlate(level, player, handler, dishItem, heldItem));
+                level.playSound(player, pos, SoundEvents.ITEM_FRAME_REMOVE_ITEM, SoundSource.BLOCKS);
             }
         return result.get();
     }

@@ -15,10 +15,10 @@
                 "item" : "minecraft:wheat"
             },
             {
-                "item" : "kitchenkarrot:ice_cubes"
+                "tag" : "forge:ice_cubes"
             },
             {
-                "item" : "kitchenkarrot:ice_cubes"
+                "tag" : "forge:ice_cubes"
             }
         ],
         "craftingtime":6000

@@ -2,16 +2,16 @@
   "type": "minecraft:crafting_shapeless",
   "ingredients": [
     {
-      "item": "kitchenkarrot:acorn"
+      "tag": "forge:nuts/acorn"
     },
     {
-      "item": "kitchenkarrot:acorn"
+      "tag": "forge:nuts/acorn"
     },
     {
-      "item": "kitchenkarrot:acorn"
+      "tag": "forge:nuts/acorn"
     },
     {
-      "item": "kitchenkarrot:acorn"
+      "tag": "forge:nuts/acorn"
     },
     {
       "item": "minecraft:sugar"
