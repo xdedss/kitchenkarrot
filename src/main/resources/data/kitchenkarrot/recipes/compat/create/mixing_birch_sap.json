@@ -1,0 +1,32 @@
+{
+  "type":"forge:conditional",
+  "recipes":[
+    {
+      "conditions": [
+        {
+          "type": "forge:mod_loaded",
+          "modid":"create"
+        }
+      ],
+
+      "recipe":{
+        "type": "create:mixing",
+        "ingredients": [
+          {
+            "item": "minecraft:birch_sapling"
+          },
+          {
+            "fluid": "minecraft:water",
+            "nbt": {},
+            "amount": 125
+          }
+        ],
+        "results": [
+          {
+            "item": "kitchenkarrot:birch_sap"
+          }
+        ]
+      }
+    }
+  ]
+}

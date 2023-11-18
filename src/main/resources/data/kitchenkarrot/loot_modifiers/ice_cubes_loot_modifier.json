@@ -6,5 +6,5 @@
       "loot_table_id": "minecraft:blocks/ice"
     }
   ],
-  "item": "kitchenkarrot:ice_cubes"
+  "tag": "forge:ice_cubes"
 }

@@ -8,7 +8,7 @@
       "item": "minecraft:sugar"
     },
     {
-      "item": "kitchenkarrot:ice_cubes"
+      "tag": "forge:ice_cubes"
     },
     {
       "item": "minecraft:dragon_breath"
