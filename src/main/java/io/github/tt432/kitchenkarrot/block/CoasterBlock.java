@@ -2,7 +2,10 @@ package io.github.tt432.kitchenkarrot.block;
 
 import io.github.tt432.kitchenkarrot.blockentity.CoasterBlockEntity;
 import io.github.tt432.kitchenkarrot.registries.ModBlockEntities;
+import io.github.tt432.kitchenkarrot.util.ItemHandlerUtils;
 import net.minecraft.core.BlockPos;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
@@ -13,6 +16,8 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.StateDefinition;
+import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
@@ -37,8 +42,10 @@ public class CoasterBlock extends FacingEntityBlock<CoasterBlockEntity> {
 
     public static final VoxelShape SHAPE;
 
+    public static final BooleanProperty INVISIBLE = BooleanProperty.create("invisible");
     public CoasterBlock(Properties p_49795_) {
         super(p_49795_);
+        this.registerDefaultState(defaultBlockState().setValue(INVISIBLE, false));
     }
 
     @Override
@@ -54,6 +61,9 @@ public class CoasterBlock extends FacingEntityBlock<CoasterBlockEntity> {
     @Override
     public InteractionResult use(BlockState pState, Level pLevel, BlockPos pPos, Player pPlayer, InteractionHand pHand, BlockHitResult pHit) {
         if (pLevel.isClientSide) {
+            // The logic will be passing every single interaction, so sound always plays.
+            // Well, it's still weird when you keep right-clicking with empty hand.
+            pLevel.playSound(pPlayer, pPos, SoundEvents.WOOD_HIT, SoundSource.BLOCKS, 1, 1);
             return InteractionResult.SUCCESS;
         }
 
@@ -61,17 +71,11 @@ public class CoasterBlock extends FacingEntityBlock<CoasterBlockEntity> {
 
         pLevel.getBlockEntity(pPos).getCapability(ForgeCapabilities.ITEM_HANDLER).ifPresent(handler -> {
             if (handler.getStackInSlot(0).isEmpty() && !pPlayer.getItemInHand(pHand).isEmpty()) {
-                handler.insertItem(0, pPlayer.getItemInHand(pHand).split(1), false);
-                //pPlayer.setItemInHand(pHand, ItemStack.EMPTY);
+                ItemHandlerUtils.insertSingle(handler, 0, pPlayer, pHand);
                 success.set(true);
             }
             else if (!handler.getStackInSlot(0).isEmpty()) {
-                var item = handler.extractItem(0, 1, false);
-
-                if (!pPlayer.addItem(item)) {
-                    pPlayer.drop(item, true);
-                }
-
+                ItemHandlerUtils.extractSingle(handler, 0, pPlayer);
                 success.set(true);
             }
         });
@@ -86,5 +90,11 @@ public class CoasterBlock extends FacingEntityBlock<CoasterBlockEntity> {
     @Override
     public BlockState getStateForPlacement(BlockPlaceContext pContext) {
         return this.defaultBlockState().setValue(FACING, pContext.getHorizontalDirection().getOpposite());
+    }
+
+    @Override
+    protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
+        super.createBlockStateDefinition(builder);
+        builder.add(INVISIBLE);
     }
 }

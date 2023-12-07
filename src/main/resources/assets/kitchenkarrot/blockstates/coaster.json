@@ -1,18 +1,33 @@
 {
   "variants": {
-    "facing=east": {
+    "facing=east,invisible=false": {
       "model": "kitchenkarrot:block/coaster",
       "y": 270
     },
-    "facing=north": {
+    "facing=north,invisible=false": {
       "model": "kitchenkarrot:block/coaster",
       "y": 180
     },
-    "facing=south": {
+    "facing=south,invisible=false": {
       "model": "kitchenkarrot:block/coaster"
     },
-    "facing=west": {
+    "facing=west,invisible=false": {
       "model": "kitchenkarrot:block/coaster",
+      "y": 90
+    },
+    "facing=east,invisible=true": {
+      "model": "kitchenkarrot:block/invisible",
+      "y": 270
+    },
+    "facing=north,invisible=true": {
+      "model": "kitchenkarrot:block/invisible",
+      "y": 180
+    },
+    "facing=south,invisible=true": {
+      "model": "kitchenkarrot:block/invisible"
+    },
+    "facing=west,invisible=true": {
+      "model": "kitchenkarrot:block/invisible",
       "y": 90
     }
   }
