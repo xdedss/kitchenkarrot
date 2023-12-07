@@ -1,5 +1,7 @@
 package io.github.tt432.kitchenkarrot.util;
 
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.items.IItemHandler;
 
@@ -21,4 +23,21 @@ public class ItemHandlerUtils {
 
         return result;
     }
+
+    public static void insertSingle(IItemHandler handler, int slot, Player player, InteractionHand hand) {
+        insertSingle(handler, slot, player, player.getItemInHand(hand));
+    };
+
+    public static void insertSingle(IItemHandler handler, int slot, Player player, ItemStack itemStack) {
+        ItemStack stack = player.getAbilities().instabuild ? new ItemStack(itemStack.getItem()) : itemStack.split(1);
+        handler.insertItem(slot, stack, false);
+    };
+
+    public static void extractSingle(IItemHandler handler, int slot, Player player) {
+        ItemStack stack = handler.extractItem(slot, 1, false);
+        if (!player.getAbilities().instabuild && !player.addItem(stack)) {
+            player.drop(stack, true);
+        }
+    };
+
 }
