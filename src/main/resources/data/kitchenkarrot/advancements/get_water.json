@@ -1,28 +1,28 @@
 {
-  "parent": "kitchenkarrot:get_canned_food",
+  "parent": "kitchenkarrot:place_air_compressor",
   "display": {
     "icon": {
-      "item": "kitchenkarrot:canned_hoglin_confit"
+      "item": "kitchenkarrot:water"
     },
     "title": {
-      "translate": "advancement.kitchenkarrot.get_canned_hoglin_confit.title"
+      "translate": "advancement.kitchenkarrot.get_water.title"
     },
     "description": {
-      "translate": "advancement.kitchenkarrot.get_canned_hoglin_confit.desc"
+      "translate": "advancement.kitchenkarrot.get_water.desc"
     },
-    "frame": "goal",
+    "frame": "task",
     "show_toast": true,
     "announce_to_chat": true,
     "hidden": false
   },
   "criteria": {
-    "canned_hoglin_confit": {
+    "water": {
       "trigger": "minecraft:inventory_changed",
       "conditions": {
         "items": [
           {
             "items": [
-              "kitchenkarrot:canned_hoglin_confit"
+              "kitchenkarrot:water"
             ]
           }
         ]
@@ -31,7 +31,7 @@
   },
   "requirements": [
     [
-      "canned_hoglin_confit"
+      "water"
     ]
   ]
 }

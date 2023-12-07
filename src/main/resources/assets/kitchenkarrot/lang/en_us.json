@@ -221,6 +221,8 @@
     "advancement.kitchenkarrot.get_pillager_pie.desc":"Loot a classic illager dish from the illagers",
     "advancement.kitchenkarrot.place_air_compressor.title":"100% Reasonable",
     "advancement.kitchenkarrot.place_air_compressor.desc":"Place a modern machine for modern dishes",
+    "advancement.kitchenkarrot.get_water.title":"The Hydration",
+    "advancement.kitchenkarrot.get_water.desc":"Use a water bucket on an air compressor to get some water",
     "advancement.kitchenkarrot.get_canned_food.title":"Molecular Gastronome",
     "advancement.kitchenkarrot.get_canned_food.desc":"Craft any canned food from the air compressor",
     "advancement.kitchenkarrot.place_plate.title":"Breakfast's Served!",
