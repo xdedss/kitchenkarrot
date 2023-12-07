@@ -221,6 +221,8 @@
     "advancement.kitchenkarrot.get_pillager_pie.desc": "從窳民那裏搶一個掠奪者派",
     "advancement.kitchenkarrot.place_air_compressor.title": "100%合理",
     "advancement.kitchenkarrot.place_air_compressor.desc": "現代菜要配現代機器",
+    "advancement.kitchenkarrot.get_water.title": "水喝作用",
+    "advancement.kitchenkarrot.get_water.desc": "對空氣壓縮機使用水桶，獲得一些水",
     "advancement.kitchenkarrot.get_canned_food.title": "分子美食家",
     "advancement.kitchenkarrot.get_canned_food.desc": "用空氣壓縮機製作任意罐頭",
     "advancement.kitchenkarrot.place_plate.title": "甜點上桌！",
