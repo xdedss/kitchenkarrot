@@ -13,6 +13,8 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.StateDefinition;
+import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
@@ -37,8 +39,10 @@ public class CoasterBlock extends FacingEntityBlock<CoasterBlockEntity> {
 
     public static final VoxelShape SHAPE;
 
+    public static final BooleanProperty INVISIBLE = BooleanProperty.create("invisible");
     public CoasterBlock(Properties p_49795_) {
         super(p_49795_);
+        this.registerDefaultState(defaultBlockState().setValue(INVISIBLE, false));
     }
 
     @Override
@@ -86,5 +90,11 @@ public class CoasterBlock extends FacingEntityBlock<CoasterBlockEntity> {
     @Override
     public BlockState getStateForPlacement(BlockPlaceContext pContext) {
         return this.defaultBlockState().setValue(FACING, pContext.getHorizontalDirection().getOpposite());
+    }
+
+    @Override
+    protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
+        super.createBlockStateDefinition(builder);
+        builder.add(INVISIBLE);
     }
 }
