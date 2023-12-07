@@ -3,13 +3,13 @@ package io.github.tt432.kitchenkarrot.menu;
 import io.github.tt432.kitchenkarrot.item.CocktailItem;
 import io.github.tt432.kitchenkarrot.item.ShakerItem;
 import io.github.tt432.kitchenkarrot.menu.base.KKMenu;
-import io.github.tt432.kitchenkarrot.registries.ModMenuTypes;
 import io.github.tt432.kitchenkarrot.menu.slot.KKResultSlot;
 import io.github.tt432.kitchenkarrot.recipes.RecipeManager;
+import io.github.tt432.kitchenkarrot.registries.ModMenuTypes;
 import io.github.tt432.kitchenkarrot.registries.ModSoundEvents;
-import net.minecraft.core.RegistryAccess;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.inventory.ClickType;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.common.capabilities.ForgeCapabilities;
@@ -201,5 +201,19 @@ public class ShakerMenu extends KKMenu {
 
         // Hotbar
         addSlotRange(invHandler, 0, 8, 138, 9, 18);
+    }
+
+    @Override
+    public void clicked(int slot, int button, ClickType clickType, Player player) {
+        try {
+            Slot slotInstance = slots.get(slot);
+            if (slotInstance.getItem().getItem() instanceof ShakerItem){
+                return;
+            }
+        }catch (Exception ignored){
+
+        }
+
+        super.clicked(slot, button, clickType, player);
     }
 }
