@@ -7,6 +7,7 @@ import io.github.tt432.kitchenkarrot.registries.ModItems;
 import io.github.tt432.kitchenkarrot.registries.ModSoundEvents;
 import io.github.tt432.kitchenkarrot.registries.RecipeTypes;
 import io.github.tt432.kitchenkarrot.tag.ModItemTags;
+import io.github.tt432.kitchenkarrot.util.ItemHandlerUtils;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Style;
 import net.minecraft.network.chat.TranslatableComponent;
@@ -157,10 +158,7 @@ public class PlateBlock extends ModBaseEntityBlock<PlateBlockEntity> {
         });
 
         if (recipe.isEmpty()) {
-            ItemStack item = handler.extractItem(0, 1, false);
-            player.getInventory().add(item);
-
-
+            ItemHandlerUtils.extractSingle(handler, 0, player);
             result.set(true);
         }
 
@@ -169,11 +167,7 @@ public class PlateBlock extends ModBaseEntityBlock<PlateBlockEntity> {
 
     private boolean addToPlate( IItemHandler handler, ItemStack heldItem, Player player) {
         AtomicBoolean result = new AtomicBoolean(false);
-        ItemStack Stack = heldItem.split(1);
-        handler.insertItem(0, Stack, false);
-        if (player.isCreative()) {
-            heldItem.grow(1);
-        }
+        ItemHandlerUtils.insertSingle(handler, 0, player, heldItem);
         result.set(true);
         return result.get();
     }
