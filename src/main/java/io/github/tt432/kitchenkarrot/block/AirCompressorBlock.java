@@ -8,7 +8,6 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
-import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.item.ItemEntity;
@@ -26,6 +25,8 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import net.minecraftforge.network.NetworkHooks;
+
+import java.util.Random;
 
 public class AirCompressorBlock extends FacingGuiEntityBlock<AirCompressorBlockEntity>{
     public static final VoxelShape SHAPE = Block.box(2, 0, 2, 16 - 2, 15, 16 - 2);
@@ -57,7 +58,7 @@ public class AirCompressorBlock extends FacingGuiEntityBlock<AirCompressorBlockE
         } else {
             // If player has a water bucket in hand, pop 8 water item
             if (pPlayer.getItemInHand(pHand).is(Items.WATER_BUCKET)) {
-                RandomSource random = pLevel.random;
+                Random random = pLevel.random;
                 if (!pPlayer.getAbilities().instabuild) {
                     if (pPlayer.getItemInHand(pHand).getCount() == 1) {
                         pPlayer.setItemInHand(pHand, new ItemStack(Items.BUCKET));
@@ -80,7 +81,7 @@ public class AirCompressorBlock extends FacingGuiEntityBlock<AirCompressorBlockE
             var be = pLevel.getBlockEntity(pPos);
 
             if (be instanceof MenuBlockEntity kk) {
-                NetworkHooks.openScreen((ServerPlayer) pPlayer, kk, be.getBlockPos());
+                NetworkHooks.openGui((ServerPlayer) pPlayer, kk, be.getBlockPos());
                 kk.forceOnce();
             }
             return InteractionResult.CONSUME;

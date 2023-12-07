@@ -2,7 +2,7 @@
   "parent": "kitchenkarrot:root",
   "display": {
     "icon": {
-      "tag": "forge:nuts/acorn"
+      "item": "kitchenkarrot:acorn"
     },
     "title": {
       "translate": "advancement.kitchenkarrot.get_acorn.title"
