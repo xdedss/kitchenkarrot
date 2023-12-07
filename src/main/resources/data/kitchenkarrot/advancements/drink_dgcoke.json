@@ -1,5 +1,5 @@
 {
-  "parent": "kitchenkarrot:place_air_compressor",
+  "parent": "kitchenkarrot:get_water",
   "display": {
     "icon": {
       "item": "kitchenkarrot:dragon_breath_coke"
