@@ -4,6 +4,12 @@
     {
       "condition": "forge:loot_table_id",
       "loot_table_id": "minecraft:blocks/ice"
+    },
+    {
+      "condition": "minecraft:match_tool",
+      "predicate": {
+        "tag": "forge:tools/pickaxes"
+      }
     }
   ],
   "tag": "forge:ice_cubes"

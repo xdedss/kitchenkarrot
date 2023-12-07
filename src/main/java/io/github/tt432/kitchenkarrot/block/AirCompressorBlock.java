@@ -21,6 +21,7 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.material.Material;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
@@ -30,7 +31,7 @@ public class AirCompressorBlock extends FacingGuiEntityBlock<AirCompressorBlockE
     public static final VoxelShape SHAPE = Block.box(2, 0, 2, 16 - 2, 15, 16 - 2);
 
     public AirCompressorBlock() {
-        super(BlockBehaviour.Properties.of()
+        super(BlockBehaviour.Properties.of(Material.STONE)
                 .strength(2.0f, 2.0f)
                 .noOcclusion());
     }
