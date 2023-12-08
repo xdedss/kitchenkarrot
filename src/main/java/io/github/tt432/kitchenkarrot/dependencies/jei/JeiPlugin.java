@@ -26,6 +26,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.Container;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Recipe;
+import net.minecraft.world.item.crafting.RecipeHolder;
 
 import java.util.List;
 
@@ -51,7 +52,7 @@ public class JeiPlugin implements IModPlugin {
                     PlateRecipe.class);
 
     protected <C extends Container, T extends Recipe<C>> List<T> getRecipe(net.minecraft.world.item.crafting.RecipeType<T> recipeType) {
-        return Minecraft.getInstance().level.getRecipeManager().getAllRecipesFor(recipeType);
+        return Minecraft.getInstance().level.getRecipeManager().getAllRecipesFor(recipeType).stream().map(RecipeHolder::value).toList();
     }
 
     @Override

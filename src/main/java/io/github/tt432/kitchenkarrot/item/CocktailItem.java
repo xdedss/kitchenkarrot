@@ -19,6 +19,7 @@ import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.UseAnim;
 import net.minecraft.world.item.alchemy.PotionUtils;
 import net.minecraft.world.item.crafting.Recipe;
+import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.registries.ForgeRegistries;
 
@@ -131,10 +132,10 @@ public class CocktailItem extends Item {
 
     @Nullable
     public static CocktailRecipe get(Level level, ResourceLocation resourceLocation) {
-        Optional<? extends Recipe<?>> result = level.getRecipeManager().byKey(resourceLocation);
+        Optional<RecipeHolder<? extends Recipe<?>>> result = level.getRecipeManager().byKey(resourceLocation);
 
-        if (result.isPresent() && result.get().getType() == RecipeTypes.COCKTAIL.get()) {
-            return (CocktailRecipe) result.get();
+        if (result.isPresent() && result.get().value().getType() == RecipeTypes.COCKTAIL.get()) {
+            return (CocktailRecipe) result.get().value();
         }
 
         return null;

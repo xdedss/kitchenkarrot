@@ -24,7 +24,6 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import net.minecraftforge.network.NetworkHooks;
 
 public class AirCompressorBlock extends FacingGuiEntityBlock<AirCompressorBlockEntity>{
     public static final VoxelShape SHAPE = Block.box(2, 0, 2, 16 - 2, 15, 16 - 2);
@@ -79,7 +78,7 @@ public class AirCompressorBlock extends FacingGuiEntityBlock<AirCompressorBlockE
             var be = pLevel.getBlockEntity(pPos);
 
             if (be instanceof MenuBlockEntity kk) {
-                NetworkHooks.openScreen((ServerPlayer) pPlayer, kk, be.getBlockPos());
+                pPlayer.openMenu(kk);
                 kk.forceOnce();
             }
             return InteractionResult.CONSUME;

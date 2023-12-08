@@ -1,9 +1,13 @@
 package io.github.tt432.kitchenkarrot.recipes.base;
 
 import com.google.gson.JsonObject;
+import com.mojang.serialization.Codec;
+import io.github.tt432.kitchenkarrot.recipes.recipe.AirCompressorRecipe;
 import io.github.tt432.kitchenkarrot.util.json.JsonUtils;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.ExtraCodecs;
+import net.minecraft.world.item.crafting.CraftingRecipeCodecs;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import org.jetbrains.annotations.Nullable;
 
@@ -16,15 +20,21 @@ public class BaseSerializer<RECIPE extends BaseRecipe<RECIPE>>
         implements RecipeSerializer<RECIPE> {
 
     Class<RECIPE> recipeClass;
+    private static final CraftingRecipeCodecs.
 
     public BaseSerializer(Class<RECIPE> recipeClass) {
         this.recipeClass = recipeClass;
     }
 
-    @Nullable
     @Override
-    public RECIPE fromNetwork(ResourceLocation pRecipeId, FriendlyByteBuf pBuffer) {
-        return JsonUtils.INSTANCE.normal.fromJson(pBuffer.readUtf(), recipeClass).setID(pRecipeId);
+    public Codec<RECIPE> codec() {
+        return Codec.of();
+    }
+
+    @Override
+    public @Nullable RECIPE fromNetwork(FriendlyByteBuf buf) {
+        return JsonUtils.INSTANCE.normal.fromJson(buf.readUtf(), recipeClass);
+//        return JsonUtils.INSTANCE.normal.fromJson(buf.readUtf(), recipeClass).setID(id);
     }
 
     @Override

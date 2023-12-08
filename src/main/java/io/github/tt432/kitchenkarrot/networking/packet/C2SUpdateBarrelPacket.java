@@ -3,10 +3,9 @@ package io.github.tt432.kitchenkarrot.networking.packet;
 import io.github.tt432.kitchenkarrot.block.BrewingBarrelBlock;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
-import net.minecraftforge.network.NetworkEvent;
-
-import java.util.function.Supplier;
+import net.minecraftforge.event.network.CustomPayloadEvent;
 
 public class C2SUpdateBarrelPacket {
 
@@ -28,16 +27,14 @@ public class C2SUpdateBarrelPacket {
         buf.writeBoolean(value);
     }
 
-    public void handle(Supplier<NetworkEvent.Context> supplier) {
-        var context = supplier.get();
+    public void handle(CustomPayloadEvent.Context context) {
         context.enqueueWork(() -> {
             var player = context.getSender();
             if (player == null) {
                 return;
             }
 
-            var level = player.level();
-//            var level = player.getLevel();
+            Level level = player.level();
 
             if (level.isLoaded(pos)) {
                 var state = level.getBlockState(pos);

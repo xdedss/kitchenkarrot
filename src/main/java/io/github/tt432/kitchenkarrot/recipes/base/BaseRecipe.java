@@ -46,11 +46,6 @@ public abstract class BaseRecipe<SELF extends BaseRecipe<SELF>> implements Recip
         return self();
     }
 
-    @Override
-    public ResourceLocation getId() {
-        return id;
-    }
-
     private SELF self() {
         return (SELF) this;
     }

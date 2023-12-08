@@ -38,8 +38,8 @@ public class AirCompressorGui extends KKGui<AirCompressorMenu> {
     }
 
     @Override
-    public void render(GuiGraphics p_283479_, int p_283661_, int p_281248_, float p_281886_) {
-        super.render(p_283479_, p_283661_, p_281248_, p_281886_);
+    public void render(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTick) {
+        super.render(guiGraphics, mouseX, mouseY, partialTick);
     }
 
 //    @Override

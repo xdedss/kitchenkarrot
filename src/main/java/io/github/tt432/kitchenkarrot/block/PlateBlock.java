@@ -19,6 +19,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.context.BlockPlaceContext;
+import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
@@ -143,23 +144,23 @@ public class PlateBlock extends ModBaseEntityBlock<PlateBlockEntity> {
     }
 
     private boolean removeFromPlate(Level level, Player player, IItemHandler handler, ItemStack input, ItemStack heldItem) {
-        Optional<PlateRecipe> recipe = level.getRecipeManager()
+        Optional<RecipeHolder<PlateRecipe>> recipe = level.getRecipeManager()
                 .getAllRecipesFor(RecipeTypes.PLATE.get())
                 .stream()
                 .filter(r ->
-                        r.matches(Collections.singletonList(input)) &&
-                                r.canCut(heldItem, input)).findFirst();
+                        r.value().matches(Collections.singletonList(input)) &&
+                                r.value().canCut(heldItem, input)).findFirst();
 
         AtomicBoolean result = new AtomicBoolean(false);
 
         recipe.ifPresent(r -> {
-            if (giveRecipeResult(r, handler)) {
+            if (giveRecipeResult(r.value(), handler)) {
                 level.playSound(player, player.getOnPos(), ModSoundEvents.CHOP.get(), player.getSoundSource(), 0.5F, level.random.nextFloat() * 0.4F + 0.8F);
                 result.set(true);
             }
         });
 
-        if (recipe.isEmpty()) {
+        if (!recipe.isPresent()) {
             ItemHandlerUtils.extractSingle(handler, 0, player);
             result.set(true);
         }

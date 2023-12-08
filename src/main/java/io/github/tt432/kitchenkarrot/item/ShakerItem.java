@@ -20,7 +20,6 @@ import net.minecraft.world.level.Level;
 import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
 import net.minecraftforge.items.ItemStackHandler;
-import net.minecraftforge.network.NetworkHooks;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Objects;
@@ -42,7 +41,7 @@ public class ShakerItem extends Item {
         if (pUsedHand == InteractionHand.MAIN_HAND) {
             if (pPlayer.isShiftKeyDown()) {
                 if (!pLevel.isClientSide) {
-                    NetworkHooks.openScreen((ServerPlayer) pPlayer, new SimpleMenuProvider(
+                    pPlayer.openMenu(new SimpleMenuProvider(
                             (id, inv, player) -> new ShakerMenu(id, inv), stack.getDisplayName()));
                 } else {
                     pPlayer.playSound(ModSoundEvents.SHAKER_OPEN.get(), 0.5F,

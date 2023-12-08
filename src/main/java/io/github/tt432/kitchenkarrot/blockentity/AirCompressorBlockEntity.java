@@ -126,7 +126,7 @@ public class AirCompressorBlockEntity extends MenuBlockEntity {
     public AirCompressorRecipe getRecipe() {
         return recipe == null && !this.recipeId.isEmpty() ?
                 recipe = (AirCompressorRecipe) level.getRecipeManager()
-                        .byKey(new ResourceLocation(recipeId.get())).get() : recipe;
+                        .byKey(new ResourceLocation(recipeId.get())).get().value() : recipe;
     }
 
     /* Predicate the recipe from given items before the recipe is set.*/

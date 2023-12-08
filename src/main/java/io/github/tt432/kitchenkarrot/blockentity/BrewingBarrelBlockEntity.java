@@ -63,7 +63,7 @@ public class BrewingBarrelBlockEntity extends MenuBlockEntity {
     public BrewingBarrelRecipe getRecipe() {
         return currentRecipe == null && !this.recipe.isEmpty() ?
                 currentRecipe = (BrewingBarrelRecipe) level.getRecipeManager()
-                        .byKey(new ResourceLocation(recipe.get())).get() : currentRecipe;
+                        .byKey(new ResourceLocation(recipe.get())).get().value() : currentRecipe;
     }
 
     @Override
@@ -86,7 +86,7 @@ public class BrewingBarrelBlockEntity extends MenuBlockEntity {
     private boolean hasRecipe(){
         var inputList = ItemHandlerUtils.toList(input);
         return level.getRecipeManager().getAllRecipesFor(RecipeTypes.BREWING_BARREL.get())
-                .stream().anyMatch(r -> r.matches(inputList));
+                .stream().anyMatch(r -> r.value().matches(inputList));
     }
 
     private void finishBrewing(){
@@ -151,7 +151,7 @@ public class BrewingBarrelBlockEntity extends MenuBlockEntity {
     public void start() {
         var inputList = ItemHandlerUtils.toList(input);
         level.getRecipeManager().getAllRecipesFor(RecipeTypes.BREWING_BARREL.get())
-                .stream().filter(r -> r.matches(inputList)).forEach(r -> {setRecipe(r);});
+                .stream().filter(r -> r.value().matches(inputList)).forEach(r -> {setRecipe(r.value());});
         started.set(true);
         resetProgress();
     }
