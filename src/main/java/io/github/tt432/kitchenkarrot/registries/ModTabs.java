@@ -22,33 +22,11 @@ public class ModTabs {
     @SubscribeEvent
     public static void addCreative(CreativeModeTabEvent.Register reg) {
 
-        reg.registerCreativeModeTab(new ResourceLocation(MOD_ID, "cocktail"), builder ->
-        // Set name of tab to display
-        builder.title(Component.translatable("itemGroup.kitchenkarrot.cocktail"))
-                // Set icon of creative tab
-                .icon(() -> new ItemStack(ModItems.SHAKER.get()))
-                // Add default items to tab
-                .displayItems((params, event) -> {
-                    event.accept(ModItems.SHAKER.get());
-                    event.accept(ModItems.ACORN_WINE_BASE.get());
-                    event.accept(ModItems.MEAD_BASE.get());
-                    event.accept(ModItems.RUM_BASE.get());
-                    event.accept(ModItems.VODKA_BASE.get());
-                    for (String cocktail : CocktailList.INSTANCE.cocktails) {
-                        ItemStack itemStack = new ItemStack(ModItems.COCKTAIL.get());
-                        CocktailItem.setCocktail(itemStack, new ResourceLocation(cocktail));
-                        event.accept(itemStack);
-                    }
-                })
-
-        );
-
         reg.registerCreativeModeTab(new ResourceLocation(MOD_ID, "main"), builder ->
         // Set name of tab to display
         builder.title(Component.translatable("itemGroup.kitchenkarrot.main"))
                 // Set icon of creative tab
                 .icon(() -> new ItemStack(ModItems.CARROT_SPICES.get()))
-                // Add default items to tab
                 // Add default items to tab
                 .displayItems((params, event) -> {
                     event.accept(ModItems.EMPTY_PLATE.get());
@@ -171,5 +149,27 @@ public class ModTabs {
                 })
 
         );
+
+        reg.registerCreativeModeTab(new ResourceLocation(MOD_ID, "cocktail"), builder ->
+        // Set name of tab to display
+        builder.title(Component.translatable("itemGroup.kitchenkarrot.cocktail"))
+                // Set icon of creative tab
+                .icon(() -> new ItemStack(ModItems.SHAKER.get()))
+                // Add default items to tab
+                .displayItems((params, event) -> {
+                    event.accept(ModItems.SHAKER.get());
+                    event.accept(ModItems.ACORN_WINE_BASE.get());
+                    event.accept(ModItems.MEAD_BASE.get());
+                    event.accept(ModItems.RUM_BASE.get());
+                    event.accept(ModItems.VODKA_BASE.get());
+                    for (String cocktail : CocktailList.INSTANCE.cocktails) {
+                        ItemStack itemStack = new ItemStack(ModItems.COCKTAIL.get());
+                        CocktailItem.setCocktail(itemStack, new ResourceLocation(cocktail));
+                        event.accept(itemStack);
+                    }
+                })
+
+        );
+
     }
 }
