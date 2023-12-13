@@ -36,8 +36,8 @@ public class C2SUpdateBarrelPacket {
                 return;
             }
 
-            var level = player.level();
-//            var level = player.getLevel();
+            // var level = player.level();
+            var level = player.getLevel();
 
             if (level.isLoaded(pos)) {
                 var state = level.getBlockState(pos);

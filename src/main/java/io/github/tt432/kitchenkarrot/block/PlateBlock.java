@@ -30,7 +30,8 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.block.state.properties.IntegerProperty;
-import net.minecraft.world.level.storage.loot.LootParams;
+import net.minecraft.world.level.storage.loot.LootContext;
+// import net.minecraft.world.level.storage.loot.LootParams;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
@@ -72,11 +73,10 @@ public class PlateBlock extends ModBaseEntityBlock<PlateBlockEntity> {
     }
 
     @Override
-    public @NotNull VoxelShape getShape(BlockState pState, BlockGetter pLevel, BlockPos pPos, CollisionContext pContext) {
+    public @NotNull VoxelShape getShape(BlockState pState, BlockGetter pLevel, BlockPos pPos,
+            CollisionContext pContext) {
         return SHAPE;
     }
-
-
 
     @Override
     public RenderShape getRenderShape(BlockState state) {
@@ -85,7 +85,8 @@ public class PlateBlock extends ModBaseEntityBlock<PlateBlockEntity> {
 
     @NotNull
     @Override
-    public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
+    public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand,
+            BlockHitResult hit) {
 
         AtomicBoolean success = new AtomicBoolean(false);
         BlockEntity blockEntity = level.getBlockEntity(pos);
@@ -101,8 +102,10 @@ public class PlateBlock extends ModBaseEntityBlock<PlateBlockEntity> {
                             blockEntity.saveToItem(stack);
                             setPlate(stack, dishItem);
                             if (stack.getOrCreateTag().contains("plate_type") && !dishItem.is(Items.AIR)) {
-                                String inputName = dishItem.getDisplayName().getString().replace("[", "").replace("]", "");
-                                stack.setHoverName((Component.translatable("info.kitchenkarrot.dished", inputName)).setStyle(Style.EMPTY.withItalic(false)));
+                                String inputName = dishItem.getDisplayName().getString().replace("[", "").replace("]",
+                                        "");
+                                stack.setHoverName((Component.translatable("info.kitchenkarrot.dished", inputName))
+                                        .setStyle(Style.EMPTY.withItalic(false)));
                             }
                             player.setItemInHand(hand, stack);
                             level.setBlock(pos, Blocks.AIR.defaultBlockState(), Block.UPDATE_ALL_IMMEDIATE);
@@ -124,37 +127,41 @@ public class PlateBlock extends ModBaseEntityBlock<PlateBlockEntity> {
         return InteractionResult.PASS;
     }
 
-    private boolean canHoldItem(IItemHandler handler, ItemStack heldItem){
+    private boolean canHoldItem(IItemHandler handler, ItemStack heldItem) {
         ItemStack dishItem = handler.getStackInSlot(0);
         return plateHolder.containsKey(heldItem.getItem()) &&
-                (dishItem.isEmpty() || (dishItem.is(heldItem.getItem()) && dishItem.getCount() < plateHolder.get(dishItem.getItem())));
+                (dishItem.isEmpty() || (dishItem.is(heldItem.getItem())
+                        && dishItem.getCount() < plateHolder.get(dishItem.getItem())));
     }
 
-    private boolean interactWithDish(ItemStack dishItem, ItemStack heldItem, Level level, Player player, IItemHandler handler, BlockPos pos){
+    private boolean interactWithDish(ItemStack dishItem, ItemStack heldItem, Level level, Player player,
+            IItemHandler handler, BlockPos pos) {
         AtomicBoolean result = new AtomicBoolean(false);
-            if (canHoldItem(handler, heldItem)) {
-                result.set(addToPlate(handler, heldItem, player));
-                level.playSound(player, pos, SoundEvents.ITEM_FRAME_ADD_ITEM, SoundSource.BLOCKS);
-            } else if (!dishItem.isEmpty() && heldItem.isEmpty() || heldItem.is(ModItemTags.INTERACT_WITH_PLATE)) {
-                result.set(removeFromPlate(level, player, handler, dishItem, heldItem));
-                level.playSound(player, pos, SoundEvents.ITEM_FRAME_REMOVE_ITEM, SoundSource.BLOCKS);
-            }
+        if (canHoldItem(handler, heldItem)) {
+            result.set(addToPlate(handler, heldItem, player));
+            level.playSound(player, pos, SoundEvents.ITEM_FRAME_ADD_ITEM, SoundSource.BLOCKS);
+        } else if (!dishItem.isEmpty() && heldItem.isEmpty() || heldItem.is(ModItemTags.INTERACT_WITH_PLATE)) {
+            result.set(removeFromPlate(level, player, handler, dishItem, heldItem));
+            level.playSound(player, pos, SoundEvents.ITEM_FRAME_REMOVE_ITEM, SoundSource.BLOCKS);
+        }
         return result.get();
     }
 
-    private boolean removeFromPlate(Level level, Player player, IItemHandler handler, ItemStack input, ItemStack heldItem) {
+    private boolean removeFromPlate(Level level, Player player, IItemHandler handler, ItemStack input,
+            ItemStack heldItem) {
         Optional<PlateRecipe> recipe = level.getRecipeManager()
                 .getAllRecipesFor(RecipeTypes.PLATE.get())
                 .stream()
-                .filter(r ->
-                        r.matches(Collections.singletonList(input)) &&
-                                r.canCut(heldItem, input)).findFirst();
+                .filter(r -> r.matches(Collections.singletonList(input)) &&
+                        r.canCut(heldItem, input))
+                .findFirst();
 
         AtomicBoolean result = new AtomicBoolean(false);
 
         recipe.ifPresent(r -> {
             if (giveRecipeResult(r, handler)) {
-                level.playSound(player, player.getOnPos(), ModSoundEvents.CHOP.get(), player.getSoundSource(), 0.5F, level.random.nextFloat() * 0.4F + 0.8F);
+                level.playSound(player, player.getOnPos(), ModSoundEvents.CHOP.get(), player.getSoundSource(), 0.5F,
+                        level.random.nextFloat() * 0.4F + 0.8F);
                 result.set(true);
             }
         });
@@ -167,7 +174,7 @@ public class PlateBlock extends ModBaseEntityBlock<PlateBlockEntity> {
         return result.get();
     }
 
-    private boolean addToPlate( IItemHandler handler, ItemStack heldItem, Player player) {
+    private boolean addToPlate(IItemHandler handler, ItemStack heldItem, Player player) {
         AtomicBoolean result = new AtomicBoolean(false);
         ItemHandlerUtils.insertSingle(handler, 0, player, heldItem);
         result.set(true);
@@ -189,16 +196,19 @@ public class PlateBlock extends ModBaseEntityBlock<PlateBlockEntity> {
             self.getOrCreateTag().putString("plate_type", ForgeRegistries.ITEMS.getKey(content.getItem()).toString());
         }
     }
+
     @Override
-    public List<ItemStack> getDrops(BlockState p_287732_, LootParams.Builder p_287596_) {
+    public List<ItemStack> getDrops(BlockState p_287732_, LootContext.Builder p_287596_) {
         return List.of(new ItemStack(ModItems.PLATE_PIECES.get()));
     }
+
     @Override
-    protected void spawnDestroyParticles(Level pLevel, Player pPlayer, BlockPos pPos, BlockState pState) {}
+    protected void spawnDestroyParticles(Level pLevel, Player pPlayer, BlockPos pPos, BlockState pState) {
+    }
 
     @Override
     public void playerWillDestroy(Level pLevel, BlockPos pPos, BlockState pState, Player pPlayer) {
-        pLevel.playSound(null, pPos, SoundEvents.GLASS_BREAK, SoundSource.BLOCKS,1,1);
+        pLevel.playSound(null, pPos, SoundEvents.GLASS_BREAK, SoundSource.BLOCKS, 1, 1);
         super.playerWillDestroy(pLevel, pPos, pState, pPlayer);
     }
 
@@ -215,8 +225,10 @@ public class PlateBlock extends ModBaseEntityBlock<PlateBlockEntity> {
         int rotation = (int) context.getRotation();
         if (context.getLevel().isClientSide) {
             while (rotation >= 180 || rotation < -180) {
-                if (rotation >= 180) rotation -= 360;
-                if (rotation < -180) rotation += 360;
+                if (rotation >= 180)
+                    rotation -= 360;
+                if (rotation < -180)
+                    rotation += 360;
             }
         }
         return this.defaultBlockState().setValue(DEGREE, (rotation) + 180);

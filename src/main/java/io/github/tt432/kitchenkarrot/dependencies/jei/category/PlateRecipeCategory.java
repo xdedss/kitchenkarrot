@@ -15,7 +15,7 @@ import mezz.jei.api.gui.ingredient.IRecipeSlotsView;
 import mezz.jei.api.helpers.IGuiHelper;
 import mezz.jei.api.recipe.IFocusGroup;
 import mezz.jei.api.recipe.RecipeIngredientRole;
-import net.minecraft.client.gui.GuiGraphics;
+// import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
@@ -29,8 +29,8 @@ import java.util.Objects;
  **/
 public class PlateRecipeCategory extends BaseRecipeCategory<PlateRecipe> {
     private final ItemStack plateStack = ModItems.EMPTY_PLATE.get().getDefaultInstance();
-    protected static final ResourceLocation BACKGROUND =
-            new ResourceLocation(Kitchenkarrot.MOD_ID, "textures/gui/jei.png");
+    protected static final ResourceLocation BACKGROUND = new ResourceLocation(Kitchenkarrot.MOD_ID,
+            "textures/gui/jei.png");
 
     public PlateRecipeCategory(IGuiHelper helper) {
         super(JeiPlugin.PLATE,

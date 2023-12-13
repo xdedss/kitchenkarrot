@@ -1,7 +1,7 @@
 package io.github.tt432.kitchenkarrot.gui.widget;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiGraphics;
+// import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.narration.NarratedElementType;
 import net.minecraft.client.gui.narration.NarrationElementOutput;
@@ -9,6 +9,8 @@ import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.network.chat.Component;
 
 import java.util.function.Supplier;
+
+import com.mojang.blaze3d.vertex.PoseStack;
 
 /**
  * @author DustW
@@ -19,9 +21,9 @@ public class TooltipWidget extends AbstractWidget {
     AbstractContainerScreen<?> screen;
 
     public TooltipWidget(AbstractContainerScreen<?> screen,
-                         int pX, int pY,
-                         int pWidth, int pHeight,
-                         Supplier<Component> message, boolean needTooltip) {
+            int pX, int pY,
+            int pWidth, int pHeight,
+            Supplier<Component> message, boolean needTooltip) {
         super(pX, pY, pWidth, pHeight, message.get());
 
         this.screen = screen;
@@ -29,39 +31,42 @@ public class TooltipWidget extends AbstractWidget {
         this.needTooltip = needTooltip;
     }
 
-//    @Override
-//    public void render(PoseStack pPoseStack, int pMouseX, int pMouseY, float pPartialTick) {
-//        if (!visible) {
-//            return;
-//        }
-//
-//        this.isHovered = pMouseX >= this.x && pMouseY >= this.y && pMouseX < this.x + this.width && pMouseY < this.y + this.height;
-//
-//        renderToolTip(pPoseStack, pMouseX, pMouseY);
-//    }
-//
-//    @Override
-//    public void renderToolTip(PoseStack pPoseStack, int pMouseX, int pMouseY) {
-//        if (isHovered && needTooltip) {
-//            screen.renderTooltip(pPoseStack, getMessage(), pMouseX, pMouseY);
-//        }
-//    }
-
+    // @Override
+    // public void render(PoseStack pPoseStack, int pMouseX, int pMouseY, float
+    // pPartialTick) {
+    // if (!visible) {
+    // return;
+    // }
+    //
+    // this.isHovered = pMouseX >= this.x && pMouseY >= this.y && pMouseX < this.x +
+    // this.width && pMouseY < this.y + this.height;
+    //
+    // renderToolTip(pPoseStack, pMouseX, pMouseY);
+    // }
+    //
+    // @Override
+    // public void renderToolTip(PoseStack pPoseStack, int pMouseX, int pMouseY) {
+    // if (isHovered && needTooltip) {
+    // screen.renderTooltip(pPoseStack, getMessage(), pMouseX, pMouseY);
+    // }
+    // }
 
     @Override
-    public void render(GuiGraphics guiGraphics, int pMouseX, int pMouseY, float pPartialTick) {
+    public void render(PoseStack pPoseStack, int pMouseX, int pMouseY, float pPartialTick) {
         if (!visible) {
             return;
         }
-        this.isHovered = pMouseX >= this.getX() && pMouseY >= this.getY() && pMouseX < this.getX() + this.width && pMouseY < this.getY() + this.height;
 
-        renderWidget(guiGraphics, pMouseX, pMouseY, pPartialTick);
+        this.isHovered = pMouseX >= this.getX() && pMouseY >= this.getY() && pMouseX < this.getX() + this.width
+                && pMouseY < this.getY() + this.height;
+
+        renderWidget(pPoseStack, pMouseX, pMouseY, pPartialTick);
     }
 
     @Override
-    protected void renderWidget(GuiGraphics p_282139_, int p_268034_, int p_268009_, float p_268085_) {
+    public void renderWidget(PoseStack pPoseStack, int pMouseX, int pMouseY, float pPartialTick) {
         if (isHovered && needTooltip) {
-            p_282139_.renderTooltip(Minecraft.getInstance().font, getMessage(), p_268034_, p_268009_);
+            screen.renderTooltip(pPoseStack, getMessage(), pMouseX, pMouseY);
         }
     }
 
@@ -70,12 +75,12 @@ public class TooltipWidget extends AbstractWidget {
         return message.get();
     }
 
-//    @Override
-//    public void updateNarration(NarrationElementOutput pNarrationElementOutput) {
-//        if (this.needTooltip) {
-//            pNarrationElementOutput.add(NarratedElementType.HINT, getMessage());
-//        }
-//    }
+    // @Override
+    // public void updateNarration(NarrationElementOutput pNarrationElementOutput) {
+    // if (this.needTooltip) {
+    // pNarrationElementOutput.add(NarratedElementType.HINT, getMessage());
+    // }
+    // }
 
     @Override
     protected void updateWidgetNarration(NarrationElementOutput p_259858_) {

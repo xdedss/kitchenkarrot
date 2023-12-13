@@ -21,16 +21,17 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.material.Material;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import net.minecraftforge.network.NetworkHooks;
 
-public class AirCompressorBlock extends FacingGuiEntityBlock<AirCompressorBlockEntity>{
+public class AirCompressorBlock extends FacingGuiEntityBlock<AirCompressorBlockEntity> {
     public static final VoxelShape SHAPE = Block.box(2, 0, 2, 16 - 2, 15, 16 - 2);
 
     public AirCompressorBlock() {
-        super(BlockBehaviour.Properties.of()
+        super(BlockBehaviour.Properties.of(Material.STONE)
                 .strength(2.0f, 2.0f)
                 .noOcclusion());
     }
@@ -46,10 +47,11 @@ public class AirCompressorBlock extends FacingGuiEntityBlock<AirCompressorBlockE
     }
 
     @Override
-    public InteractionResult use(BlockState pState, Level pLevel, BlockPos pPos, Player pPlayer, InteractionHand pHand, BlockHitResult pHit) {
+    public InteractionResult use(BlockState pState, Level pLevel, BlockPos pPos, Player pPlayer, InteractionHand pHand,
+            BlockHitResult pHit) {
         if (pLevel.isClientSide) {
             if (pPlayer.getItemInHand(pHand).is(Items.WATER_BUCKET)) {
-                pLevel.playSound(pPlayer, pPos, SoundEvents.BUCKET_EMPTY, SoundSource.BLOCKS, 1 ,1);
+                pLevel.playSound(pPlayer, pPos, SoundEvents.BUCKET_EMPTY, SoundSource.BLOCKS, 1, 1);
                 pLevel.playSound(pPlayer, pPos, SoundEvents.BREWING_STAND_BREW, SoundSource.BLOCKS, 1, 1);
             }
             return InteractionResult.SUCCESS;

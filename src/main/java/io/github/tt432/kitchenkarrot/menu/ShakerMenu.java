@@ -50,19 +50,20 @@ public class ShakerMenu extends KKMenu {
 
     /**
      * trigger when finish
+     * 
      * @param player
      */
     private void finishRecipe(Player player) {
         if (ShakerItem.getFinish(itemStack)) {
             itemStack.getCapability(ForgeCapabilities.ITEM_HANDLER).ifPresent(handler -> {
-                if (player.level().isClientSide) {
+                if (player.getLevel().isClientSide) {
                     return;
                 }
 
                 var list = getInputs(handler);
 
-                var recipe = RecipeManager.getCocktailRecipes(inventory.player.level()).stream()
-                    .filter(r -> r.matches(list)).findFirst();
+                var recipe = RecipeManager.getCocktailRecipes(inventory.player.getLevel()).stream()
+                        .filter(r -> r.matches(list)).findFirst();
 
                 var recipeResult = CocktailItem.unknownCocktail();
 
@@ -109,16 +110,14 @@ public class ShakerMenu extends KKMenu {
 
         var list = getInputs(handler);
 
-        var recipe = RecipeManager.getCocktailRecipes(inventory.player.level())
+        var recipe = RecipeManager.getCocktailRecipes(inventory.player.getLevel())
                 .stream().filter(r -> r.matches(list)).findFirst();
         if (recipe.isPresent()) {
             ShakerItem.setRecipeTime(itemStack, recipe.get().getContent().getCraftingTime());
-        }
-        else {
+        } else {
             if (list.stream().anyMatch(ItemStack::isEmpty)) {
                 ShakerItem.setRecipeTime(itemStack, 0);
-            }
-            else {
+            } else {
                 ShakerItem.setRecipeTime(itemStack, 60);
             }
         }
@@ -147,7 +146,7 @@ public class ShakerMenu extends KKMenu {
     protected void sound() {
         var player = inventory.player;
 
-        if (player.level().isClientSide) {
+        if (player.getLevel().isClientSide) {
             player.playSound(ModSoundEvents.SHAKER_COCKTAIL.get(), 0.5F,
                     player.getRandom().nextFloat() * 0.1F + 0.9F);
         }
@@ -190,7 +189,7 @@ public class ShakerMenu extends KKMenu {
         super.removed(pPlayer);
         sync();
 
-        if (pPlayer.level().isClientSide) {
+        if (pPlayer.getLevel().isClientSide) {
             pPlayer.playSound(ModSoundEvents.SHAKER_CLOSE.get(), 0.5F,
                     pPlayer.getRandom().nextFloat() * 0.1F + 0.9F);
         }
@@ -209,10 +208,10 @@ public class ShakerMenu extends KKMenu {
     public void clicked(int slot, int button, @NotNull ClickType type, @NotNull Player player) {
         try {
             Slot slotInstance = slots.get(slot);
-            if (slotInstance.getItem().getItem() instanceof ShakerItem){
+            if (slotInstance.getItem().getItem() instanceof ShakerItem) {
                 return;
             }
-        }catch (Exception ignored){
+        } catch (Exception ignored) {
 
         }
 

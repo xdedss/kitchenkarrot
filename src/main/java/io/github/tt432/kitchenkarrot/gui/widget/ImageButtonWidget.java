@@ -1,8 +1,10 @@
 package io.github.tt432.kitchenkarrot.gui.widget;
 
 import com.mojang.blaze3d.systems.RenderSystem;
+import com.mojang.blaze3d.vertex.PoseStack;
+
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiGraphics;
+// import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
@@ -20,11 +22,11 @@ public class ImageButtonWidget extends TooltipWidget {
     int texY;
 
     public ImageButtonWidget(AbstractContainerScreen<?> screen,
-                             int pX, int pY,
-                             int pWidth, int pHeight,
-                             Supplier<Component> message, boolean needTooltip,
-                             Consumer<ImageButtonWidget> onClick,
-                             ResourceLocation texture, int texX, int texY) {
+            int pX, int pY,
+            int pWidth, int pHeight,
+            Supplier<Component> message, boolean needTooltip,
+            Consumer<ImageButtonWidget> onClick,
+            ResourceLocation texture, int texX, int texY) {
         super(screen, pX, pY, pWidth, pHeight, message, needTooltip);
 
         this.onClick = onClick;
@@ -34,36 +36,39 @@ public class ImageButtonWidget extends TooltipWidget {
     }
 
     public ImageButtonWidget(AbstractContainerScreen<?> screen,
-                             int pX, int pY,
-                             int pWidth, int pHeight,
-                             Consumer<ImageButtonWidget> onClick,
-                             ResourceLocation texture, int texX, int texY) {
+            int pX, int pY,
+            int pWidth, int pHeight,
+            Consumer<ImageButtonWidget> onClick,
+            ResourceLocation texture, int texX, int texY) {
         this(screen, pX, pY, pWidth, pHeight, () -> Component.literal(""),
-//                        this(screen, pX, pY, pWidth, pHeight, () -> new TextComponent(""),
+                // this(screen, pX, pY, pWidth, pHeight, () -> new TextComponent(""),
                 false, onClick, texture, texX, texY);
     }
 
     @Override
-    public void render(GuiGraphics p_282421_, int p_93658_, int p_93659_, float p_93660_) {
+    public void render(PoseStack pPoseStack, int pMouseX, int pMouseY, float pPartialTick) {
         if (!visible) {
             return;
         }
+
         RenderSystem.setShaderTexture(0, texture);
-        p_282421_.blit(texture,getX(),getY(),texX,texY,width,height);
-        super.render(p_282421_, p_93658_, p_93659_, p_93660_);
+        screen.blit(pPoseStack, getX(), getY(), texX, texY, width, height);
+
+        super.render(pPoseStack, pMouseX, pMouseY, pPartialTick);
     }
 
-//    @Override
-//    public void render(PoseStack pPoseStack, int pMouseX, int pMouseY, float pPartialTick) {
-//        if (!visible) {
-//            return;
-//        }
-//
-//        RenderSystem.setShaderTexture(0, texture);
-//        screen.blit(pPoseStack, x, y, texX, texY, width, height);
-//
-//        super.render(pPoseStack, pMouseX, pMouseY, pPartialTick);
-//    }
+    // @Override
+    // public void render(PoseStack pPoseStack, int pMouseX, int pMouseY, float
+    // pPartialTick) {
+    // if (!visible) {
+    // return;
+    // }
+    //
+    // RenderSystem.setShaderTexture(0, texture);
+    // screen.blit(pPoseStack, x, y, texX, texY, width, height);
+    //
+    // super.render(pPoseStack, pMouseX, pMouseY, pPartialTick);
+    // }
 
     public void onPress() {
         onClick.accept(this);

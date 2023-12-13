@@ -26,7 +26,7 @@ public class Kitchenkarrot {
     public static final String MOD_ID = "kitchenkarrot";
 
     // Mod version here.
-    public static final String VERSION = "1.20.1-0.5.0";
+    public static final String VERSION = "1.19.4-0.5.0";
 
     private static Kitchenkarrot INSTANCE;
 
@@ -36,11 +36,12 @@ public class Kitchenkarrot {
         INSTANCE = this;
 
         IEventBus bus = FMLJavaModLoadingContext.get().getModEventBus();
-        ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON,ModCommonConfigs.COMMON,"kitchenkarrot-common.toml");
+        ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, ModCommonConfigs.COMMON,
+                "kitchenkarrot-common.toml");
         ModBlocks.BLOCKS.register(bus);
         ModItems.ITEMS.register(bus);
         ModBlockItems.BLOCK_ITEMS.register(bus);
-        ModTabs.TABS.register(bus);
+        // ModTabs.TABS.register(bus);
         ModMenuTypes.MENUS.register(bus);
         ModBlockEntities.BLOCK_ENTITIES.register(bus);
         ModSoundEvents.SOUNDS.register(bus);

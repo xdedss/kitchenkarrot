@@ -8,7 +8,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.CreativeModeTabs;
 import net.minecraft.world.item.ItemStack;
-import net.minecraftforge.event.BuildCreativeModeTabContentsEvent;
+import net.minecraftforge.event.CreativeModeTabEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.registries.DeferredRegister;
@@ -18,150 +18,158 @@ import static io.github.tt432.kitchenkarrot.Kitchenkarrot.MOD_ID;
 
 @Mod.EventBusSubscriber(modid = MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD)
 public class ModTabs {
-    public static final DeferredRegister<CreativeModeTab> TABS = DeferredRegister.create(Registries.CREATIVE_MODE_TAB, MOD_ID);
-    public static final RegistryObject<CreativeModeTab> MAIN_TAB = TABS.register("main", () -> CreativeModeTab.builder()
-            .icon(() -> new ItemStack(ModItems.CARROT_SPICES.get()))
-            .title(Component.translatable("itemGroup.kitchenkarrot.main"))
-            .withTabsBefore(CreativeModeTabs.SPAWN_EGGS)
-            .build());
-    public static final RegistryObject<CreativeModeTab> COCKTAIL_TAB = TABS.register("cocktail", () -> CreativeModeTab.builder()
-            .icon(() -> new ItemStack(ModItems.SHAKER.get()))
-            .title(Component.translatable("itemGroup.kitchenkarrot.cocktail"))
-            .withTabsBefore(MAIN_TAB.getId())
-            .build());
 
     @SubscribeEvent
-    public static void addCreative(BuildCreativeModeTabContentsEvent event) {
-        if (event.getTab() == ModTabs.COCKTAIL_TAB.get()) {
-            event.accept(ModItems.SHAKER);
-            event.accept(ModItems.ACORN_WINE_BASE);
-            event.accept(ModItems.MEAD_BASE);
-            event.accept(ModItems.RUM_BASE);
-            event.accept(ModItems.VODKA_BASE);
-            for (String cocktail : CocktailList.INSTANCE.cocktails) {
-                ItemStack itemStack = new ItemStack(ModItems.COCKTAIL.get());
-                CocktailItem.setCocktail(itemStack, new ResourceLocation(cocktail));
-                event.accept(itemStack);
-            }
-        }
-        if (event.getTab() == ModTabs.MAIN_TAB.get()) {
-            event.accept(ModItems.EMPTY_PLATE);
-            event.accept(ModItems.KNIFE);
-            event.accept(ModBlocks.AIR_COMPRESSOR);
-            event.accept(ModBlocks.BREWING_BARREL);
-            event.accept(ModBlocks.COASTER);
-            event.accept(ModItems.GEM_CARROT);
-            event.accept(ModItems.CARROT_SPICES);
-            event.accept(ModItems.ICE_CUBES);
-            event.accept(ModItems.ACORN);
-            event.accept(ModItems.EMPTY_CAN);
-            event.accept(ModBlocks.SEA_SALT);
-            event.accept(ModBlocks.ROCK_SALT);
-            event.accept(ModBlocks.FINE_SALT);
-            event.accept(ModBlocks.ACORN_OIL);
-            event.accept(ModBlocks.SUNFLOWER_OIL);
-            event.accept(ModBlocks.CHORUS_OIL);
-            event.accept(ModItems.WATER);
-            event.accept(ModItems.MILK);
+    public static void addCreative(CreativeModeTabEvent.Register reg) {
 
-            event.accept(ModItems.BIRCH_SAP);
-            event.accept(ModItems.KELP_WITH_SUNFLOWER_SEED);
-            event.accept(ModItems.FRIED_PUMPKIN_CAKE);
-            event.accept(ModItems.SEED_PIE);
-            event.accept(ModItems.RAW_BEEF_IN_DRIPLEAF);
-            event.accept(ModItems.BEEF_IN_DRIPLEAF);
-            event.accept(ModItems.SMALL_BEEF_IN_DRIPLEAF);
-            event.accept(ModItems.BAMBOO_POTATO);
-            event.accept(ModItems.PICKLED_SEA_PICKLES);
-            event.accept(ModItems.BIRCH_SAP_CHOCOLATE_BAR);
-            event.accept(ModItems.CHOCOLATE_CROISSANT);
-            event.accept(ModItems.BEETROOT_CREPE);
-            event.accept(ModItems.CHINESE_CREPE);
-            event.accept(ModItems.CROQUE_MADAME);
-            event.accept(ModItems.GRILLED_WHEATMEAL);
-            event.accept(ModItems.GRILLED_FISH_AND_CACTUS);
-            event.accept(ModItems.FLOWER_CAKE);
-            event.accept(ModItems.PILLAGER_PIE);
-            event.accept(ModItems.SWEET_ROLL);
-            event.accept(ModItems.MONSTER_LASAGNA);
-            event.accept(ModItems.SMALL_MONSTER_LASAGNA);
-            event.accept(ModItems.SWEET_BERRY_MILK);
-            event.accept(ModItems.BACON_WRAPPED_POTATO);
-            event.accept(ModItems.CRISPY_BREAD_WITH_KELP);
-            event.accept(ModItems.WOODLAND_TATER_PUREE);
-            event.accept(ModItems.FISHERMENS_DELIGHT);
-            event.accept(ModItems.CREAM_OF_MUSHROOM_SOUP);
+        reg.registerCreativeModeTab(new ResourceLocation(MOD_ID, "cocktail"), builder ->
+        // Set name of tab to display
+        builder.title(Component.translatable("itemGroup.kitchenkarrot.cocktail"))
+                // Set icon of creative tab
+                .icon(() -> new ItemStack(ModItems.SHAKER.get()))
+                // Add default items to tab
+                .displayItems((params, event) -> {
+                    event.accept(ModItems.SHAKER.get());
+                    event.accept(ModItems.ACORN_WINE_BASE.get());
+                    event.accept(ModItems.MEAD_BASE.get());
+                    event.accept(ModItems.RUM_BASE.get());
+                    event.accept(ModItems.VODKA_BASE.get());
+                    for (String cocktail : CocktailList.INSTANCE.cocktails) {
+                        ItemStack itemStack = new ItemStack(ModItems.COCKTAIL.get());
+                        CocktailItem.setCocktail(itemStack, new ResourceLocation(cocktail));
+                        event.accept(itemStack);
+                    }
+                })
 
-            event.accept(ModItems.LUSH_SALAD);
-            event.accept(ModItems.FRESH_SALAD);
-            event.accept(ModItems.TRAVELERS_SALAD);
-            event.accept(ModItems.BEETROOT_SALAD);
-            event.accept(ModItems.FRUIT_CEREAL_PORRIDGE);
-            event.accept(ModItems.CREEPER_CEREAL_PORRIDGE);
-            event.accept(ModItems.ULTRA_SUPER_DELICIOUS_CEREAL_PORRIDGE);
+        );
 
-            event.accept(ModItems.CARROT_AND_CARROT);
-            event.accept(ModItems.SOOTHING_TEA);
-            event.accept(ModItems.CHORUS_MOUSSE);
-            event.accept(ModItems.SMALL_CHORUS_MOUSSE);
-            event.accept(ModItems.SLIME_MOUSSE);
-            event.accept(ModItems.SMALL_SLIME_MOUSSE);
-            event.accept(ModItems.FEAST_PIZZA);
-            event.accept(ModItems.FEAST_PIZZA_SLICE);
-            event.accept(ModItems.SHINY_PIZZA);
-            event.accept(ModItems.SHINY_PIZZA_SLICE);
-            event.accept(ModItems.DUNGEON_PIZZA);
-            event.accept(ModItems.DUNGEON_PIZZA_SLICE);
-            event.accept(ModItems.RAW_SWEET_LOAF);
-            event.accept(ModItems.SWEET_LOAF);
-            event.accept(ModItems.SWEET_LOAF_SLICE);
-            event.accept(ModItems.SIRLOIN_STEAK);
-            event.accept(ModItems.BEEF_GRAINS);
-            event.accept(ModItems.SASHIMI);
-            event.accept(ModItems.MOSS_FRIED_LAMB_CUTLETS);
-            event.accept(ModItems.FRIES);
-            event.accept(ModItems.DRUMSTICK);
-            event.accept(ModItems.FRIED_CHICKEN_COMBO);
-            event.accept(ModItems.POPACORN);
-            event.accept(ModItems.CURRY_UDON);
-            event.accept(ModItems.RICE_CAKE);
-            event.accept(ModItems.VERDANT_NAMA_CHOCO);
-            event.accept(ModItems.HONEY_BRULEE);
-            event.accept(ModItems.LAVA_BRULEE);
-            event.accept(ModItems.HI_NRG_BRULEE);
-            event.accept(ModItems.EGG_TART);
-            event.accept(ModItems.SWEET_BERRY_TART);
-            event.accept(ModItems.CARROT_TART);
+        reg.registerCreativeModeTab(new ResourceLocation(MOD_ID, "main"), builder ->
+        // Set name of tab to display
+        builder.title(Component.translatable("itemGroup.kitchenkarrot.main"))
+                // Set icon of creative tab
+                .icon(() -> new ItemStack(ModItems.CARROT_SPICES.get()))
+                // Add default items to tab
+                // Add default items to tab
+                .displayItems((params, event) -> {
+                    event.accept(ModItems.EMPTY_PLATE.get());
+                    event.accept(ModItems.KNIFE.get());
+                    event.accept(ModBlocks.AIR_COMPRESSOR.get());
+                    event.accept(ModBlocks.BREWING_BARREL.get());
+                    event.accept(ModBlocks.COASTER.get());
+                    event.accept(ModItems.GEM_CARROT.get());
+                    event.accept(ModItems.CARROT_SPICES.get());
+                    event.accept(ModItems.ICE_CUBES.get());
+                    event.accept(ModItems.ACORN.get());
+                    event.accept(ModItems.EMPTY_CAN.get());
+                    event.accept(ModBlocks.SEA_SALT.get());
+                    event.accept(ModBlocks.ROCK_SALT.get());
+                    event.accept(ModBlocks.FINE_SALT.get());
+                    event.accept(ModBlocks.ACORN_OIL.get());
+                    event.accept(ModBlocks.SUNFLOWER_OIL.get());
+                    event.accept(ModBlocks.CHORUS_OIL.get());
+                    event.accept(ModItems.WATER.get());
+                    event.accept(ModItems.MILK.get());
 
-            event.accept(ModItems.CANNED_MUTTON_PUMPKIN);
-            event.accept(ModItems.CANNED_PORK_BEETROOT);
-            event.accept(ModItems.CANNED_BEEF_POTATO);
-            event.accept(ModItems.CANNED_CANDIED_APPLE);
-            event.accept(ModItems.CANNED_SWEET_BERRY_MILK);
-            event.accept(ModItems.CANNED_HOGLIN_CONFIT);
+                    event.accept(ModItems.BIRCH_SAP.get());
+                    event.accept(ModItems.KELP_WITH_SUNFLOWER_SEED.get());
+                    event.accept(ModItems.FRIED_PUMPKIN_CAKE.get());
+                    event.accept(ModItems.SEED_PIE.get());
+                    event.accept(ModItems.RAW_BEEF_IN_DRIPLEAF.get());
+                    event.accept(ModItems.BEEF_IN_DRIPLEAF.get());
+                    event.accept(ModItems.SMALL_BEEF_IN_DRIPLEAF.get());
+                    event.accept(ModItems.BAMBOO_POTATO.get());
+                    event.accept(ModItems.PICKLED_SEA_PICKLES.get());
+                    event.accept(ModItems.BIRCH_SAP_CHOCOLATE_BAR.get());
+                    event.accept(ModItems.CHOCOLATE_CROISSANT.get());
+                    event.accept(ModItems.BEETROOT_CREPE.get());
+                    event.accept(ModItems.CHINESE_CREPE.get());
+                    event.accept(ModItems.CROQUE_MADAME.get());
+                    event.accept(ModItems.GRILLED_WHEATMEAL.get());
+                    event.accept(ModItems.GRILLED_FISH_AND_CACTUS.get());
+                    event.accept(ModItems.FLOWER_CAKE.get());
+                    event.accept(ModItems.PILLAGER_PIE.get());
+                    event.accept(ModItems.SWEET_ROLL.get());
+                    event.accept(ModItems.MONSTER_LASAGNA.get());
+                    event.accept(ModItems.SMALL_MONSTER_LASAGNA.get());
+                    event.accept(ModItems.SWEET_BERRY_MILK.get());
+                    event.accept(ModItems.BACON_WRAPPED_POTATO.get());
+                    event.accept(ModItems.CRISPY_BREAD_WITH_KELP.get());
+                    event.accept(ModItems.WOODLAND_TATER_PUREE.get());
+                    event.accept(ModItems.FISHERMENS_DELIGHT.get());
+                    event.accept(ModItems.CREAM_OF_MUSHROOM_SOUP.get());
 
-            event.accept(ModItems.ICED_MELON_LAGER);
-            event.accept(ModItems.GLOW_BERRY_LAGER);
+                    event.accept(ModItems.LUSH_SALAD.get());
+                    event.accept(ModItems.FRESH_SALAD.get());
+                    event.accept(ModItems.TRAVELERS_SALAD.get());
+                    event.accept(ModItems.BEETROOT_SALAD.get());
+                    event.accept(ModItems.FRUIT_CEREAL_PORRIDGE.get());
+                    event.accept(ModItems.CREEPER_CEREAL_PORRIDGE.get());
+                    event.accept(ModItems.ULTRA_SUPER_DELICIOUS_CEREAL_PORRIDGE.get());
 
-            event.accept(ModItems.ACORN_WINE);
-            event.accept(ModItems.MEAD);
-            event.accept(ModItems.RUM);
-            event.accept(ModItems.VODKA);
-            event.accept(ModItems.LIGHT_SODA);
-            event.accept(ModItems.KELP_SODA);
-            event.accept(ModItems.TWISTING_SODA);
-            event.accept(ModItems.DANDELION_COKE);
-            event.accept(ModItems.CORAL_COKE);
-            event.accept(ModItems.DRAGON_BREATH_COKE);
+                    event.accept(ModItems.CARROT_AND_CARROT.get());
+                    event.accept(ModItems.SOOTHING_TEA.get());
+                    event.accept(ModItems.CHORUS_MOUSSE.get());
+                    event.accept(ModItems.SMALL_CHORUS_MOUSSE.get());
+                    event.accept(ModItems.SLIME_MOUSSE.get());
+                    event.accept(ModItems.SMALL_SLIME_MOUSSE.get());
+                    event.accept(ModItems.FEAST_PIZZA.get());
+                    event.accept(ModItems.FEAST_PIZZA_SLICE.get());
+                    event.accept(ModItems.SHINY_PIZZA.get());
+                    event.accept(ModItems.SHINY_PIZZA_SLICE.get());
+                    event.accept(ModItems.DUNGEON_PIZZA.get());
+                    event.accept(ModItems.DUNGEON_PIZZA_SLICE.get());
+                    event.accept(ModItems.RAW_SWEET_LOAF.get());
+                    event.accept(ModItems.SWEET_LOAF.get());
+                    event.accept(ModItems.SWEET_LOAF_SLICE.get());
+                    event.accept(ModItems.SIRLOIN_STEAK.get());
+                    event.accept(ModItems.BEEF_GRAINS.get());
+                    event.accept(ModItems.SASHIMI.get());
+                    event.accept(ModItems.MOSS_FRIED_LAMB_CUTLETS.get());
+                    event.accept(ModItems.FRIES.get());
+                    event.accept(ModItems.DRUMSTICK.get());
+                    event.accept(ModItems.FRIED_CHICKEN_COMBO.get());
+                    event.accept(ModItems.POPACORN.get());
+                    event.accept(ModItems.CURRY_UDON.get());
+                    event.accept(ModItems.RICE_CAKE.get());
+                    event.accept(ModItems.VERDANT_NAMA_CHOCO.get());
+                    event.accept(ModItems.HONEY_BRULEE.get());
+                    event.accept(ModItems.LAVA_BRULEE.get());
+                    event.accept(ModItems.HI_NRG_BRULEE.get());
+                    event.accept(ModItems.EGG_TART.get());
+                    event.accept(ModItems.SWEET_BERRY_TART.get());
+                    event.accept(ModItems.CARROT_TART.get());
 
-            event.accept(ModItems.RAW_VEGAN_MUTTON);
-            event.accept(ModItems.COOKED_VEGAN_MUTTON);
-            event.accept(ModItems.RAW_VEGAN_PORK);
-            event.accept(ModItems.COOKED_VEGAN_PORK);
-            event.accept(ModItems.RAW_VEGAN_BEEF);
-            event.accept(ModItems.COOKED_VEGAN_BEEF);
+                    event.accept(ModItems.CANNED_MUTTON_PUMPKIN.get());
+                    event.accept(ModItems.CANNED_PORK_BEETROOT.get());
+                    event.accept(ModItems.CANNED_BEEF_POTATO.get());
+                    event.accept(ModItems.CANNED_CANDIED_APPLE.get());
+                    event.accept(ModItems.CANNED_SWEET_BERRY_MILK.get());
+                    event.accept(ModItems.CANNED_HOGLIN_CONFIT.get());
 
-            event.accept(ModItems.PLATE_PIECES);
-        }
+                    event.accept(ModItems.ICED_MELON_LAGER.get());
+                    event.accept(ModItems.GLOW_BERRY_LAGER.get());
+
+                    event.accept(ModItems.ACORN_WINE.get());
+                    event.accept(ModItems.MEAD.get());
+                    event.accept(ModItems.RUM.get());
+                    event.accept(ModItems.VODKA.get());
+                    event.accept(ModItems.LIGHT_SODA.get());
+                    event.accept(ModItems.KELP_SODA.get());
+                    event.accept(ModItems.TWISTING_SODA.get());
+                    event.accept(ModItems.DANDELION_COKE.get());
+                    event.accept(ModItems.CORAL_COKE.get());
+                    event.accept(ModItems.DRAGON_BREATH_COKE.get());
+
+                    event.accept(ModItems.RAW_VEGAN_MUTTON.get());
+                    event.accept(ModItems.COOKED_VEGAN_MUTTON.get());
+                    event.accept(ModItems.RAW_VEGAN_PORK.get());
+                    event.accept(ModItems.COOKED_VEGAN_PORK.get());
+                    event.accept(ModItems.RAW_VEGAN_BEEF.get());
+                    event.accept(ModItems.COOKED_VEGAN_BEEF.get());
+
+                    event.accept(ModItems.PLATE_PIECES.get());
+                })
+
+        );
     }
 }

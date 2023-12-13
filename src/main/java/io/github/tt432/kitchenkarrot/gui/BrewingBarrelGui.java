@@ -5,7 +5,7 @@ import io.github.tt432.kitchenkarrot.blockentity.BrewingBarrelBlockEntity;
 import io.github.tt432.kitchenkarrot.gui.base.KKGui;
 import io.github.tt432.kitchenkarrot.gui.widget.ProgressWidget;
 import io.github.tt432.kitchenkarrot.menu.BrewingBarrelMenu;
-import net.minecraft.client.gui.GuiGraphics;
+// import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
@@ -17,8 +17,8 @@ import net.minecraftforge.fluids.IFluidTank;
  **/
 public class BrewingBarrelGui extends KKGui<BrewingBarrelMenu> {
 
-    public static final ResourceLocation TEXTURE =
-            new ResourceLocation(Kitchenkarrot.MOD_ID, "textures/gui/brewing_barrel.png");
+    public static final ResourceLocation TEXTURE = new ResourceLocation(Kitchenkarrot.MOD_ID,
+            "textures/gui/brewing_barrel.png");
 
     public BrewingBarrelGui(BrewingBarrelMenu pMenu, Inventory pPlayerInventory, Component pTitle) {
         super(pMenu, pPlayerInventory, pTitle, TEXTURE);
@@ -44,14 +44,11 @@ public class BrewingBarrelGui extends KKGui<BrewingBarrelMenu> {
                             } else {
                                 if (tank.getFluidAmount() < be.FLUID_CONSUMPTION) {
                                     return Component.translatable("brewing_barrel.error.not_enough_liquid");
-                                }
-                                else if (!be.isRecipeSame()) {
+                                } else if (!be.isRecipeSame()) {
                                     return Component.translatable("brewing_barrel.error.error_recipe");
-                                }
-                                else if (!be.resultEmpty()) {
+                                } else if (!be.resultEmpty()) {
                                     return Component.translatable("brewing_barrel.error.result_slot_not_empty");
-                                }
-                                else {
+                                } else {
                                     return Component.empty();
                                 }
                             }

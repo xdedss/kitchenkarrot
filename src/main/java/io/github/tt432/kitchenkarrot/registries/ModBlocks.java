@@ -12,6 +12,7 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.material.Material;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
@@ -27,12 +28,14 @@ import javax.annotation.ParametersAreNonnullByDefault;
  **/
 @ParametersAreNonnullByDefault
 public class ModBlocks {
-    public static final DeferredRegister<Block> BLOCKS = DeferredRegister.create(ForgeRegistries.BLOCKS, Kitchenkarrot.MOD_ID);
+    public static final DeferredRegister<Block> BLOCKS = DeferredRegister.create(ForgeRegistries.BLOCKS,
+            Kitchenkarrot.MOD_ID);
 
-    public static final RegistryObject<Block> AIR_COMPRESSOR = BLOCKS.register("air_compressor", AirCompressorBlock::new);
+    public static final RegistryObject<Block> AIR_COMPRESSOR = BLOCKS.register("air_compressor",
+            AirCompressorBlock::new);
 
-    public static final RegistryObject<Block> BREWING_BARREL = BLOCKS.register("brewing_barrel", () ->
-            new BrewingBarrelBlock(BlockBehaviour.Properties.copy(Blocks.BARREL)
+    public static final RegistryObject<Block> BREWING_BARREL = BLOCKS.register("brewing_barrel",
+            () -> new BrewingBarrelBlock(BlockBehaviour.Properties.copy(Blocks.BARREL)
                     .noOcclusion()));
 
     public static final RegistryObject<Block> ROCK_SALT = salt("rock_salt");
@@ -43,31 +46,35 @@ public class ModBlocks {
     public static final RegistryObject<Block> ACORN_OIL = oil("acorn_oil");
     public static final RegistryObject<Block> CHORUS_OIL = oil("chorus_oil");
 
-    public static final RegistryObject<Block> COASTER = BLOCKS.register("coaster", () -> new CoasterBlock(BlockBehaviour.Properties.of().strength(0.5F, 0.5F).sound(SoundType.WOOD)));
+    public static final RegistryObject<Block> COASTER = BLOCKS.register("coaster", () -> new CoasterBlock(
+            BlockBehaviour.Properties.of(Material.WOOD).strength(0.5F, 0.5F).sound(SoundType.WOOD)));
 
-    public static final RegistryObject<Block> PLATE = BLOCKS.register("plate", () -> new PlateBlock(BlockBehaviour.Properties.of().strength(1F, 1F).sound(SoundType.GLASS)));
+    public static final RegistryObject<Block> PLATE = BLOCKS.register("plate",
+            () -> new PlateBlock(BlockBehaviour.Properties.of(Material.STONE).strength(1F, 1F).sound(SoundType.GLASS)));
 
     private static RegistryObject<Block> oil(String name) {
-        return BLOCKS.register(name, () -> new Block(BlockBehaviour.Properties.of()
+        return BLOCKS.register(name, () -> new Block(BlockBehaviour.Properties.of(Material.STONE)
                 .noOcclusion()
                 .strength(1f, 1f)) {
             @Override
             @NotNull
             @SuppressWarnings("deprecation")
-            public VoxelShape getShape(BlockState pState, BlockGetter pLevel, BlockPos pPos, CollisionContext pContext) {
+            public VoxelShape getShape(BlockState pState, BlockGetter pLevel, BlockPos pPos,
+                    CollisionContext pContext) {
                 return OIL;
             }
         });
     }
 
     private static RegistryObject<Block> salt(String name) {
-        return BLOCKS.register(name, () -> new Block(BlockBehaviour.Properties.of()
+        return BLOCKS.register(name, () -> new Block(BlockBehaviour.Properties.of(Material.STONE)
                 .noOcclusion()
                 .strength(1f, 1f)) {
             @Override
             @NotNull
             @SuppressWarnings("deprecation")
-            public VoxelShape getShape(BlockState pState, BlockGetter pLevel, BlockPos pPos, CollisionContext pContext) {
+            public VoxelShape getShape(BlockState pState, BlockGetter pLevel, BlockPos pPos,
+                    CollisionContext pContext) {
                 return SALT;
             }
         });
